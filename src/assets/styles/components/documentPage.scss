@@ -1,0 +1,111 @@
+/**
+ * Document Page Styles
+ * 
+ * This file contains styles for the document page component
+ * that displays and manages the content of a document section.
+ */
+
+// Main container
+.document-page-container {
+  position: relative;
+  margin: 16px auto;
+}
+
+// Document page
+.document-page {
+  background-color: var(--background);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s ease;
+  position: relative;
+
+  &.active {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+// Page content container
+.page-content {
+  position: relative;
+  height: 100%; // Use fixed height instead of min-height
+  background-color: white;
+  box-sizing: border-box;
+  overflow: hidden; // Hide content that goes outside the document boundaries
+}
+
+// Container for all elements
+.elements-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+// Individual element wrapper
+.element-wrapper {
+  position: relative;
+  // We no longer force z-index on hover to maintain proper layer ordering
+  // Layer controls will be visible due to their own z-index
+}
+
+// Empty page placeholder
+.empty-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  color: var(--text-secondary);
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+
+  p {
+    font-size: 16px;
+    text-align: center;
+    max-width: 300px;
+  }
+}
+
+// Loading indicator
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  color: var(--text-secondary);
+}
+
+// Error message for component loading failures
+.error-loading {
+  padding: 8px;
+  color: var(--error);
+  background-color: rgba(var(--error-rgb, 239, 68, 68), 0.1);
+  border-radius: 4px;
+  margin: 8px 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+// Drawing rectangle for element creation
+.drawing-rectangle {
+  position: absolute;
+  border: 2px dashed var(--primary);
+  background-color: rgba(var(--primary-rgb), 0.1);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .document-page-container {
+    margin: 8px auto;
+  }
+  
+  .empty-page {
+    height: 300px;
+    
+    p {
+      font-size: 14px;
+      max-width: 250px;
+    }
+  }
+}

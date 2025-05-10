@@ -1,0 +1,61 @@
+// Grid Layout styles
+.grid-layout {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background-color: var(--surface);
+  position: relative;
+}
+
+:deep(.grid-stack) {
+  background: var(--background);
+  min-height: 480px;
+}
+
+:deep(.grid-stack-item) {
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 4px;
+  
+  &:hover {
+    border-color: var(--primary);
+  }
+  
+  .grid-stack-item-content {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}
+
+.item-header {
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: move;
+  
+  .item-title {
+    font-weight: 500;
+  }
+  
+  .item-actions {
+    display: flex;
+    gap: 4px;
+  }
+}
+
+.item-content {
+  padding: 12px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.add-block-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+}

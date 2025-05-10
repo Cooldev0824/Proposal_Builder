@@ -1,0 +1,203 @@
+/**
+ * Element Toolbar Styles
+ *
+ * This file contains styles for the element toolbar component that appears
+ * when an element is selected in the document editor.
+ */
+
+// Main toolbar container
+.element-toolbar {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  z-index: 3000; // High z-index to appear above other elements
+  backdrop-filter: blur(10px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 3px solid rgba(var(--primary-rgb), 0.8);
+  min-width: 220px;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+// Toolbar sections
+.toolbar-section {
+  display: flex;
+  align-items: center;
+}
+
+// Element information section
+.element-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+// Element type display
+.element-type {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: var(--text-primary);
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Layer number badge
+.layer-number {
+  font-size: 12px;
+  color: var(--text-secondary);
+  background-color: rgba(0, 0, 0, 0.08);
+  padding: 2px 8px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+// Divider between toolbar sections
+.toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--border);
+  margin: 0 12px;
+}
+
+// Layer control buttons container
+.layer-controls {
+  display: flex;
+  gap: 4px;
+}
+
+// Toolbar button style
+.toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background-color: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--primary);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+
+  &:hover {
+    background-color: rgba(var(--primary-rgb), 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  // Disabled state
+  &.disabled {
+    color: var(--text-disabled);
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: transparent;
+      transform: none;
+    }
+
+    &:active {
+      transform: none;
+    }
+  }
+}
+
+// Tooltip style
+.toolbar-tooltip {
+  font-size: 12px;
+  padding: 4px 8px;
+  background-color: rgba(30, 30, 30, 0.85);
+  color: white;
+  border-radius: 6px;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(4px);
+}
+
+// Animation for toolbar appearance
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .element-toolbar {
+    min-width: 200px;
+    padding: 6px 10px;
+  }
+
+  .element-type {
+    max-width: 100px;
+  }
+
+  .toolbar-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .toolbar-divider {
+    margin: 0 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .element-toolbar {
+    min-width: 180px;
+    padding: 5px 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .element-info {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .toolbar-divider {
+    display: none;
+  }
+
+  .layer-controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .element-type {
+    max-width: 90px;
+    font-size: 12px;
+  }
+
+  .layer-number {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .toolbar-btn {
+    width: 26px;
+    height: 26px;
+  }
+}
