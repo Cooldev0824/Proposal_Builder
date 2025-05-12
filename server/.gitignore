@@ -2,7 +2,7 @@
 node_modules/
 
 # Document storage
-documents/
+//documents/
 
 # Public images
 public/images/

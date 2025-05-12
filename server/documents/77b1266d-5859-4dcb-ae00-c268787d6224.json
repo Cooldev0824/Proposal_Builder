@@ -1,0 +1,161 @@
+{
+  "id": "77b1266d-5859-4dcb-ae00-c268787d6224",
+  "title": "Template 2",
+  "createdAt": "2025-05-07T23:58:57.904Z",
+  "updatedAt": "2025-05-08T00:48:15.844Z",
+  "sections": [
+    {
+      "id": "cover",
+      "title": "Cover",
+      "elements": [
+        {
+          "id": "shape-1746661616720",
+          "type": "shape",
+          "content": "rectangle",
+          "position": {
+            "x": 100,
+            "y": 160
+          },
+          "size": {
+            "width": 590,
+            "height": 260
+          },
+          "style": {
+            "fill": "#314d80",
+            "stroke": "#91a0b2",
+            "strokeWidth": 10,
+            "opacity": 0.8,
+            "rotation": 0,
+            "borderRadius": 13
+          },
+          "zIndex": 3
+        },
+        {
+          "id": "text-1746661678794",
+          "type": "text",
+          "content": "<span style=\"font-family: Ubuntu; font-size: 69px; font-weight: 700; text-transform: uppercase;\">Construction Job Proposal</span>",
+          "position": {
+            "x": 110,
+            "y": 170
+          },
+          "size": {
+            "width": 600,
+            "height": 230
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 4
+        },
+        {
+          "id": "text-1746661743992",
+          "type": "text",
+          "content": "<span style=\"background-color: rgb(255, 255, 255);\"><span style=\"box-sizing: border-box; font-family: Lato; font-size: 23px;\"><span style=\"box-sizing: border-box; font-size: 18px;\">Prepared by:&nbsp;</span></span><br style=\"box-sizing: border-box; font-family: Lato; font-size: 26px;\"><span style=\"font-family: Lato; font-size: 26px;\">​</span><span data-placeholder=\"{user_assigned}\" style=\"box-sizing: border-box; font-family: Lato; font-size: 26px;\">Barrett Schinner</span><span style=\"font-family: Lato; font-size: 26px;\">​</span><span style=\"box-sizing: border-box; font-family: Lato; font-size: 26px;\">,</span><br style=\"box-sizing: border-box; font-family: Lato; font-size: 26px;\"><span data-placeholder=\"{company_name}\" style=\"box-sizing: border-box; font-family: Lato; font-size: 26px;\">aa</span><br style=\"box-sizing: border-box; font-family: Lato; font-size: 26px;\"><span style=\"box-sizing: border-box; font-family: Lato; font-size: 26px;\"><em style=\"box-sizing: border-box;\"><span data-placeholder=\"{user_email}\" style=\"box-sizing: border-box; font-size: 19px;\">kingdev0109@gmail.com</span>​</em></span></span>",
+          "position": {
+            "x": 90,
+            "y": 570
+          },
+          "size": {
+            "width": 324,
+            "height": 154
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 7
+        },
+        {
+          "id": "line-1746661821760",
+          "type": "shape",
+          "content": "line",
+          "position": {
+            "x": 100,
+            "y": 720
+          },
+          "size": {
+            "width": 307,
+            "height": 16
+          },
+          "style": {
+            "stroke": "#000000",
+            "strokeWidth": 5,
+            "opacity": 1,
+            "fill": "#E2E8F0",
+            "rotation": 0,
+            "lineStyle": "solid"
+          },
+          "zIndex": -4
+        },
+        {
+          "id": "text-1746661853978",
+          "type": "text",
+          "content": "<span style=\"box-sizing: border-box; color: rgb(146, 160, 178); font-family: Lato; font-size: 23px;\"><span style=\"box-sizing: border-box; font-size: 18px;\">Prepared for:</span></span><br style=\"box-sizing: border-box; color: rgb(146, 160, 178); font-family: Lato; font-size: 26px;\"><span data-placeholder=\"{client_contact_first}\" style=\"box-sizing: border-box; background-color: rgb(255, 217, 109); font-family: Lato; font-size: 26px; color: rgb(255, 255, 255);\">John</span><span style=\"box-sizing: border-box; font-family: Lato; font-size: 26px; color: rgb(255, 255, 255);\">&nbsp; </span><span data-placeholder=\"{client_contact_last}\" style=\"box-sizing: border-box; background-color: rgb(255, 217, 109); font-family: Lato; font-size: 26px; color: rgb(255, 255, 255);\">Doe</span><br style=\"box-sizing: border-box; color: rgb(146, 160, 178); font-family: Lato; font-size: 26px;\"><span data-placeholder=\"{client_address}\" style=\"box-sizing: border-box; background-color: rgb(255, 217, 109); font-family: Lato; font-size: 26px; color: rgb(255, 255, 255);\">123 Fake Street</span><span style=\"color: rgb(146, 160, 178); font-family: Lato; font-size: 26px;\">​</span><br style=\"box-sizing: border-box; color: rgb(146, 160, 178); font-family: Lato; font-size: 26px;\"><span data-placeholder=\"{client_city}\" style=\"box-sizing: border-box; background-color: rgb(255, 217, 109); font-family: Lato; font-size: 26px; color: rgb(255, 255, 255);\">Halifax</span><span style=\"box-sizing: border-box; font-family: Lato; font-size: 26px; color: rgb(255, 255, 255);\">, </span><span data-placeholder=\"{client_province}\" style=\"box-sizing: border-box; background-color: rgb(255, 217, 109); font-family: Lato; font-size: 26px; color: rgb(255, 255, 255);\">Nova Scotia</span><span style=\"color: rgb(146, 160, 178); font-family: Lato; font-size: 26px;\">​</span>",
+          "position": {
+            "x": 90,
+            "y": 750
+          },
+          "size": {
+            "width": 290,
+            "height": 160
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 8
+        },
+        {
+          "id": "image-1746661893632",
+          "type": "image",
+          "content": "https://images.pexels.com/photos/3760514/pexels-photo-3760514.jpeg",
+          "position": {
+            "x": -20,
+            "y": -30
+          },
+          "size": {
+            "width": 790,
+            "height": 1025
+          },
+          "style": {
+            "borderRadius": 0,
+            "borderWidth": 0,
+            "borderColor": "transparent",
+            "opacity": 1
+          },
+          "zIndex": -6
+        },
+        {
+          "id": "shape-1746662064473",
+          "type": "shape",
+          "content": "rectangle",
+          "position": {
+            "x": 667,
+            "y": 97
+          },
+          "size": {
+            "width": 102,
+            "height": 52
+          },
+          "style": {
+            "fill": "#E2E8F0",
+            "stroke": "#CBD5E1",
+            "strokeWidth": 1,
+            "opacity": 1
+          },
+          "zIndex": -7
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,666 @@
+{
+  "id": "045678e6-5b5d-4517-b669-c080145343fe",
+  "title": "Template 1",
+  "createdAt": "2025-05-07T22:08:00.569Z",
+  "updatedAt": "2025-05-10T01:42:59.656Z",
+  "sections": [
+    {
+      "id": "cover",
+      "title": "Cover",
+      "elements": [
+        {
+          "id": "image-1746657101242",
+          "type": "image",
+          "content": "https://images.unsplash.com/photo-1502790671504-542ad42d5189?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "position": {
+            "x": -30,
+            "y": -20
+          },
+          "size": {
+            "width": 1083,
+            "height": 834
+          },
+          "style": {
+            "borderRadius": 0,
+            "borderWidth": 0,
+            "borderColor": "transparent",
+            "opacity": 1,
+            "objectFit": "cover"
+          },
+          "zIndex": 1
+        },
+        {
+          "id": "text-1746657149841",
+          "type": "text",
+          "content": "<div style=\"text-align: left;\"><div style=\"text-align: left;\"><span style=\"background-color: transparent; color: rgb(38, 35, 45); font-family: Oswald; font-size: 64px; font-weight: 700; text-align: center; text-transform: uppercase; caret-color: black;\">​</span><span style=\"background-color: transparent; color: rgb(38, 35, 45); font-family: Oswald; font-size: 64px; font-weight: 700; text-align: center; text-transform: uppercase; caret-color: black;\">A r c h i t e c t u r e</span></div></div><span style=\"box-sizing: border-box; color: rgb(38, 35, 45); font-family: Oswald; font-size: 64px; font-weight: 700; text-align: center; text-transform: uppercase; line-height: 72px;\"><div style=\"text-align: center;\"><span style=\"background-color: transparent; caret-color: black;\">S e r v i c e s</span></div></span>",
+          "position": {
+            "x": 280,
+            "y": 290
+          },
+          "size": {
+            "width": 720,
+            "height": 220
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 2
+        },
+        {
+          "id": "text-1746657536113",
+          "type": "text",
+          "content": "<div style=\"text-align: left;\"><span style=\"color: rgb(38, 35, 45); font-family: &quot;Open Sans&quot;; font-size: 22px; font-weight: 700; text-align: center; text-transform: uppercase; background-color: transparent; caret-color: black;\">PROPOSAL FOR</span></div>",
+          "position": {
+            "x": 530,
+            "y": 240
+          },
+          "size": {
+            "width": 230,
+            "height": 60
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 3
+        },
+        {
+          "id": "text-1746657597746",
+          "type": "text",
+          "content": "<div style=\"text-align: left;\"><div style=\"text-align: left;\"><span style=\"font-family: &quot;Open Sans&quot;; font-size: 22px; font-weight: 700; text-align: center; text-transform: uppercase; caret-color: black; color: rgb(255, 255, 255); background-color: transparent;\"> </span><span style=\"color: rgb(255, 255, 255); background-color: transparent; caret-color: black; font-family: &quot;Open Sans&quot;; font-size: 22px; font-weight: 700; text-align: center; text-transform: uppercase;\">​FOR ​</span><span data-placeholder=\"{client_name}\" style=\"color: rgb(255, 255, 255); background-color: transparent; caret-color: black; box-sizing: border-box; font-family: &quot;Open Sans&quot;; font-size: 22px; font-weight: 700; text-align: center; text-transform: uppercase;\">Example Company</span></div></div><span data-placeholder=\"{client_name}\" style=\"box-sizing: border-box; font-family: &quot;Open Sans&quot;; font-size: 22px; font-weight: 700; text-align: center; text-transform: uppercase; color: rgb(255, 255, 255);\"><p class=\"ppStyleIntro\" style=\"text-align: center; box-sizing: border-box; margin-bottom: 20px; font-size: 21px; font-style: italic; line-height: 27px; text-transform: none; padding-left: 0.1px; word-break: keep-all !important;\"><em style=\"box-sizing: border-box;\"><span style=\"box-sizing: border-box;\"><em style=\"box-sizing: border-box;\">Prepared for <span data-placeholder=\"{client_contact_first}\" style=\"box-sizing: border-box;\">John</span> <span data-placeholder=\"{client_contact_last}\" style=\"box-sizing: border-box;\">Doe</span></em></span></em></p><p class=\"ppStyleHeading4\" style=\"text-align: center; box-sizing: border-box; margin-bottom: 5px; font-size: 15px; line-height: 24px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"box-sizing: border-box;\">PREPARED BY</span></p><p class=\"ppStyleHeading2\" style=\"text-align: center; box-sizing: border-box; margin-bottom: 21px; font-size: 34px; font-family: Oswald; line-height: 40px; text-transform: none; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"box-sizing: border-box;\"><span data-placeholder=\"{company_name}\" style=\"box-sizing: border-box;\">aa</span></span></p><p class=\"ppStyleHeading4\" style=\"text-align: center; box-sizing: border-box; font-size: 15px; line-height: 24px; padding-left: 0.1px; word-break: keep-all !important;\">{user_address}<br style=\"box-sizing: border-box;\"></p><span style=\"font-size: 15px; caret-color: black;\"><div style=\"text-align: center;\"><span data-placeholder=\"{client_name}\" style=\"caret-color: black; box-sizing: border-box; font-size: 22px;\"><span style=\"font-size: 15px; caret-color: black;\">{user_city}, {user_province} {user_zip_code}</span>​</span><span style=\"caret-color: black; font-size: 22px;\">​</span></div></span></span>",
+          "position": {
+            "x": 270,
+            "y": 480
+          },
+          "size": {
+            "width": 730,
+            "height": 270
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 4
+        }
+      ]
+    },
+    {
+      "id": "section-1746657740845",
+      "title": "1st page",
+      "elements": [
+        {
+          "id": "shape-1746657752553",
+          "type": "shape",
+          "content": "rectangle",
+          "position": {
+            "x": -20,
+            "y": -20
+          },
+          "size": {
+            "width": 350,
+            "height": 840
+          },
+          "style": {
+            "fill": "#ddd6d1",
+            "stroke": "#CBD5E1",
+            "strokeWidth": 1,
+            "opacity": 1,
+            "rotation": 0,
+            "borderRadius": 0
+          },
+          "zIndex": 1
+        },
+        {
+          "id": "text-1746657780057",
+          "type": "text",
+          "content": "<p class=\"ppStyleHeading2\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(247, 136, 99); font-size: 34px; font-family: Oswald; font-weight: bold; line-height: 40px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"box-sizing: border-box;\">Attention</span></p><p class=\"ppStyleIntro\" style=\"box-sizing: border-box; margin-bottom: 20px; color: rgb(45, 58, 81); font-size: 21px; font-family: &quot;Open Sans&quot;; font-weight: bold; font-style: italic; line-height: 27px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"background-color: rgb(221, 214, 209);\"><span data-placeholder=\"{client_contact_first}\" style=\"box-sizing: border-box;\">John</span> <span data-placeholder=\"{client_contact_last}\" style=\"box-sizing: border-box;\">Doe</span></span></p><p class=\"ppStyleIntro\" style=\"box-sizing: border-box; margin-bottom: 20px; color: rgb(45, 58, 81); font-size: 21px; font-family: &quot;Open Sans&quot;; font-weight: bold; font-style: italic; line-height: 27px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"background-color: rgb(221, 214, 209);\"><span data-placeholder=\"{client_name}\" style=\"box-sizing: border-box;\">Example Company</span><br style=\"box-sizing: border-box;\"></span></p><p class=\"ppStyleIntro\" style=\"box-sizing: border-box; color: rgb(45, 58, 81); font-size: 21px; font-family: &quot;Open Sans&quot;; font-weight: bold; font-style: italic; line-height: 27px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"background-color: rgb(221, 214, 209);\"><span data-placeholder=\"{client_address}\" style=\"box-sizing: border-box;\">123 Fake Street</span>​<br style=\"box-sizing: border-box;\"><span data-placeholder=\"{client_city}\" style=\"box-sizing: border-box;\">Halifax</span>, <span data-placeholder=\"{client_province}\" style=\"box-sizing: border-box;\">Nova Scotia</span><br style=\"box-sizing: border-box;\"><span data-placeholder=\"{client_zip_code}\" style=\"box-sizing: border-box;\">B2Y4V2</span></span>​</p>",
+          "position": {
+            "x": 40,
+            "y": 70
+          },
+          "size": {
+            "width": 334,
+            "height": 340
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent",
+            "blockBackground": false
+          },
+          "zIndex": 2
+        },
+        {
+          "id": "text-1746657840121",
+          "type": "text",
+          "content": "<span style=\"box-sizing: border-box; font-weight: 700; color: rgb(38, 35, 45); font-family: Oswald; font-size: 64px; text-transform: uppercase;\">Letter &nbsp;of &nbsp;<br style=\"box-sizing: border-box;\"></span><span style=\"color: rgb(38, 35, 45); font-family: Oswald; font-size: 64px; font-weight: 700; text-transform: uppercase;\">Interest</span>",
+          "position": {
+            "x": 390,
+            "y": 40
+          },
+          "size": {
+            "width": 450,
+            "height": 210
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 3
+        },
+        {
+          "id": "text-1746657894301",
+          "type": "text",
+          "content": "<p class=\"ppStyleHeading2\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(247, 136, 99); font-size: 34px; font-family: Oswald; font-weight: bold; line-height: 40px; padding-left: 0.1px; overflow-wrap: break-word;\">Re: Proposal Name</p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; overflow-wrap: break-word;\">Dear <span data-placeholder=\"{client_contact_first}\" style=\"box-sizing: border-box; background-color: rgb(255, 217, 109);\">John</span> <span data-placeholder=\"{client_contact_last}\" style=\"box-sizing: border-box; background-color: rgb(255, 217, 109);\">Doe</span>,</p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; overflow-wrap: break-word;\">We are very excited to submit ACE ARCHITECT's qualifications and proposal for the INSERT PROJECT NAME project. Our team is very interested to be involved in the design and construction of INSERT PROJECT NAME. With more than X years of experience in INSERT CITY, our work can be seen in buildings such as INSERT BUILDING A, INSERT BUILDING B, INSERT BUILDING C.</p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; overflow-wrap: break-word;\">We believe our expertise, past performance and integrated approach can ensure a collaborative, successful project between our two teams.<br style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></p><p class=\"ppStyleHeading3\" style=\"box-sizing: border-box; margin-bottom: 5px; color: rgb(38, 35, 45); font-size: 22px; font-family: &quot;Open Sans&quot;; font-weight: bold; line-height: 24px; text-transform: uppercase; padding-left: 0.1px; overflow-wrap: break-word;\"><span style=\"box-sizing: border-box;\">Expertise in Building Projects</span></p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; overflow-wrap: break-word;\">We have designed and constructed over X buildings, totalling over X square feet. Our clients include: x, y and z.</p>",
+          "position": {
+            "x": 400,
+            "y": 290
+          },
+          "size": {
+            "width": 570,
+            "height": 380
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 4
+        }
+      ]
+    },
+    {
+      "id": "section-1746659402748",
+      "title": "2nd page",
+      "elements": [
+        {
+          "id": "image-1746659462332",
+          "type": "image",
+          "content": "https://images.unsplash.com/photo-1494783367193-149034c05e8f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "width": 370,
+            "height": 400
+          },
+          "style": {
+            "borderRadius": 0,
+            "borderWidth": 0,
+            "borderColor": "transparent",
+            "opacity": 1,
+            "objectFit": "cover"
+          },
+          "zIndex": 1
+        },
+        {
+          "id": "image-1746659489914",
+          "type": "image",
+          "content": "https://images.unsplash.com/photo-1666739517861-a62c85b9d120?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "position": {
+            "x": 0,
+            "y": 420
+          },
+          "size": {
+            "width": 370,
+            "height": 390
+          },
+          "style": {
+            "borderRadius": 0,
+            "borderWidth": 0,
+            "borderColor": "transparent",
+            "opacity": 1,
+            "objectFit": "cover"
+          },
+          "zIndex": 2
+        },
+        {
+          "id": "text-1746659556666",
+          "type": "text",
+          "content": "<p class=\"ppStyleHeading3\" style=\"box-sizing: border-box; margin-bottom: 5px; color: rgb(38, 35, 45); font-size: 22px; font-family: &quot;Open Sans&quot;; font-weight: bold; line-height: 24px; text-transform: uppercase; padding-left: 0.1px; overflow-wrap: break-word;\"><span style=\"box-sizing: border-box;\">Successful Past Performance in Your Sector / Industry / Town</span></p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; overflow-wrap: break-word;\">Our team has worked has recently completed the X project, with Organization X. Our experience working with this public sector/state/private industry client, has helped us achieve a solid understanding of the todays market needs.<br style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></p><p class=\"ppStyleHeading3\" style=\"box-sizing: border-box; margin-bottom: 5px; color: rgb(38, 35, 45); font-size: 22px; font-family: &quot;Open Sans&quot;; font-weight: bold; line-height: 24px; text-transform: uppercase; padding-left: 0.1px; overflow-wrap: break-word;\"><span style=\"box-sizing: border-box;\">Integration</span></p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; overflow-wrap: break-word;\">Our team works closely with our partners to ensure that our work is efficient, effective and meets the goals of the project.</p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; overflow-wrap: break-word;\">Our attached proposal includes relevant projects that illustrate our experience and project approach. We look forward to an opportunity to discuss the project with you in more detail.</p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; overflow-wrap: break-word;\">Regards, <br style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; overflow-wrap: break-word;\"><span style=\"box-sizing: border-box; font-weight: 700;\"><span data-placeholder=\"{user_assigned}\" style=\"box-sizing: border-box; background-color: rgb(255, 217, 109);\">Barrett Schinner</span></span><br style=\"box-sizing: border-box;\"><em style=\"box-sizing: border-box;\"><span data-placeholder=\"{user_title}\" style=\"box-sizing: border-box; background-color: rgb(255, 217, 109);\"> </span></em><br style=\"box-sizing: border-box;\"><span data-placeholder=\"{company_name}\" style=\"box-sizing: border-box; background-color: rgb(255, 217, 109);\">aa</span><br style=\"box-sizing: border-box;\"><span data-placeholder=\"{user_phone}\" style=\"box-sizing: border-box; background-color: rgb(255, 217, 109);\">+441297443541</span>​</p>",
+          "position": {
+            "x": 390,
+            "y": 20
+          },
+          "size": {
+            "width": 571,
+            "height": 671
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 3
+        }
+      ]
+    },
+    {
+      "id": "section-1746659583714",
+      "title": "3rd page",
+      "elements": [
+        {
+          "id": "shape-1746659614241",
+          "type": "shape",
+          "content": "rectangle",
+          "position": {
+            "x": -20,
+            "y": 0
+          },
+          "size": {
+            "width": 350,
+            "height": 820
+          },
+          "style": {
+            "fill": "#ddd6d1",
+            "stroke": "#CBD5E1",
+            "strokeWidth": 1,
+            "opacity": 1,
+            "rotation": 0,
+            "borderRadius": 0
+          },
+          "zIndex": 3
+        },
+        {
+          "id": "text-1746659649464",
+          "type": "text",
+          "content": "<p class=\"ppStyleHeading2\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(247, 136, 99); font-size: 34px; font-family: Oswald; font-weight: bold; line-height: 40px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"box-sizing: border-box; background-color: rgb(221, 214, 209);\">Vital Stats</span></p><p class=\"ppStyleHeading4\" style=\"box-sizing: border-box; margin-bottom: 5px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; font-weight: bold; line-height: 24px; text-transform: uppercase; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"box-sizing: border-box; background-color: rgb(221, 214, 209);\">Contact information</span></p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"background-color: rgb(221, 214, 209);\"><span data-placeholder=\"{user_assigned}\" style=\"box-sizing: border-box;\">Barrett Schinner</span><br style=\"box-sizing: border-box;\"><span data-placeholder=\"{user_title}\" style=\"box-sizing: border-box;\"> </span><br style=\"box-sizing: border-box;\"><span data-placeholder=\"{company_address_1}\" style=\"box-sizing: border-box;\"> </span><br style=\"box-sizing: border-box;\"><span data-placeholder=\"{company_city}\" style=\"box-sizing: border-box;\"> </span>, <span data-placeholder=\"{company_state}\" style=\"box-sizing: border-box;\"> </span> <span data-placeholder=\"{company_zip_code}\" style=\"box-sizing: border-box;\"> </span><br style=\"box-sizing: border-box;\">Phone: <span data-placeholder=\"{user_phone}\" style=\"box-sizing: border-box;\">+441297443541</span><br style=\"box-sizing: border-box;\"><span data-placeholder=\"{user_email}\" style=\"box-sizing: border-box;\">kingdev0109@gmail.com</span></span></p><p class=\"ppStyleHeading4\" style=\"box-sizing: border-box; margin-bottom: 5px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; font-weight: bold; line-height: 24px; text-transform: uppercase; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"box-sizing: border-box; background-color: rgb(221, 214, 209);\">Office Locations</span></p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"background-color: rgb(221, 214, 209);\">City, State</span></p><p class=\"ppStyleHeading4\" style=\"box-sizing: border-box; margin-bottom: 5px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; font-weight: bold; line-height: 24px; text-transform: uppercase; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"box-sizing: border-box; background-color: rgb(221, 214, 209);\">Years in Business</span></p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"background-color: rgb(221, 214, 209);\">#</span></p><p class=\"ppStyleHeading4\" style=\"box-sizing: border-box; margin-bottom: 5px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; font-weight: bold; line-height: 24px; text-transform: uppercase; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"box-sizing: border-box; background-color: rgb(221, 214, 209);\">Size</span></p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"background-color: rgb(221, 214, 209);\"># Employees</span></p><p class=\"ppStyleHeading4\" style=\"box-sizing: border-box; margin-bottom: 5px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; font-weight: bold; line-height: 24px; text-transform: uppercase; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"box-sizing: border-box; background-color: rgb(221, 214, 209);\">Staff</span></p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"background-color: rgb(221, 214, 209);\">Registered Architects - #<br style=\"box-sizing: border-box;\">Architectural Staff - #<br style=\"box-sizing: border-box;\">Support Staff - #<br style=\"box-sizing: border-box;\">LEED Accredited Professionals - #</span></p>",
+          "position": {
+            "x": 30,
+            "y": 70
+          },
+          "size": {
+            "width": 320,
+            "height": 670
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 4
+        },
+        {
+          "id": "text-1746659685968",
+          "type": "text",
+          "content": "<p class=\"ppStyleHeading1\" style=\"box-sizing: border-box; margin-bottom: 40px; color: rgb(38, 35, 45); font-size: 64px; font-family: Oswald; font-weight: bold; line-height: 72px; text-transform: uppercase; padding-left: 0.1px; overflow-wrap: break-word;\"><span style=\"box-sizing: border-box;\">Organization , <br style=\"box-sizing: border-box;\">Credentials , <br style=\"box-sizing: border-box;\">&amp; Background</span></p><p class=\"ppStyleHeading2\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(247, 136, 99); font-size: 34px; font-family: Oswald; font-weight: bold; line-height: 40px; padding-left: 0.1px; overflow-wrap: break-word;\">About Ace Architects&nbsp;</p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; overflow-wrap: break-word;\">We are more than simply architects. Ace Architects are an extension of your business success team.We consider ourselves resourceful collaborators who connect with our clients to grow each project together.&nbsp;</p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; overflow-wrap: break-word;\">We pride ourselves on having a team that is flexible to fit into any work environment, attentive to our client needs and experienced listeners who can transform your thoughts and ideas into a tangible vision. We design for our clients needs.</p><p class=\"ppStyleHeading3\" style=\"box-sizing: border-box; margin-bottom: 5px; color: rgb(38, 35, 45); font-size: 22px; font-family: &quot;Open Sans&quot;; font-weight: bold; line-height: 24px; text-transform: uppercase; padding-left: 0.1px; overflow-wrap: break-word;\"><span style=\"box-sizing: border-box;\">Background</span></p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; overflow-wrap: break-word;\">ACE ARCHITECTS was founded in Rochester, Minnesota in 1980, AA has expanded into a regional architecture firm servicing the needs of companies across the midwest. We have been recognized by Minnesota Weekly as one of the best places to work in 2014.</p>",
+          "position": {
+            "x": 390,
+            "y": 10
+          },
+          "size": {
+            "width": 590,
+            "height": 630
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 5
+        }
+      ]
+    },
+    {
+      "id": "section-1746659747409",
+      "title": "4th page",
+      "elements": [
+        {
+          "id": "text-1746659757096",
+          "type": "text",
+          "content": "<p class=\"ppStyleHeading1\" style=\"box-sizing: border-box; margin-bottom: 40px; font-size: 64px; font-family: Oswald; font-weight: bold; line-height: 72px; text-transform: uppercase; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"box-sizing: border-box; color: rgb(26, 26, 26);\">Relevant <br style=\"box-sizing: border-box;\">Experience</span></p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"color: rgb(26, 26, 26);\">Ace Architects have completed a number of medical office building design projects. We've enclosed several examples of our work on these, as well as other projects which showcase our design capabilities. Our work consistently is shaped to reflect the value.</span></p>",
+          "position": {
+            "x": 0,
+            "y": 130
+          },
+          "size": {
+            "width": 480,
+            "height": 330
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent",
+            "blockBackground": true,
+            "blockBackgroundColor": "#f78863"
+          },
+          "zIndex": 2
+        },
+        {
+          "id": "image-1746659840679",
+          "type": "image",
+          "content": "https://plus.unsplash.com/premium_photo-1675448891117-870fa1d32551?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "width": 1060,
+            "height": 820
+          },
+          "style": {
+            "borderRadius": 0,
+            "borderWidth": 0,
+            "borderColor": "transparent",
+            "opacity": 1,
+            "objectFit": "cover"
+          },
+          "zIndex": 1
+        },
+        {
+          "id": "shape-1746659978036",
+          "type": "shape",
+          "content": "rectangle",
+          "position": {
+            "x": 520,
+            "y": 27
+          },
+          "size": {
+            "width": 69,
+            "height": 15
+          },
+          "style": {
+            "fill": "#E2E8F0",
+            "stroke": "#CBD5E1",
+            "strokeWidth": 1,
+            "opacity": 1
+          },
+          "zIndex": -2
+        }
+      ]
+    },
+    {
+      "id": "section-1746660087921",
+      "title": "5th page",
+      "elements": [
+        {
+          "id": "shape-1746660230313",
+          "type": "shape",
+          "content": "circle",
+          "position": {
+            "x": 160,
+            "y": 110
+          },
+          "size": {
+            "width": 294,
+            "height": 270
+          },
+          "style": {
+            "fill": "#f58764",
+            "stroke": "#CBD5E1",
+            "strokeWidth": 1,
+            "opacity": 1,
+            "rotation": 0
+          },
+          "zIndex": 1
+        },
+        {
+          "id": "shape-1746660236729",
+          "type": "shape",
+          "content": "circle",
+          "position": {
+            "x": 40,
+            "y": 270
+          },
+          "size": {
+            "width": 294,
+            "height": 270
+          },
+          "style": {
+            "fill": "#2f3b53",
+            "stroke": "#CBD5E1",
+            "strokeWidth": 1,
+            "opacity": 0.8,
+            "rotation": 0
+          },
+          "zIndex": 2
+        },
+        {
+          "id": "shape-1746660241241",
+          "type": "shape",
+          "content": "circle",
+          "position": {
+            "x": 270,
+            "y": 280
+          },
+          "size": {
+            "width": 294,
+            "height": 270
+          },
+          "style": {
+            "fill": "#ded7d1",
+            "stroke": "#CBD5E1",
+            "strokeWidth": 1,
+            "opacity": 0.8,
+            "rotation": 0
+          },
+          "zIndex": 3
+        },
+        {
+          "id": "text-1746660333409",
+          "type": "text",
+          "content": "<div style=\"text-align: left;\"><span style=\"color: rgb(38, 35, 45); font-family: &quot;Open Sans&quot;; font-size: 22px; font-weight: 700; text-align: center; text-transform: uppercase; background-color: transparent; caret-color: black;\">Ace Architects</span></div><span style=\"color: rgb(38, 35, 45); font-family: &quot;Open Sans&quot;; font-size: 22px; font-weight: 700; text-align: center; text-transform: uppercase;\"><div style=\"text-align: center;\"><span style=\"background-color: transparent; caret-color: black;\">Team</span></div></span>",
+          "position": {
+            "x": 190,
+            "y": 180
+          },
+          "size": {
+            "width": 239,
+            "height": 84
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 4
+        },
+        {
+          "id": "text-1746660358401",
+          "type": "text",
+          "content": "<div style=\"text-align: left;\"><div style=\"text-align: left;\"><span style=\"background-color: transparent; color: rgb(221, 214, 209); font-family: &quot;Open Sans&quot;; font-size: 22px; font-weight: 700; text-align: center; text-transform: uppercase; caret-color: black;\"> </span></div><span style=\"color: rgb(221, 214, 209); font-family: &quot;Open Sans&quot;; font-size: 22px; font-weight: 700; text-align: center; text-transform: uppercase; background-color: transparent; caret-color: black;\"><div style=\"text-align: center;\"><span style=\"background-color: transparent; caret-color: black;\">​</span><span style=\"background-color: transparent; caret-color: black;\">Client</span></div></span></div><span style=\"color: rgb(221, 214, 209); font-family: &quot;Open Sans&quot;; font-size: 22px; font-weight: 700; text-align: center; text-transform: uppercase;\"><div style=\"text-align: center;\"><span style=\"background-color: transparent; caret-color: black;\">Project</span></div></span><span style=\"color: rgb(221, 214, 209); font-family: &quot;Open Sans&quot;; font-size: 22px; font-weight: 700; text-align: center; text-transform: uppercase;\"><div style=\"text-align: center;\"><span style=\"background-color: transparent; caret-color: black;\">Team</span></div></span>",
+          "position": {
+            "x": 90,
+            "y": 330
+          },
+          "size": {
+            "width": 170,
+            "height": 130
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 5
+        },
+        {
+          "id": "text-1746660415722",
+          "type": "text",
+          "content": "<span style=\"color: rgb(38, 35, 45); font-family: &quot;Open Sans&quot;; font-size: 22px; font-weight: 700; text-align: center; text-transform: uppercase;\">Consultants</span>",
+          "position": {
+            "x": 350,
+            "y": 390
+          },
+          "size": {
+            "width": 190,
+            "height": 60
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 6
+        },
+        {
+          "id": "text-1746660437991",
+          "type": "text",
+          "content": "<span style=\"color: rgb(38, 35, 45); font-family: Oswald; font-size: 64px; font-weight: 700; text-align: center; text-transform: uppercase;\">Project &nbsp; Team</span>",
+          "position": {
+            "x": 10,
+            "y": -10
+          },
+          "size": {
+            "width": 590,
+            "height": 110
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 7
+        },
+        {
+          "id": "text-1746660461584",
+          "type": "text",
+          "content": "<p class=\"ppStyleIntro\" style=\"box-sizing: border-box; margin-bottom: 20px; color: rgb(45, 58, 81); font-size: 21px; font-family: &quot;Open Sans&quot;; font-weight: bold; font-style: italic; line-height: 27px; padding-left: 0.1px; word-break: keep-all !important;\"><span style=\"box-sizing: border-box;\">Regardless of the size of your project, your team will always include a team lead or principal that is engaged in your final design.</span></p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; word-break: keep-all !important;\">We then populate the team to fill positions that complement our client's way of business to ensure that personality, availability and expertise are always matched to the project.</p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; word-break: keep-all !important;\"><br style=\"box-sizing: border-box;\"></p><p class=\"ppStyleHeading2\" style=\"box-sizing: border-box; margin-bottom: 21px; color: rgb(247, 136, 99); font-size: 34px; font-family: Oswald; font-weight: bold; line-height: 40px; padding-left: 0.1px; word-break: keep-all !important;\">Team Roles</p><p class=\"ppStyleBody\" style=\"box-sizing: border-box; color: rgb(38, 35, 45); font-size: 15px; font-family: &quot;Open Sans&quot;; line-height: 24px; padding-left: 0.1px; word-break: keep-all !important;\">Ace Architects provides a dedicated team for the duration of your project who will collaborate with our clients from inception to design to construction. View an introduction to your proposed team on the following pages.</p>",
+          "position": {
+            "x": 720,
+            "y": 0
+          },
+          "size": {
+            "width": 340,
+            "height": 820
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent",
+            "blockBackground": true,
+            "blockBackgroundColor": "#ddd6d1",
+            "lineHeight": 1.4
+          },
+          "zIndex": 8
+        }
+      ]
+    },
+    {
+      "id": "section-1746660610097",
+      "title": "final page",
+      "elements": [
+        {
+          "id": "image-1746660634977",
+          "type": "image",
+          "content": "https://images.pexels.com/photos/3760514/pexels-photo-3760514.jpeg",
+          "position": {
+            "x": -20,
+            "y": -20
+          },
+          "size": {
+            "width": 330,
+            "height": 835
+          },
+          "style": {
+            "borderRadius": 0,
+            "borderWidth": 0,
+            "borderColor": "transparent",
+            "opacity": 1
+          },
+          "zIndex": 1
+        },
+        {
+          "id": "table-1746660693376",
+          "type": "table",
+          "content": {
+            "headers": [
+              "Item",
+              "Description",
+              "Price"
+            ],
+            "rows": [
+              [
+                "Principal",
+                "Principal Cost",
+                "$200"
+              ],
+              [
+                "Project Architect",
+                "Project Architect",
+                "$300"
+              ]
+            ]
+          },
+          "position": {
+            "x": 403,
+            "y": 314
+          },
+          "size": {
+            "width": 537,
+            "height": 243
+          },
+          "style": {
+            "headerBackgroundColor": "#f78863",
+            "headerTextColor": "#fffafa",
+            "cellBackgroundColor": "#e8e1dc",
+            "cellTextColor": "#000000",
+            "borderColor": "#E2E8F0",
+            "borderStyle": "solid",
+            "borderWidth": 1
+          },
+          "zIndex": 2
+        },
+        {
+          "id": "text-1746660842400",
+          "type": "text",
+          "content": "<p class=\"ppStyleHeading1\" style=\"box-sizing: border-box; margin-bottom: 40px; color: rgb(38, 35, 45); font-size: 64px; font-family: Oswald; font-weight: bold; line-height: 72px; text-transform: uppercase; padding-left: 0.1px; overflow-wrap: break-word;\"><span style=\"box-sizing: border-box;\">Fee &nbsp;Outline</span></p><p class=\"ppStyleIntro\" style=\"box-sizing: border-box; margin-bottom: 20px; color: rgb(45, 58, 81); font-size: 21px; font-family: &quot;Open Sans&quot;; font-weight: bold; font-style: italic; line-height: 27px; padding-left: 0.1px; overflow-wrap: break-word;\"><span style=\"box-sizing: border-box;\">Fees will be billed monthly on a percentage completion basis. <br style=\"box-sizing: border-box;\">If additional services are requested and approved, Ace Architecture's hourly billing rate is as follows:</span></p>",
+          "position": {
+            "x": 400,
+            "y": 20
+          },
+          "size": {
+            "width": 580,
+            "height": 240
+          },
+          "style": {
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "#000000",
+            "backgroundColor": "transparent"
+          },
+          "zIndex": 3
+        }
+      ]
+    }
+  ],
+  "paperSize": "Letter",
+  "orientation": "landscape"
+}
