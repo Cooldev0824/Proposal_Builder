@@ -21,24 +21,24 @@ export function generateElementId(type: string): string {
  */
 export function getElementIcon(type: string): string {
   switch (type) {
-    case "text":
-      return "mdi-format-text";
-    case "image":
-      return "mdi-image";
-    case "shape":
-      return "mdi-shape";
-    case "table":
-      return "mdi-table";
-    case "signature":
-      return "mdi-draw";
-    case "form":
-      return "mdi-form-select";
-    case "grid":
-      return "mdi-grid";
-    case "group":
-      return "mdi-folder-outline";
-    default:
-      return "mdi-shape-outline";
+  case "text":
+    return "mdi-format-text";
+  case "image":
+    return "mdi-image";
+  case "shape":
+    return "mdi-shape";
+  case "table":
+    return "mdi-table";
+  case "signature":
+    return "mdi-draw";
+  case "form":
+    return "mdi-form-select";
+  case "grid":
+    return "mdi-grid";
+  case "group":
+    return "mdi-folder-outline";
+  default:
+    return "mdi-shape-outline";
   }
 }
 
@@ -52,18 +52,18 @@ export function getElementName(element: DocumentElement): string {
   const prefix = element.type.charAt(0).toUpperCase() + element.type.slice(1);
 
   switch (element.type) {
-    case "text":
-      return "Text";
+  case "text":
+    return "Text";
 
-    case "shape":
-      return "Shape";
+  case "shape":
+    return "Shape";
 
-    case "image":
-      return "Image";
-    case "group":
-      return "Group";
-    default:
-      return `${prefix}`;
+  case "image":
+    return "Image";
+  case "group":
+    return "Group";
+  default:
+    return `${prefix}`;
   }
 }
 
@@ -81,7 +81,7 @@ export function createTextElement(
   y: number,
   width: number = 200,
   height: number = 100,
-  content: string = "New text block"
+  content: string = "New text block",
 ): DocumentElement {
   return {
     id: generateElementId("text"),
@@ -114,7 +114,7 @@ export function createImageElement(
   y: number,
   width: number = 200,
   height: number = 200,
-  imageUrl: string = ""
+  imageUrl: string = "",
 ): DocumentElement {
   return {
     id: generateElementId("image"),
@@ -146,7 +146,7 @@ export function createShapeElement(
   y: number,
   width: number = 100,
   height: number = 100,
-  shapeType: "rectangle" | "circle" | "triangle" | "arrow" = "rectangle"
+  shapeType: "rectangle" | "circle" | "triangle" | "arrow" = "rectangle",
 ): DocumentElement {
   return {
     id: generateElementId("shape"),
@@ -178,7 +178,7 @@ export function createGroupElement(
   y: number,
   width: number,
   height: number,
-  children: DocumentElement[] = []
+  children: DocumentElement[] = [],
 ): DocumentElement {
   return {
     id: generateElementId("group"),
@@ -208,7 +208,7 @@ export function createGroupElement(
 export function duplicateElement(
   element: DocumentElement,
   offsetX: number = 20,
-  offsetY: number = 20
+  offsetY: number = 20,
 ): DocumentElement {
   // Create a deep copy of the element
   const duplicate = JSON.parse(JSON.stringify(element));
@@ -225,7 +225,7 @@ export function duplicateElement(
   // If it's a group, recursively duplicate children
   if (element.children && element.children.length > 0) {
     duplicate.children = element.children.map(
-      (child) => duplicateElement(child, 0, 0) // No offset for children
+      (child) => duplicateElement(child, 0, 0), // No offset for children
     );
   }
 

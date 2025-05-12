@@ -3,6 +3,18 @@
     <v-card>
       <v-card-title class="text-h5">Export to PDF</v-card-title>
       <v-card-text>
+        <!-- Error alert -->
+        <v-alert
+          v-if="exportError"
+          type="error"
+          variant="tonal"
+          closable
+          class="mb-4"
+          @click:close="exportError = null"
+        >
+          {{ exportError }}
+        </v-alert>
+
         <v-form ref="form">
           <v-text-field
             v-model="filename"
@@ -52,9 +64,7 @@
 
           <v-expansion-panels variant="accordion" class="mb-4">
             <v-expansion-panel>
-              <v-expansion-panel-title
-                >Advanced Options</v-expansion-panel-title
-              >
+              <v-expansion-panel-title>Advanced Options</v-expansion-panel-title>
               <v-expansion-panel-text>
                 <v-text-field
                   v-model.number="margins.top"
@@ -91,15 +101,16 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" variant="text" @click="closeDialog"
-          >Cancel</v-btn
-        >
+        <v-btn color="primary"
+               variant="text"
+               @click="closeDialog"
+        >Cancel</v-btn>
         <v-btn
           color="primary"
           variant="elevated"
-          @click="exportPdf"
           :loading="isExporting"
           :disabled="isExporting"
+          @click="exportPdf"
         >
           Export
         </v-btn>
@@ -137,7 +148,7 @@ const form = ref<any>(null);
 
 // Export options
 const filename = ref(
-  props.document.title ? `${props.document.title}.pdf` : "document.pdf"
+  props.document.title ? `${props.document.title}.pdf` : "document.pdf",
 );
 const paperSize = ref(props.document.paperSize || "A4");
 const orientation = ref(props.document.orientation || "portrait");
@@ -158,6 +169,7 @@ const qualityLabels = ["Draft", "Normal", "High"];
 
 // Export state
 const isExporting = ref(false);
+const exportError = ref<string | null>(null);
 
 // Update filename when document title changes
 watch(
@@ -166,7 +178,7 @@ watch(
     if (newTitle) {
       filename.value = `${newTitle}.pdf`;
     }
-  }
+  },
 );
 
 // Close the dialog
@@ -179,12 +191,12 @@ function closeDialog() {
 async function directExport(
   document: Document,
   container: HTMLElement,
-  options: PdfExportOptions
+  options: PdfExportOptions,
 ): Promise<void> {
   console.log("Using direct export method");
   // This is just a stub - we're not using this function anymore
   throw new Error(
-    "Direct export is no longer supported. Use the new PDF export service instead."
+    "Direct export is no longer supported. Use the new PDF export service instead.",
   );
 }
 
@@ -202,6 +214,7 @@ async function exportPdf() {
   }
 
   isExporting.value = true;
+  exportError.value = null; // Clear any previous error
 
   try {
     // First, we need to create a preview of the document
@@ -282,11 +295,11 @@ async function exportPdf() {
         // Explicitly subtract 30px from both x and y to remove ruler space
         elementContainer.style.left = `${Math.max(
           0,
-          element.position.x - 30
+          element.position.x - 30,
         )}px`;
         elementContainer.style.top = `${Math.max(
           0,
-          element.position.y - 30
+          element.position.y - 30,
         )}px`;
         elementContainer.style.width = `${element.size.width}px`;
         elementContainer.style.height = `${element.size.height}px`;
@@ -301,56 +314,56 @@ async function exportPdf() {
             Object.entries(element.style).forEach(([key, value]) => {
               if (value !== undefined && value !== null) {
                 switch (key) {
-                  case "fontFamily":
-                    elementContainer.style.fontFamily = value as string;
-                    break;
-                  case "fontSize":
-                    elementContainer.style.fontSize = `${value}px`;
-                    break;
-                  case "bold":
-                    if (value) elementContainer.style.fontWeight = "bold";
-                    break;
-                  case "italic":
-                    if (value) elementContainer.style.fontStyle = "italic";
-                    break;
-                  case "underline":
-                    if (value)
-                      elementContainer.style.textDecoration = "underline";
-                    break;
-                  case "color":
-                    elementContainer.style.color = value as string;
-                    break;
-                  case "backgroundColor":
-                    elementContainer.style.backgroundColor = value as string;
-                    break;
-                  case "textAlign":
-                    elementContainer.style.textAlign = value as string;
-                    break;
-                  case "lineHeight":
-                    elementContainer.style.lineHeight = value as string;
-                    break;
-                  case "letterSpacing":
-                    elementContainer.style.letterSpacing = `${value}px`;
-                    break;
-                  case "textIndent":
-                    elementContainer.style.textIndent = `${value}px`;
-                    break;
-                  case "paragraphIndent":
-                    elementContainer.style.marginLeft = `${value}px`;
-                    break;
-                  case "listType":
-                    if (value === "bullet") {
-                      elementContainer.style.listStyleType = "disc";
-                      elementContainer.style.listStylePosition = "inside";
-                      elementContainer.style.display = "list-item";
-                      elementContainer.style.paddingLeft = "20px";
-                    } else if (value === "number") {
-                      elementContainer.style.listStyleType = "decimal";
-                      elementContainer.style.listStylePosition = "inside";
-                      elementContainer.style.display = "list-item";
-                      elementContainer.style.paddingLeft = "20px";
-                    }
-                    break;
+                case "fontFamily":
+                  elementContainer.style.fontFamily = value as string;
+                  break;
+                case "fontSize":
+                  elementContainer.style.fontSize = `${value}px`;
+                  break;
+                case "bold":
+                  if (value) elementContainer.style.fontWeight = "bold";
+                  break;
+                case "italic":
+                  if (value) elementContainer.style.fontStyle = "italic";
+                  break;
+                case "underline":
+                  if (value)
+                    elementContainer.style.textDecoration = "underline";
+                  break;
+                case "color":
+                  elementContainer.style.color = value as string;
+                  break;
+                case "backgroundColor":
+                  elementContainer.style.backgroundColor = value as string;
+                  break;
+                case "textAlign":
+                  elementContainer.style.textAlign = value as string;
+                  break;
+                case "lineHeight":
+                  elementContainer.style.lineHeight = value as string;
+                  break;
+                case "letterSpacing":
+                  elementContainer.style.letterSpacing = `${value}px`;
+                  break;
+                case "textIndent":
+                  elementContainer.style.textIndent = `${value}px`;
+                  break;
+                case "paragraphIndent":
+                  elementContainer.style.marginLeft = `${value}px`;
+                  break;
+                case "listType":
+                  if (value === "bullet") {
+                    elementContainer.style.listStyleType = "disc";
+                    elementContainer.style.listStylePosition = "inside";
+                    elementContainer.style.display = "list-item";
+                    elementContainer.style.paddingLeft = "20px";
+                  } else if (value === "number") {
+                    elementContainer.style.listStyleType = "decimal";
+                    elementContainer.style.listStylePosition = "inside";
+                    elementContainer.style.display = "list-item";
+                    elementContainer.style.paddingLeft = "20px";
+                  }
+                  break;
                 }
               }
             });
@@ -450,13 +463,13 @@ async function exportPdf() {
           // Create an SVG element for the shape
           const svg = window.document.createElementNS(
             "http://www.w3.org/2000/svg",
-            "svg"
+            "svg",
           );
           svg.setAttribute("width", "100%");
           svg.setAttribute("height", "100%");
           svg.setAttribute(
             "viewBox",
-            `0 0 ${element.size.width} ${element.size.height}`
+            `0 0 ${element.size.width} ${element.size.height}`,
           );
           svg.style.display = "block";
 
@@ -473,75 +486,75 @@ async function exportPdf() {
           let shapeElement;
 
           switch (shapeType) {
-            case "rectangle":
-              shapeElement = window.document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "rect"
-              );
-              shapeElement.setAttribute("x", "0");
-              shapeElement.setAttribute("y", "0");
-              shapeElement.setAttribute("width", width.toString());
-              shapeElement.setAttribute("height", height.toString());
-              shapeElement.setAttribute(
-                "rx",
-                (element.style?.borderRadius || 0).toString()
-              );
-              break;
+          case "rectangle":
+            shapeElement = window.document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "rect",
+            );
+            shapeElement.setAttribute("x", "0");
+            shapeElement.setAttribute("y", "0");
+            shapeElement.setAttribute("width", width.toString());
+            shapeElement.setAttribute("height", height.toString());
+            shapeElement.setAttribute(
+              "rx",
+              (element.style?.borderRadius || 0).toString(),
+            );
+            break;
 
-            case "circle":
-              shapeElement = window.document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "ellipse"
-              );
-              shapeElement.setAttribute("cx", (width / 2).toString());
-              shapeElement.setAttribute("cy", (height / 2).toString());
-              shapeElement.setAttribute("rx", (width / 2).toString());
-              shapeElement.setAttribute("ry", (height / 2).toString());
-              break;
+          case "circle":
+            shapeElement = window.document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "ellipse",
+            );
+            shapeElement.setAttribute("cx", (width / 2).toString());
+            shapeElement.setAttribute("cy", (height / 2).toString());
+            shapeElement.setAttribute("rx", (width / 2).toString());
+            shapeElement.setAttribute("ry", (height / 2).toString());
+            break;
 
-            case "triangle":
-              shapeElement = window.document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "polygon"
-              );
-              const points = `${width / 2},0 ${width},${height} 0,${height}`;
-              shapeElement.setAttribute("points", points);
-              break;
+          case "triangle":
+            shapeElement = window.document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "polygon",
+            );
+            const points = `${width / 2},0 ${width},${height} 0,${height}`;
+            shapeElement.setAttribute("points", points);
+            break;
 
-            case "line":
-              shapeElement = window.document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "line"
-              );
-              shapeElement.setAttribute("x1", "0");
-              shapeElement.setAttribute("y1", (height / 2).toString());
-              shapeElement.setAttribute("x2", width.toString());
-              shapeElement.setAttribute("y2", (height / 2).toString());
-              break;
+          case "line":
+            shapeElement = window.document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "line",
+            );
+            shapeElement.setAttribute("x1", "0");
+            shapeElement.setAttribute("y1", (height / 2).toString());
+            shapeElement.setAttribute("x2", width.toString());
+            shapeElement.setAttribute("y2", (height / 2).toString());
+            break;
 
-            case "arrow":
-              shapeElement = window.document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "path"
-              );
-              const arrowPath = `M0,${height / 2} L${width - 10},${
-                height / 2
-              } L${width - 15},${height / 4} L${width},${height / 2} L${
-                width - 15
-              },${(3 * height) / 4} L${width - 10},${height / 2}`;
-              shapeElement.setAttribute("d", arrowPath);
-              break;
+          case "arrow":
+            shapeElement = window.document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "path",
+            );
+            const arrowPath = `M0,${height / 2} L${width - 10},${
+              height / 2
+            } L${width - 15},${height / 4} L${width},${height / 2} L${
+              width - 15
+            },${(3 * height) / 4} L${width - 10},${height / 2}`;
+            shapeElement.setAttribute("d", arrowPath);
+            break;
 
-            default:
-              shapeElement = window.document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "rect"
-              );
-              shapeElement.setAttribute("x", "0");
-              shapeElement.setAttribute("y", "0");
-              shapeElement.setAttribute("width", width.toString());
-              shapeElement.setAttribute("height", height.toString());
-              break;
+          default:
+            shapeElement = window.document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "rect",
+            );
+            shapeElement.setAttribute("x", "0");
+            shapeElement.setAttribute("y", "0");
+            shapeElement.setAttribute("width", width.toString());
+            shapeElement.setAttribute("height", height.toString());
+            break;
           }
 
           // Apply styles to the shape
@@ -552,14 +565,14 @@ async function exportPdf() {
           // Apply line style if applicable
           if (shapeType === "line" && element.style?.lineStyle) {
             switch (element.style.lineStyle) {
-              case "dashed":
-                shapeElement.setAttribute("stroke-dasharray", "8,4");
-                break;
-              case "dotted":
-                shapeElement.setAttribute("stroke-dasharray", "2,2");
-                break;
-              default:
-                shapeElement.setAttribute("stroke-dasharray", "none");
+            case "dashed":
+              shapeElement.setAttribute("stroke-dasharray", "8,4");
+              break;
+            case "dotted":
+              shapeElement.setAttribute("stroke-dasharray", "2,2");
+              break;
+            default:
+              shapeElement.setAttribute("stroke-dasharray", "none");
             }
           }
 
@@ -567,11 +580,11 @@ async function exportPdf() {
           if (rotation !== 0) {
             const g = window.document.createElementNS(
               "http://www.w3.org/2000/svg",
-              "g"
+              "g",
             );
             g.setAttribute(
               "transform",
-              `rotate(${rotation} ${width / 2} ${height / 2})`
+              `rotate(${rotation} ${width / 2} ${height / 2})`,
             );
             g.appendChild(shapeElement);
             svg.appendChild(g);
@@ -702,16 +715,16 @@ async function exportPdf() {
     // Check for specific error types
     if (error instanceof TypeError) {
       console.error(
-        "Type error detected. This might be related to missing properties or methods."
+        "Type error detected. This might be related to missing properties or methods.",
       );
     } else if (error instanceof ReferenceError) {
       console.error(
-        "Reference error detected. This might be related to undefined variables."
+        "Reference error detected. This might be related to undefined variables.",
       );
     }
 
-    // Alert with more specific error message
-    alert(errorMessage);
+    // Set error message to be displayed in the UI
+    exportError.value = errorMessage;
   } finally {
     isExporting.value = false;
   }

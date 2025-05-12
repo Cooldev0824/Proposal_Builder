@@ -1,6 +1,6 @@
-import { ref, computed, onBeforeUnmount } from 'vue';
-import type { DocumentElement, Position, Size } from '../types/document';
-import type { CSSProperties } from 'vue';
+import { ref, computed, onBeforeUnmount } from "vue";
+import type { DocumentElement, Position, Size } from "../types/document";
+import type { CSSProperties } from "vue";
 
 /**
  * Composable for handling common element functionality
@@ -13,9 +13,9 @@ export function useElement(
     isPreview?: boolean;
   },
   emit: {
-    (e: 'update:element', element: DocumentElement): void;
-    (e: 'click', element: DocumentElement): void;
-  }
+    (e: "update:element", element: DocumentElement): void;
+    (e: "click", element: DocumentElement): void;
+  },
 ) {
   // Element state
   const isDragging = ref(false);
@@ -35,10 +35,10 @@ export function useElement(
       top: `${position.y}px`,
       width: `${size.width}px`,
       height: `${size.height}px`,
-      position: 'absolute' as const,
+      position: "absolute" as const,
       zIndex: zIndex || 0,
       transform: rotation ? `rotate(${rotation}deg)` : undefined,
-      transformOrigin: rotation ? 'center center' : undefined,
+      transformOrigin: rotation ? "center center" : undefined,
     };
   });
 
@@ -51,7 +51,7 @@ export function useElement(
     if (props.isPreview) return;
 
     // Emit click event to select this element
-    emit('click', props.element);
+    emit("click", props.element);
   }
 
   // Drag functionality
@@ -65,8 +65,8 @@ export function useElement(
     startLeft.value = props.element.position.x;
     startTop.value = props.element.position.y;
 
-    document.addEventListener('mousemove', onDrag);
-    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener("mousemove", onDrag);
+    document.addEventListener("mouseup", stopDrag);
   }
 
   function onDrag(event: MouseEvent) {
@@ -89,13 +89,13 @@ export function useElement(
       },
     };
 
-    emit('update:element', updatedElement);
+    emit("update:element", updatedElement);
   }
 
   function stopDrag() {
     isDragging.value = false;
-    document.removeEventListener('mousemove', onDrag);
-    document.removeEventListener('mouseup', stopDrag);
+    document.removeEventListener("mousemove", onDrag);
+    document.removeEventListener("mouseup", stopDrag);
   }
 
   // Handle resize
@@ -106,7 +106,7 @@ export function useElement(
       size: newSize,
     };
 
-    emit('update:element', updatedElement);
+    emit("update:element", updatedElement);
   }
 
   // Rotation functionality
@@ -116,7 +116,7 @@ export function useElement(
   function startRotate(event: MouseEvent) {
     isRotating.value = true;
     const rect = (event.target as HTMLElement)
-      .closest('.element')
+      .closest(".element")
       ?.getBoundingClientRect();
     if (!rect) return;
 
@@ -124,15 +124,15 @@ export function useElement(
     const centerY = rect.top + rect.height / 2;
     startAngle.value = Math.atan2(event.clientY - centerY, event.clientX - centerX);
 
-    document.addEventListener('mousemove', onRotate);
-    document.addEventListener('mouseup', stopRotate);
+    document.addEventListener("mousemove", onRotate);
+    document.addEventListener("mouseup", stopRotate);
   }
 
   function onRotate(event: MouseEvent) {
     if (!isRotating.value) return;
 
     const rect = (event.target as HTMLElement)
-      .closest('.element')
+      .closest(".element")
       ?.getBoundingClientRect();
     if (!rect) return;
 
@@ -154,13 +154,13 @@ export function useElement(
       },
     };
 
-    emit('update:element', updatedElement);
+    emit("update:element", updatedElement);
   }
 
   function stopRotate() {
     isRotating.value = false;
-    document.removeEventListener('mousemove', onRotate);
-    document.removeEventListener('mouseup', stopRotate);
+    document.removeEventListener("mousemove", onRotate);
+    document.removeEventListener("mouseup", stopRotate);
   }
 
   // Clean up event listeners

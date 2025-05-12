@@ -22,8 +22,8 @@
             class="toolbar-btn"
             :class="{ disabled: isBottomLayer }"
             :disabled="isBottomLayer"
-            @click.stop="$emit('move-to-bottom', element)"
             aria-label="Send to Back"
+            @click.stop="$emit('move-to-bottom', element)"
           >
             <v-icon>mdi-arrow-collapse-down</v-icon>
           </button>
@@ -38,8 +38,8 @@
             class="toolbar-btn"
             :class="{ disabled: isBottomLayer }"
             :disabled="isBottomLayer"
-            @click.stop="$emit('move-down', element)"
             aria-label="Move Down"
+            @click.stop="$emit('move-down', element)"
           >
             <v-icon>mdi-arrow-down</v-icon>
           </button>
@@ -54,8 +54,8 @@
             class="toolbar-btn"
             :class="{ disabled: isTopLayer }"
             :disabled="isTopLayer"
-            @click.stop="$emit('move-up', element)"
             aria-label="Move Up"
+            @click.stop="$emit('move-up', element)"
           >
             <v-icon>mdi-arrow-up</v-icon>
           </button>
@@ -70,8 +70,8 @@
             class="toolbar-btn"
             :class="{ disabled: isTopLayer }"
             :disabled="isTopLayer"
-            @click.stop="$emit('move-to-top', element)"
             aria-label="Bring to Front"
+            @click.stop="$emit('move-to-top', element)"
           >
             <v-icon>mdi-arrow-collapse-up</v-icon>
           </button>
@@ -132,7 +132,7 @@ defineEmits<{
  * Determines if the element is at the top of the layer stack
  */
 const isTopLayer = computed(
-  (): boolean => props.layerIndex === props.totalLayers - 1
+  (): boolean => props.layerIndex === props.totalLayers - 1,
 );
 
 /**
@@ -152,7 +152,7 @@ const toolbarStyle = computed((): CSSProperties => {
   // Calculate left position to center the toolbar
   const left = Math.max(
     0,
-    props.elementPosition.left + (props.elementPosition.width - width) / 2
+    props.elementPosition.left + (props.elementPosition.width - width) / 2,
   );
 
   // Calculate top position, ensuring it's not negative

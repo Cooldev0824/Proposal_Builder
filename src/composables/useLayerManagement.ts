@@ -1,16 +1,16 @@
-import { computed } from 'vue';
-import type { DocumentElement } from '../types/document';
+import { computed } from "vue";
+import type { DocumentElement } from "../types/document";
 
 /**
  * Composable for managing element layers (z-index)
  * Provides functions for sorting elements by z-index and moving elements up/down in the stack
  */
 export function useLayerManagement(
-  elements: DocumentElement[] | (() => DocumentElement[])
+  elements: DocumentElement[] | (() => DocumentElement[]),
 ) {
   // Get elements array from function or direct array
   const getElements = (): DocumentElement[] => {
-    return typeof elements === 'function' ? elements() : elements;
+    return typeof elements === "function" ? elements() : elements;
   };
 
   // Sort elements by z-index for proper layering
@@ -29,7 +29,7 @@ export function useLayerManagement(
 
   // Get the index of an element in the sorted array
   const getElementIndex = (element: DocumentElement): number => {
-    return sortedElements.value.findIndex(e => e.id === element.id);
+    return sortedElements.value.findIndex((e) => e.id === element.id);
   };
 
   // Check if element is at the top of the stack
@@ -58,7 +58,7 @@ export function useLayerManagement(
     // Swap z-indices
     const updatedElement = {
       ...element,
-      zIndex: aboveElement.zIndex ?? 0
+      zIndex: aboveElement.zIndex ?? 0,
     };
     
     // If the above element has the same z-index, increment this element's z-index
@@ -82,7 +82,7 @@ export function useLayerManagement(
     // Swap z-indices
     const updatedElement = {
       ...element,
-      zIndex: belowElement.zIndex ?? 0
+      zIndex: belowElement.zIndex ?? 0,
     };
     
     // If the below element has the same z-index, decrement this element's z-index
@@ -100,13 +100,13 @@ export function useLayerManagement(
     // Find the highest z-index
     const highestZIndex = elementsArray.reduce(
       (max, el) => Math.max(max, el.zIndex ?? 0),
-      0
+      0,
     );
     
     // Set this element's z-index to one higher than the highest
     return {
       ...element,
-      zIndex: highestZIndex + 1
+      zIndex: highestZIndex + 1,
     };
   };
 
@@ -117,13 +117,13 @@ export function useLayerManagement(
     // Find the lowest z-index
     const lowestZIndex = elementsArray.reduce(
       (min, el) => Math.min(min, el.zIndex ?? 0),
-      0
+      0,
     );
     
     // Set this element's z-index to one lower than the lowest
     return {
       ...element,
-      zIndex: lowestZIndex - 1
+      zIndex: lowestZIndex - 1,
     };
   };
 
@@ -135,6 +135,6 @@ export function useLayerManagement(
     moveElementUp,
     moveElementDown,
     moveElementToTop,
-    moveElementToBottom
+    moveElementToBottom,
   };
 }

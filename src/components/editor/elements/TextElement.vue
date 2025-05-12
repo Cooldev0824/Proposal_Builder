@@ -7,7 +7,10 @@
   >
     <div
       class="element-content"
+      ref="contentElement"
       contenteditable="true"
+      :style="textStyle"
+      :data-element-id="props.element.id"
       @input="handleTextChange"
       @keydown="handleKeyDown"
       @focus="handleFocus"
@@ -15,9 +18,6 @@
       @mousedown="handleMouseDown"
       @mouseup="handleMouseUp"
       @keyup="handleKeyUp"
-      :style="textStyle"
-      ref="contentElement"
-      :data-element-id="props.element.id"
     ></div>
     <ResizeHandles
       v-if="isSelected"
@@ -162,7 +162,7 @@ watch(
       }
     }
   },
-  { deep: true, immediate: true }
+  { deep: true, immediate: true },
 );
 
 // Watch for content changes from outside this component
@@ -191,7 +191,7 @@ watch(
       // Re-enable the observer
       setupMutationObserver();
     }
-  }
+  },
 );
 
 // No longer needed - using direct text selection utility instead
@@ -247,7 +247,7 @@ function getNodePath(node: Node): number[] | null {
     if (!parentNode) return null;
 
     const index = Array.from(parentNode.childNodes).indexOf(
-      currentNode as ChildNode
+      currentNode as ChildNode,
     );
     if (index === -1) return null;
 
@@ -369,7 +369,7 @@ function handleTextChange(_event: Event): void {
           const walker = document.createTreeWalker(
             contentElement.value,
             NodeFilter.SHOW_TEXT,
-            null
+            null,
           );
 
           let node: Node | null;
@@ -445,54 +445,54 @@ function handleKeyDown(event: KeyboardEvent): void {
     const selection = window.getSelection();
 
     switch (event.key.toLowerCase()) {
-      case "b": // Bold
-        event.preventDefault();
-        // Apply bold to selected text if there's a selection
-        if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
-          applyStyleToSelectedText("bold", true);
-        } else {
-          // Otherwise toggle bold for the whole element
-          emit("update:element", {
-            ...props.element,
-            style: {
-              ...props.element.style,
-              bold: !props.element.style.bold,
-            },
-          });
-        }
-        return;
-      case "i": // Italic
-        event.preventDefault();
-        // Apply italic to selected text if there's a selection
-        if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
-          applyStyleToSelectedText("italic", true);
-        } else {
-          // Otherwise toggle italic for the whole element
-          emit("update:element", {
-            ...props.element,
-            style: {
-              ...props.element.style,
-              italic: !props.element.style.italic,
-            },
-          });
-        }
-        return;
-      case "u": // Underline
-        event.preventDefault();
-        // Apply underline to selected text if there's a selection
-        if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
-          applyStyleToSelectedText("underline", true);
-        } else {
-          // Otherwise toggle underline for the whole element
-          emit("update:element", {
-            ...props.element,
-            style: {
-              ...props.element.style,
-              underline: !props.element.style.underline,
-            },
-          });
-        }
-        return;
+    case "b": // Bold
+      event.preventDefault();
+      // Apply bold to selected text if there's a selection
+      if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
+        applyStyleToSelectedText("bold", true);
+      } else {
+        // Otherwise toggle bold for the whole element
+        emit("update:element", {
+          ...props.element,
+          style: {
+            ...props.element.style,
+            bold: !props.element.style.bold,
+          },
+        });
+      }
+      return;
+    case "i": // Italic
+      event.preventDefault();
+      // Apply italic to selected text if there's a selection
+      if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
+        applyStyleToSelectedText("italic", true);
+      } else {
+        // Otherwise toggle italic for the whole element
+        emit("update:element", {
+          ...props.element,
+          style: {
+            ...props.element.style,
+            italic: !props.element.style.italic,
+          },
+        });
+      }
+      return;
+    case "u": // Underline
+      event.preventDefault();
+      // Apply underline to selected text if there's a selection
+      if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
+        applyStyleToSelectedText("underline", true);
+      } else {
+        // Otherwise toggle underline for the whole element
+        emit("update:element", {
+          ...props.element,
+          style: {
+            ...props.element.style,
+            underline: !props.element.style.underline,
+          },
+        });
+      }
+      return;
     }
   }
 
@@ -698,7 +698,7 @@ function handleMouseDown() {
 // Apply style to selected text
 function applyStyleToSelectedText(
   styleProperty: string,
-  value: string | boolean
+  value: string | boolean,
 ): boolean {
   // Applying style to selected text
 
@@ -734,171 +734,171 @@ function applyStyleToSelectedText(
   let value2: string | boolean = value;
 
   switch (styleProperty) {
-    case "bold":
-      command = "bold";
+  case "bold":
+    command = "bold";
+    break;
+  case "italic":
+    command = "italic";
+    break;
+  case "underline":
+    command = "underline";
+    break;
+  case "fontName":
+    command = "fontName";
+    break;
+  case "fontSize":
+    // Special handling for font size
+    // Create a span with the specified font size
+    const fontSizeSpan = document.createElement("span");
+    fontSizeSpan.style.fontSize = value + "px";
+
+    // Extract the selected content
+    const fontSizeFragment = range.extractContents();
+    fontSizeSpan.appendChild(fontSizeFragment);
+
+    // Insert the styled span
+    range.insertNode(fontSizeSpan);
+
+    // Update selection to include the new span
+    selection.removeAllRanges();
+    const fontSizeRange = document.createRange();
+    fontSizeRange.selectNodeContents(fontSizeSpan);
+    selection.addRange(fontSizeRange);
+
+    // Update the element content
+    const fontSizeUpdatedElement = {
+      ...props.element,
+      content: contentElement.value.innerHTML,
+    };
+
+    emit("update:element", fontSizeUpdatedElement);
+    return true;
+  case "heading":
+    // Special handling for headings
+
+    // Create the appropriate heading element
+    const headingLevel = parseInt(value as string, 10);
+    if (isNaN(headingLevel) || headingLevel < 1 || headingLevel > 6) {
+      return false;
+    }
+
+    // Create the heading element (h1, h2, etc.)
+    const headingTag = `h${headingLevel}`;
+    const headingElement = document.createElement(headingTag);
+
+    // Set appropriate styles based on heading level
+    switch (headingLevel) {
+    case 1: // H1
+      headingElement.style.fontSize = "32px";
+      headingElement.style.fontWeight = "bold";
+      headingElement.style.marginBottom = "16px";
+      headingElement.style.marginTop = "16px";
+      headingElement.style.color = "#333";
+      headingElement.style.lineHeight = "1.2";
       break;
-    case "italic":
-      command = "italic";
+    case 2: // H2
+      headingElement.style.fontSize = "28px";
+      headingElement.style.fontWeight = "bold";
+      headingElement.style.marginBottom = "14px";
+      headingElement.style.marginTop = "14px";
+      headingElement.style.color = "#444";
+      headingElement.style.lineHeight = "1.2";
       break;
-    case "underline":
-      command = "underline";
+    case 3: // H3
+      headingElement.style.fontSize = "24px";
+      headingElement.style.fontWeight = "bold";
+      headingElement.style.marginBottom = "12px";
+      headingElement.style.marginTop = "12px";
+      headingElement.style.color = "#555";
+      headingElement.style.lineHeight = "1.3";
       break;
-    case "fontName":
-      command = "fontName";
+    case 4: // H4
+      headingElement.style.fontSize = "20px";
+      headingElement.style.fontWeight = "bold";
+      headingElement.style.marginBottom = "10px";
+      headingElement.style.marginTop = "10px";
+      headingElement.style.color = "#666";
+      headingElement.style.lineHeight = "1.3";
       break;
-    case "fontSize":
-      // Special handling for font size
-      // Create a span with the specified font size
-      const fontSizeSpan = document.createElement("span");
-      fontSizeSpan.style.fontSize = value + "px";
-
-      // Extract the selected content
-      const fontSizeFragment = range.extractContents();
-      fontSizeSpan.appendChild(fontSizeFragment);
-
-      // Insert the styled span
-      range.insertNode(fontSizeSpan);
-
-      // Update selection to include the new span
-      selection.removeAllRanges();
-      const fontSizeRange = document.createRange();
-      fontSizeRange.selectNodeContents(fontSizeSpan);
-      selection.addRange(fontSizeRange);
-
-      // Update the element content
-      const fontSizeUpdatedElement = {
-        ...props.element,
-        content: contentElement.value.innerHTML,
-      };
-
-      emit("update:element", fontSizeUpdatedElement);
-      return true;
-    case "heading":
-      // Special handling for headings
-
-      // Create the appropriate heading element
-      const headingLevel = parseInt(value as string);
-      if (isNaN(headingLevel) || headingLevel < 1 || headingLevel > 6) {
-        return false;
-      }
-
-      // Create the heading element (h1, h2, etc.)
-      const headingTag = `h${headingLevel}`;
-      const headingElement = document.createElement(headingTag);
-
-      // Set appropriate styles based on heading level
-      switch (headingLevel) {
-        case 1: // H1
-          headingElement.style.fontSize = "32px";
-          headingElement.style.fontWeight = "bold";
-          headingElement.style.marginBottom = "16px";
-          headingElement.style.marginTop = "16px";
-          headingElement.style.color = "#333";
-          headingElement.style.lineHeight = "1.2";
-          break;
-        case 2: // H2
-          headingElement.style.fontSize = "28px";
-          headingElement.style.fontWeight = "bold";
-          headingElement.style.marginBottom = "14px";
-          headingElement.style.marginTop = "14px";
-          headingElement.style.color = "#444";
-          headingElement.style.lineHeight = "1.2";
-          break;
-        case 3: // H3
-          headingElement.style.fontSize = "24px";
-          headingElement.style.fontWeight = "bold";
-          headingElement.style.marginBottom = "12px";
-          headingElement.style.marginTop = "12px";
-          headingElement.style.color = "#555";
-          headingElement.style.lineHeight = "1.3";
-          break;
-        case 4: // H4
-          headingElement.style.fontSize = "20px";
-          headingElement.style.fontWeight = "bold";
-          headingElement.style.marginBottom = "10px";
-          headingElement.style.marginTop = "10px";
-          headingElement.style.color = "#666";
-          headingElement.style.lineHeight = "1.3";
-          break;
-        case 5: // H5
-          headingElement.style.fontSize = "18px";
-          headingElement.style.fontWeight = "bold";
-          headingElement.style.marginBottom = "8px";
-          headingElement.style.marginTop = "8px";
-          headingElement.style.color = "#777";
-          headingElement.style.lineHeight = "1.4";
-          break;
-        case 6: // H6
-          headingElement.style.fontSize = "16px";
-          headingElement.style.fontWeight = "bold";
-          headingElement.style.marginBottom = "6px";
-          headingElement.style.marginTop = "6px";
-          headingElement.style.color = "#888";
-          headingElement.style.lineHeight = "1.4";
-          break;
-      }
-
-      // Extract the selected content
-      const headingFragment = range.extractContents();
-      headingElement.appendChild(headingFragment);
-
-      // Insert the heading element
-      range.insertNode(headingElement);
-
-      // Update selection to include the new heading
-      selection.removeAllRanges();
-      const headingRange = document.createRange();
-      headingRange.selectNodeContents(headingElement);
-      selection.addRange(headingRange);
-
-      // Update the element content
-      const headingUpdatedElement = {
-        ...props.element,
-        content: contentElement.value.innerHTML,
-      };
-
-      emit("update:element", headingUpdatedElement);
-      return true;
-    case "foreColor":
-      command = "foreColor";
+    case 5: // H5
+      headingElement.style.fontSize = "18px";
+      headingElement.style.fontWeight = "bold";
+      headingElement.style.marginBottom = "8px";
+      headingElement.style.marginTop = "8px";
+      headingElement.style.color = "#777";
+      headingElement.style.lineHeight = "1.4";
       break;
-    case "backColor":
-      command = "backColor";
+    case 6: // H6
+      headingElement.style.fontSize = "16px";
+      headingElement.style.fontWeight = "bold";
+      headingElement.style.marginBottom = "6px";
+      headingElement.style.marginTop = "6px";
+      headingElement.style.color = "#888";
+      headingElement.style.lineHeight = "1.4";
       break;
-    case "justifyLeft":
-    case "justifyCenter":
-    case "justifyRight":
-    case "justifyFull":
-      command = styleProperty;
-      value2 = ""; // Use empty string instead of null
-      break;
-    default:
-      // Using custom span for style
-      // For unsupported commands, wrap in a span with inline style
-      const span = document.createElement("span");
-      span.style.setProperty(styleProperty, value as string);
+    }
 
-      // Extract the selected content
-      const fragment = range.extractContents();
-      span.appendChild(fragment);
+    // Extract the selected content
+    const headingFragment = range.extractContents();
+    headingElement.appendChild(headingFragment);
 
-      // Insert the styled span
-      range.insertNode(span);
+    // Insert the heading element
+    range.insertNode(headingElement);
 
-      // Update selection to include the new span
-      selection.removeAllRanges();
-      const newRange = document.createRange();
-      newRange.selectNodeContents(span);
-      selection.addRange(newRange);
+    // Update selection to include the new heading
+    selection.removeAllRanges();
+    const headingRange = document.createRange();
+    headingRange.selectNodeContents(headingElement);
+    selection.addRange(headingRange);
 
-      // Update the element content
-      const updatedElement = {
-        ...props.element,
-        content: contentElement.value.innerHTML,
-      };
+    // Update the element content
+    const headingUpdatedElement = {
+      ...props.element,
+      content: contentElement.value.innerHTML,
+    };
 
-      emit("update:element", updatedElement);
-      return true;
+    emit("update:element", headingUpdatedElement);
+    return true;
+  case "foreColor":
+    command = "foreColor";
+    break;
+  case "backColor":
+    command = "backColor";
+    break;
+  case "justifyLeft":
+  case "justifyCenter":
+  case "justifyRight":
+  case "justifyFull":
+    command = styleProperty;
+    value2 = ""; // Use empty string instead of null
+    break;
+  default:
+    // Using custom span for style
+    // For unsupported commands, wrap in a span with inline style
+    const span = document.createElement("span");
+    span.style.setProperty(styleProperty, value as string);
+
+    // Extract the selected content
+    const fragment = range.extractContents();
+    span.appendChild(fragment);
+
+    // Insert the styled span
+    range.insertNode(span);
+
+    // Update selection to include the new span
+    selection.removeAllRanges();
+    const newRange = document.createRange();
+    newRange.selectNodeContents(span);
+    selection.addRange(newRange);
+
+    // Update the element content
+    const updatedElement = {
+      ...props.element,
+      content: contentElement.value.innerHTML,
+    };
+
+    emit("update:element", updatedElement);
+    return true;
   }
 
   // For supported commands, use execCommand
@@ -917,7 +917,7 @@ function applyStyleToSelectedText(
       return true;
     } catch (error) {
       console.warn(
-        "execCommand is deprecated, consider using a modern alternative"
+        "execCommand is deprecated, consider using a modern alternative",
       );
       return false;
     }
@@ -996,7 +996,7 @@ function setupMutationObserver() {
     // If the content changed, update the element
     const contentChanged = mutations.some(
       (mutation) =>
-        mutation.type === "childList" || mutation.type === "characterData"
+        mutation.type === "childList" || mutation.type === "characterData",
     );
 
     if (contentChanged) {

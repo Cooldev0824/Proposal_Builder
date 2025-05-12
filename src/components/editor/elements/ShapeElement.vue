@@ -71,7 +71,7 @@ const rotation = computed(() => props.element.style?.rotation || 0);
 // SVG dimensions including padding for rotation
 const svgSize = computed(() => {
   const diagonal = Math.sqrt(
-    width.value * width.value + height.value * height.value
+    width.value * width.value + height.value * height.value,
   );
   return {
     width: diagonal,
@@ -111,14 +111,14 @@ const shapeStyle = computed(() => {
 
   if (props.element.content === "line" && style.lineStyle) {
     switch (style.lineStyle) {
-      case "dashed":
-        strokeDasharray = "8,4";
-        break;
-      case "dotted":
-        strokeDasharray = "2,2";
-        break;
-      default:
-        strokeDasharray = "none";
+    case "dashed":
+      strokeDasharray = "8,4";
+      break;
+    case "dotted":
+      strokeDasharray = "2,2";
+      break;
+    default:
+      strokeDasharray = "none";
     }
   }
 
@@ -140,59 +140,59 @@ function getShapeComponent() {
   const shapeType = props.element.content;
 
   switch (shapeType) {
-    case "rectangle":
-      return h("rect", {
-        x: 0,
-        y: 0,
-        width: width.value,
-        height: height.value,
-        rx: props.element.style?.borderRadius || 0,
-        ...shapeStyle.value,
-      });
-    case "circle":
-      return h("ellipse", {
-        cx: width.value / 2,
-        cy: height.value / 2,
-        rx: width.value / 2,
-        ry: height.value / 2,
-        ...shapeStyle.value,
-      });
-    case "triangle":
-      const points = `${width.value / 2},0 ${width.value},${height.value} 0,${
-        height.value
-      }`;
-      return h("polygon", {
-        points,
-        ...shapeStyle.value,
-      });
-    case "line":
-      return h("line", {
-        x1: 0,
-        y1: height.value / 2,
-        x2: width.value,
-        y2: height.value / 2,
-        ...shapeStyle.value,
-      });
-    case "arrow":
-      const arrowPath = `M0,${height.value / 2} L${width.value - 10},${
-        height.value / 2
-      } L${width.value - 15},${height.value / 4} L${width.value},${
-        height.value / 2
-      } L${width.value - 15},${(3 * height.value) / 4} L${width.value - 10},${
-        height.value / 2
-      }`;
-      return h("path", {
-        d: arrowPath,
-        ...shapeStyle.value,
-      });
-    default:
-      return h("rect", {
-        x: 0,
-        y: 0,
-        width: width.value,
-        height: height.value,
-        ...shapeStyle.value,
-      });
+  case "rectangle":
+    return h("rect", {
+      x: 0,
+      y: 0,
+      width: width.value,
+      height: height.value,
+      rx: props.element.style?.borderRadius || 0,
+      ...shapeStyle.value,
+    });
+  case "circle":
+    return h("ellipse", {
+      cx: width.value / 2,
+      cy: height.value / 2,
+      rx: width.value / 2,
+      ry: height.value / 2,
+      ...shapeStyle.value,
+    });
+  case "triangle":
+    const points = `${width.value / 2},0 ${width.value},${height.value} 0,${
+      height.value
+    }`;
+    return h("polygon", {
+      points,
+      ...shapeStyle.value,
+    });
+  case "line":
+    return h("line", {
+      x1: 0,
+      y1: height.value / 2,
+      x2: width.value,
+      y2: height.value / 2,
+      ...shapeStyle.value,
+    });
+  case "arrow":
+    const arrowPath = `M0,${height.value / 2} L${width.value - 10},${
+      height.value / 2
+    } L${width.value - 15},${height.value / 4} L${width.value},${
+      height.value / 2
+    } L${width.value - 15},${(3 * height.value) / 4} L${width.value - 10},${
+      height.value / 2
+    }`;
+    return h("path", {
+      d: arrowPath,
+      ...shapeStyle.value,
+    });
+  default:
+    return h("rect", {
+      x: 0,
+      y: 0,
+      width: width.value,
+      height: height.value,
+      ...shapeStyle.value,
+    });
   }
 }
 

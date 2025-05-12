@@ -1,46 +1,46 @@
 <template>
-  <div class="inline-formatting-toolbar" v-if="visible" :style="toolbarStyle">
+  <div v-if="visible" class="inline-formatting-toolbar" :style="toolbarStyle">
     <div class="toolbar-buttons">
       <button 
         class="format-button" 
         :class="{ active: isBold }"
-        @mousedown.prevent="applyBold"
         title="Bold"
+        @mousedown.prevent="applyBold"
       >
         <v-icon>mdi-format-bold</v-icon>
       </button>
       <button 
         class="format-button" 
         :class="{ active: isItalic }"
-        @mousedown.prevent="applyItalic"
         title="Italic"
+        @mousedown.prevent="applyItalic"
       >
         <v-icon>mdi-format-italic</v-icon>
       </button>
       <button 
         class="format-button" 
         :class="{ active: isUnderline }"
-        @mousedown.prevent="applyUnderline"
         title="Underline"
+        @mousedown.prevent="applyUnderline"
       >
         <v-icon>mdi-format-underline</v-icon>
       </button>
       <div class="divider"></div>
       <div class="color-picker">
         <input 
-          type="color" 
           v-model="textColor" 
-          @change="applyTextColor"
+          type="color" 
           title="Text Color"
+          @change="applyTextColor"
         />
         <v-icon small>mdi-format-color-text</v-icon>
       </div>
       <div class="color-picker">
         <input 
-          type="color" 
           v-model="backgroundColor" 
-          @change="applyBackgroundColor"
+          type="color" 
           title="Background Color"
+          @change="applyBackgroundColor"
         />
         <v-icon small>mdi-format-color-highlight</v-icon>
       </div>
@@ -49,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { 
   toggleBold, 
   toggleItalic, 
@@ -60,16 +60,16 @@ import {
   hasItalic,
   hasUnderline,
   getTextColor,
-  getBackgroundColor
-} from '../../utils/textFormatting';
+  getBackgroundColor,
+} from "../../utils/textFormatting";
 
 const visible = ref(false);
 const position = ref({ x: 0, y: 0 });
 const isBold = ref(false);
 const isItalic = ref(false);
 const isUnderline = ref(false);
-const textColor = ref('#000000');
-const backgroundColor = ref('#ffffff');
+const textColor = ref("#000000");
+const backgroundColor = ref("#ffffff");
 
 const toolbarStyle = computed(() => {
   return {
@@ -84,12 +84,12 @@ function updateFormattingState() {
   isUnderline.value = hasUnderline();
   
   const currentTextColor = getTextColor();
-  if (currentTextColor && currentTextColor !== 'rgb(0, 0, 0)') {
+  if (currentTextColor && currentTextColor !== "rgb(0, 0, 0)") {
     textColor.value = rgbToHex(currentTextColor);
   }
   
   const currentBgColor = getBackgroundColor();
-  if (currentBgColor && currentBgColor !== 'rgba(0, 0, 0, 0)') {
+  if (currentBgColor && currentBgColor !== "rgba(0, 0, 0, 0)") {
     backgroundColor.value = rgbToHex(currentBgColor);
   }
 }
@@ -98,9 +98,9 @@ function rgbToHex(rgb: string): string {
   // Convert rgb(r, g, b) to #rrggbb
   const match = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
   if (match) {
-    const r = parseInt(match[1], 10).toString(16).padStart(2, '0');
-    const g = parseInt(match[2], 10).toString(16).padStart(2, '0');
-    const b = parseInt(match[3], 10).toString(16).padStart(2, '0');
+    const r = parseInt(match[1], 10).toString(16).padStart(2, "0");
+    const g = parseInt(match[2], 10).toString(16).padStart(2, "0");
+    const b = parseInt(match[3], 10).toString(16).padStart(2, "0");
     return `#${r}${g}${b}`;
   }
   return rgb;
@@ -145,7 +145,7 @@ function handleSelectionChange() {
   
   position.value = {
     x: rect.left + window.scrollX + (rect.width / 2) - 100, // Center the toolbar
-    y: rect.top + window.scrollY - 50 // Position above the selection
+    y: rect.top + window.scrollY - 50, // Position above the selection
   };
   
   // Update the formatting state
@@ -154,13 +154,13 @@ function handleSelectionChange() {
 
 // Set up event listeners
 onMounted(() => {
-  document.addEventListener('selectionchange', handleSelectionChange);
-  document.addEventListener('mouseup', handleSelectionChange);
+  document.addEventListener("selectionchange", handleSelectionChange);
+  document.addEventListener("mouseup", handleSelectionChange);
 });
 
 onBeforeUnmount(() => {
-  document.removeEventListener('selectionchange', handleSelectionChange);
-  document.removeEventListener('mouseup', handleSelectionChange);
+  document.removeEventListener("selectionchange", handleSelectionChange);
+  document.removeEventListener("mouseup", handleSelectionChange);
 });
 </script>
 

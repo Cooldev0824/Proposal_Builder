@@ -40,12 +40,12 @@
 
 <script setup lang="ts">
 
-import { Size, Position } from '../../types/document';
+import { Size, Position } from "../../types/document";
 
 // Import styles
-import '../../assets/styles/components/elements.scss';
+import "../../assets/styles/components/elements.scss";
 
-type ResizeDirection = 'top-left' | 'top' | 'top-right' | 'right' | 'bottom-right' | 'bottom' | 'bottom-left' | 'left';
+type ResizeDirection = "top-left" | "top" | "top-right" | "right" | "bottom-right" | "bottom" | "bottom-left" | "left";
 
 const props = defineProps<{
   elementSize: Size;
@@ -57,7 +57,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'resize', newSize: Size, newPosition: Position): void;
+  (e: "resize", newSize: Size, newPosition: Position): void;
 }>();
 
 // Default values
@@ -85,8 +85,8 @@ function startResize(direction: ResizeDirection, event: MouseEvent) {
   startLeft = props.elementPosition.x;
   startTop = props.elementPosition.y;
 
-  document.addEventListener('mousemove', onResize);
-  document.addEventListener('mouseup', stopResize);
+  document.addEventListener("mousemove", onResize);
+  document.addEventListener("mouseup", stopResize);
 }
 
 function onResize(event: MouseEvent) {
@@ -102,40 +102,40 @@ function onResize(event: MouseEvent) {
 
   // Handle resize based on direction
   switch (resizeDirection) {
-    case 'top-left':
-      newWidth = Math.max(minWidth, startWidth - deltaX);
-      newHeight = Math.max(minHeight, startHeight - deltaY);
-      newLeft = startLeft + startWidth - newWidth;
-      newTop = startTop + startHeight - newHeight;
-      break;
-    case 'top':
-      newHeight = Math.max(minHeight, startHeight - deltaY);
-      newTop = startTop + startHeight - newHeight;
-      break;
-    case 'top-right':
-      newWidth = Math.max(minWidth, startWidth + deltaX);
-      newHeight = Math.max(minHeight, startHeight - deltaY);
-      newTop = startTop + startHeight - newHeight;
-      break;
-    case 'right':
-      newWidth = Math.max(minWidth, startWidth + deltaX);
-      break;
-    case 'bottom-right':
-      newWidth = Math.max(minWidth, startWidth + deltaX);
-      newHeight = Math.max(minHeight, startHeight + deltaY);
-      break;
-    case 'bottom':
-      newHeight = Math.max(minHeight, startHeight + deltaY);
-      break;
-    case 'bottom-left':
-      newWidth = Math.max(minWidth, startWidth - deltaX);
-      newHeight = Math.max(minHeight, startHeight + deltaY);
-      newLeft = startLeft + startWidth - newWidth;
-      break;
-    case 'left':
-      newWidth = Math.max(minWidth, startWidth - deltaX);
-      newLeft = startLeft + startWidth - newWidth;
-      break;
+  case "top-left":
+    newWidth = Math.max(minWidth, startWidth - deltaX);
+    newHeight = Math.max(minHeight, startHeight - deltaY);
+    newLeft = startLeft + startWidth - newWidth;
+    newTop = startTop + startHeight - newHeight;
+    break;
+  case "top":
+    newHeight = Math.max(minHeight, startHeight - deltaY);
+    newTop = startTop + startHeight - newHeight;
+    break;
+  case "top-right":
+    newWidth = Math.max(minWidth, startWidth + deltaX);
+    newHeight = Math.max(minHeight, startHeight - deltaY);
+    newTop = startTop + startHeight - newHeight;
+    break;
+  case "right":
+    newWidth = Math.max(minWidth, startWidth + deltaX);
+    break;
+  case "bottom-right":
+    newWidth = Math.max(minWidth, startWidth + deltaX);
+    newHeight = Math.max(minHeight, startHeight + deltaY);
+    break;
+  case "bottom":
+    newHeight = Math.max(minHeight, startHeight + deltaY);
+    break;
+  case "bottom-left":
+    newWidth = Math.max(minWidth, startWidth - deltaX);
+    newHeight = Math.max(minHeight, startHeight + deltaY);
+    newLeft = startLeft + startWidth - newWidth;
+    break;
+  case "left":
+    newWidth = Math.max(minWidth, startWidth - deltaX);
+    newLeft = startLeft + startWidth - newWidth;
+    break;
   }
 
   // Apply aspect ratio constraint if needed
@@ -143,10 +143,10 @@ function onResize(event: MouseEvent) {
     const ratio = props.aspectRatio;
 
     // Determine which dimension to adjust based on resize direction
-    if (['left', 'right'].includes(resizeDirection)) {
+    if (["left", "right"].includes(resizeDirection)) {
       // Adjusting width, calculate height based on aspect ratio
       newHeight = newWidth / ratio;
-    } else if (['top', 'bottom'].includes(resizeDirection)) {
+    } else if (["top", "bottom"].includes(resizeDirection)) {
       // Adjusting height, calculate width based on aspect ratio
       newWidth = newHeight * ratio;
     } else {
@@ -161,10 +161,10 @@ function onResize(event: MouseEvent) {
       }
 
       // Adjust position for top and left edges
-      if (['top-left', 'top-right'].includes(resizeDirection)) {
+      if (["top-left", "top-right"].includes(resizeDirection)) {
         newTop = startTop + startHeight - newHeight;
       }
-      if (['top-left', 'bottom-left'].includes(resizeDirection)) {
+      if (["top-left", "bottom-left"].includes(resizeDirection)) {
         newLeft = startLeft + startWidth - newWidth;
       }
     }
@@ -177,15 +177,14 @@ function onResize(event: MouseEvent) {
   newTop = Math.round(newTop / gridSize) * gridSize;
 
   // Emit resize event with new size and position
-  emit('resize', { width: newWidth, height: newHeight }, { x: newLeft, y: newTop });
+  emit("resize", { width: newWidth, height: newHeight }, { x: newLeft, y: newTop });
 }
 
 function stopResize() {
   isResizing = false;
   resizeDirection = null;
-  document.removeEventListener('mousemove', onResize);
-  document.removeEventListener('mouseup', stopResize);
+  document.removeEventListener("mousemove", onResize);
+  document.removeEventListener("mouseup", stopResize);
 }
 </script>
-
 

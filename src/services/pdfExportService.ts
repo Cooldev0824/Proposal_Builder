@@ -39,7 +39,7 @@ const defaultOptions: PdfExportOptions = {
 export async function exportToPdf(
   docData: Document,
   container: HTMLElement,
-  options: PdfExportOptions = {}
+  options: PdfExportOptions = {},
 ): Promise<void> {
   // Merge default options with provided options
   const mergedOptions = { ...defaultOptions, ...options };
@@ -138,7 +138,7 @@ export async function exportToPdf(
               img.onerror = () => resolve(null);
             }
           });
-        })
+        }),
       );
 
       // Render the page to canvas with settings that match the preview
@@ -282,7 +282,7 @@ export async function exportToPdf(
                 element.style.setProperty(
                   "background-color",
                   backgroundColor,
-                  "important"
+                  "important",
                 );
                 // Add padding to ensure the background is visible
                 element.style.setProperty("padding", "8px", "important");
@@ -300,7 +300,7 @@ export async function exportToPdf(
                       node.style.setProperty(
                         "color",
                         contentElement.style.color,
-                        "important"
+                        "important",
                       );
                     }
                   });
@@ -311,21 +311,21 @@ export async function exportToPdf(
                   contentElement.style.setProperty(
                     "font-family",
                     contentElement.style.fontFamily,
-                    "important"
+                    "important",
                   );
                 }
                 if (contentElement.style.fontSize) {
                   contentElement.style.setProperty(
                     "font-size",
                     contentElement.style.fontSize,
-                    "important"
+                    "important",
                   );
                 }
                 if (contentElement.style.fontWeight) {
                   contentElement.style.setProperty(
                     "font-weight",
                     contentElement.style.fontWeight,
-                    "important"
+                    "important",
                   );
                 }
 
@@ -338,7 +338,7 @@ export async function exportToPdf(
                   contentElement.style.setProperty(
                     "background-color",
                     "transparent",
-                    "important"
+                    "important",
                   );
                 }
               }
@@ -419,7 +419,7 @@ export async function exportToPdf(
         offsetX,
         offsetY,
         scaledWidth,
-        scaledHeight
+        scaledHeight,
       );
     } finally {
       // Clean up the temporary container
@@ -443,7 +443,7 @@ async function exportSinglePage(
   _docData: Document,
   container: HTMLElement,
   pdf: jsPDF,
-  options: PdfExportOptions
+  options: PdfExportOptions,
 ): Promise<void> {
   console.log("Attempting to export single page from container:", container);
 
@@ -485,7 +485,7 @@ async function exportSinglePage(
             img.onerror = () => resolve(null);
           }
         });
-      })
+      }),
     );
 
     // Render the container to canvas
@@ -605,7 +605,7 @@ async function exportSinglePage(
       marginLeft,
       marginTop,
       availableWidth,
-      availableHeight
+      availableHeight,
     );
 
     // Save the PDF
@@ -623,14 +623,14 @@ async function exportSinglePage(
  */
 function processPageForExport(
   pageElement: HTMLElement,
-  _options: PdfExportOptions
+  _options: PdfExportOptions,
 ): void {
   // Hide UI controls that shouldn't appear in the PDF
   const uiElements = pageElement.querySelectorAll(
     ".resize-handle, .scroll-control, .v-navigation-drawer, " +
       ".v-overlay, .v-menu, .v-btn--icon, button, " +
       "[role='button'], .control-button, .handle, " +
-      ".v-slider, .v-input__control"
+      ".v-slider, .v-input__control",
   );
 
   uiElements.forEach((el) => {
@@ -684,7 +684,7 @@ function processPageForExport(
         element.style.setProperty(
           "background-color",
           backgroundColor,
-          "important"
+          "important",
         );
         // Add padding to ensure the background is visible
         element.style.setProperty("padding", "8px", "important");
@@ -702,7 +702,7 @@ function processPageForExport(
               node.style.setProperty(
                 "color",
                 contentElement.style.color,
-                "important"
+                "important",
               );
             }
           });
@@ -713,21 +713,21 @@ function processPageForExport(
           contentElement.style.setProperty(
             "font-family",
             contentElement.style.fontFamily,
-            "important"
+            "important",
           );
         }
         if (contentElement.style.fontSize) {
           contentElement.style.setProperty(
             "font-size",
             contentElement.style.fontSize,
-            "important"
+            "important",
           );
         }
         if (contentElement.style.fontWeight) {
           contentElement.style.setProperty(
             "font-weight",
             contentElement.style.fontWeight,
-            "important"
+            "important",
           );
         }
 
@@ -740,7 +740,7 @@ function processPageForExport(
           contentElement.style.setProperty(
             "background-color",
             "transparent",
-            "important"
+            "important",
           );
         }
       }
@@ -799,7 +799,7 @@ function processPageForExport(
  */
 export async function directExportToPdf(
   docData: Document,
-  options: PdfExportOptions = {}
+  options: PdfExportOptions = {},
 ): Promise<void> {
   // Merge default options with provided options
   const mergedOptions = { ...defaultOptions, ...options };
@@ -1002,7 +1002,7 @@ export async function directExportToPdf(
             // For triangles, use SVG
             const svg = document.createElementNS(
               "http://www.w3.org/2000/svg",
-              "svg"
+              "svg",
             );
             svg.setAttribute("width", "100%");
             svg.setAttribute("height", "100%");
@@ -1012,7 +1012,7 @@ export async function directExportToPdf(
 
             const polygon = document.createElementNS(
               "http://www.w3.org/2000/svg",
-              "polygon"
+              "polygon",
             );
             const width = element.size.width;
             const height = element.size.height;
@@ -1024,7 +1024,7 @@ export async function directExportToPdf(
             polygon.setAttribute("stroke", element.style?.stroke || "#CBD5E1");
             polygon.setAttribute(
               "stroke-width",
-              `${element.style?.strokeWidth || 1}`
+              `${element.style?.strokeWidth || 1}`,
             );
 
             svg.appendChild(polygon);
@@ -1097,7 +1097,7 @@ export async function directExportToPdf(
               img.onerror = () => resolve(null);
             }
           });
-        })
+        }),
       );
 
       // Add a new page for each section after the first
@@ -1208,7 +1208,7 @@ export async function directExportToPdf(
         marginLeft,
         marginTop,
         availableWidth,
-        availableHeight
+        availableHeight,
       );
 
       // Remove the page container after processing

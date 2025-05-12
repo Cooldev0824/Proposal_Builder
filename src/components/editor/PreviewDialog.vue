@@ -15,7 +15,7 @@
       </v-toolbar>
 
       <v-container fluid>
-        <div class="preview-pages" ref="previewContent">
+        <div ref="previewContent" class="preview-pages">
           <div
             v-for="(section, index) in document.sections"
             :key="section.id"
@@ -26,9 +26,9 @@
             <div class="page-content">
               <div class="elements-container">
                 <component
+                  :is="getElementComponent(element.type)"
                   v-for="element in getSortedElements(section.elements)"
                   :key="element.id"
-                  :is="getElementComponent(element.type)"
                   :element="{
                     ...element,
                     position: {
@@ -110,51 +110,51 @@ watch(
   () => props.modelValue,
   (value) => {
     dialog.value = value;
-  }
+  },
 );
 
 watch(
   () => dialog.value,
   (value) => {
     emit("update:modelValue", value);
-  }
+  },
 );
 
 const TextElement = defineAsyncComponent(
-  () => import("./elements/TextElement.vue")
+  () => import("./elements/TextElement.vue"),
 );
 const ImageElement = defineAsyncComponent(
-  () => import("./elements/ImageElement.vue")
+  () => import("./elements/ImageElement.vue"),
 );
 const ShapeElement = defineAsyncComponent(
-  () => import("./elements/ShapeElement.vue")
+  () => import("./elements/ShapeElement.vue"),
 );
 const TableElement = defineAsyncComponent(
-  () => import("./elements/SimpleTableElement.vue")
+  () => import("./elements/SimpleTableElement.vue"),
 );
 const SignatureElement = defineAsyncComponent(
-  () => import("./elements/SignatureElement.vue")
+  () => import("./elements/SignatureElement.vue"),
 );
 const FormElement = defineAsyncComponent(
-  () => import("./elements/FormElement.vue")
+  () => import("./elements/FormElement.vue"),
 );
 
 function getElementComponent(type: string) {
   switch (type) {
-    case "text":
-      return TextElement;
-    case "image":
-      return ImageElement;
-    case "shape":
-      return ShapeElement;
-    case "table":
-      return TableElement;
-    case "signature":
-      return SignatureElement;
-    case "form":
-      return FormElement;
-    default:
-      return null;
+  case "text":
+    return TextElement;
+  case "image":
+    return ImageElement;
+  case "shape":
+    return ShapeElement;
+  case "table":
+    return TableElement;
+  case "signature":
+    return SignatureElement;
+  case "form":
+    return FormElement;
+  default:
+    return null;
   }
 }
 

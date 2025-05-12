@@ -1,19 +1,19 @@
-import { RouteRecordRaw } from 'vue-router'
-import EditorView from '../views/EditorView.vue'
-import DashboardView from '../views/DashboardView.vue'
+import { RouteRecordRaw } from "vue-router";
+import EditorView from "../views/EditorView.vue";
+import DashboardView from "../views/DashboardView.vue";
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
-    name: 'Dashboard',
-    component: DashboardView
+    path: "/",
+    name: "Dashboard",
+    component: DashboardView,
   },
   {
-    path: '/editor/:id?',
-    name: 'Editor',
+    path: "/editor/:id?",
+    name: "Editor",
     component: EditorView,
-    props: true
-  }
-]
+    props: true,
+  },
+];
 
-export default routes
+export default routes;

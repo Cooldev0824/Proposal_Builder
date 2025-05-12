@@ -31,47 +31,47 @@
 
 <script setup lang="ts">
 
-import type { DocumentElement, Size, Position } from '../../../types/document';
-import ResizeHandles from '../ResizeHandles.vue';
-import { useElement } from '../../../composables/useElement';
+import type { DocumentElement, Size, Position } from "../../../types/document";
+import ResizeHandles from "../ResizeHandles.vue";
+import { useElement } from "../../../composables/useElement";
 
 // Import styles
-import '../../../assets/styles/components/elements.scss';
+import "../../../assets/styles/components/elements.scss";
 
 const props = defineProps({
   element: {
     type: Object as () => DocumentElement,
-    required: true
+    required: true,
   },
   isSelected: {
     type: Boolean,
-    default: false
+    default: false,
   },
   isPreview: {
     type: Boolean,
-    default: false
+    default: false,
   },
   minWidth: {
     type: Number,
-    default: 20
+    default: 20,
   },
   minHeight: {
     type: Number,
-    default: 20
+    default: 20,
   },
   aspectRatio: {
     type: Number,
-    default: undefined
+    default: undefined,
   },
   showRotateHandle: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
 });
 
 const emit = defineEmits<{
-  (e: 'update:element', element: DocumentElement): void;
-  (e: 'click', element: DocumentElement): void;
+  (e: "update:element", element: DocumentElement): void;
+  (e: "click", element: DocumentElement): void;
 }>();
 
 // Use the element composable for common functionality
@@ -81,13 +81,13 @@ const {
   handleClick,
   startDrag,
   handleResize: baseHandleResize,
-  startRotate
+  startRotate,
 } = useElement(props, emit);
 
 // Custom resize handler that checks if the component has its own resize handler
 function handleResize(newSize: Size, newPosition: Position) {
   // If the component has its own resize handler, use that
-  if (typeof (props as any).onResize === 'function') {
+  if (typeof (props as any).onResize === "function") {
     (props as any).onResize(newSize, newPosition);
   } else {
     // Otherwise use the base handler
@@ -97,6 +97,6 @@ function handleResize(newSize: Size, newPosition: Position) {
 
 // Expose to child components
 defineExpose({
-  contentElement
+  contentElement,
 });
 </script>

@@ -43,12 +43,12 @@
 
 <script setup lang="ts">
 // 1. Imports
-import { computed } from 'vue';
-import type { DocumentElement } from '../../types/document';
-import { getElementIcon, getElementName } from '../../utils/elementUtils';
+import { computed } from "vue";
+import type { DocumentElement } from "../../types/document";
+import { getElementIcon, getElementName } from "../../utils/elementUtils";
 
 // Import styles
-import '../../assets/styles/components/layerControlPanel.scss';
+import "../../assets/styles/components/layerControlPanel.scss";
 
 // 2. Props and Emits
 /**
@@ -66,17 +66,17 @@ const props = defineProps<{
  */
 const emit = defineEmits<{
   /** Emitted when an element is selected in the layer panel */
-  (e: 'element-selected', element: DocumentElement): void;
+  (e: "element-selected", element: DocumentElement): void;
   /** Emitted when an element is updated */
-  (e: 'update-element', element: DocumentElement): void;
+  (e: "update-element", element: DocumentElement): void;
   /** Move the element up one layer */
-  (e: 'move-up', element: DocumentElement): void;
+  (e: "move-up", element: DocumentElement): void;
   /** Move the element down one layer */
-  (e: 'move-down', element: DocumentElement): void;
+  (e: "move-down", element: DocumentElement): void;
   /** Move the element to the top of all layers */
-  (e: 'move-to-top', element: DocumentElement): void;
+  (e: "move-to-top", element: DocumentElement): void;
   /** Move the element to the bottom of all layers */
-  (e: 'move-to-bottom', element: DocumentElement): void;
+  (e: "move-to-bottom", element: DocumentElement): void;
 }>();
 
 // 3. Computed Properties
@@ -99,7 +99,7 @@ const sortedElements = computed(() => {
  * @param element The element to select
  */
 function selectElement(element: DocumentElement): void {
-  emit('element-selected', element);
+  emit("element-selected", element);
 }
 
 /**
@@ -107,7 +107,7 @@ function selectElement(element: DocumentElement): void {
  * @param element The element to move
  */
 function moveUp(element: DocumentElement): void {
-  emit('move-up', element);
+  emit("move-up", element);
 }
 
 /**
@@ -115,7 +115,7 @@ function moveUp(element: DocumentElement): void {
  * @param element The element to move
  */
 function moveDown(element: DocumentElement): void {
-  emit('move-down', element);
+  emit("move-down", element);
 }
 
 /**
@@ -123,7 +123,7 @@ function moveDown(element: DocumentElement): void {
  * @param element The element to move
  */
 function moveToTop(element: DocumentElement): void {
-  emit('move-to-top', element);
+  emit("move-to-top", element);
 }
 
 /**
@@ -131,8 +131,7 @@ function moveToTop(element: DocumentElement): void {
  * @param element The element to move
  */
 function moveToBottom(element: DocumentElement): void {
-  emit('move-to-bottom', element);
+  emit("move-to-bottom", element);
 }
 </script>
-
 

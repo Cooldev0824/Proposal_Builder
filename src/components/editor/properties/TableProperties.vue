@@ -91,11 +91,11 @@ const borderStyle = ref(props.element.style?.borderStyle || "solid");
 const borderWidth = ref(props.element.style?.borderWidth || 1);
 const borderColor = ref(props.element.style?.borderColor || "#E2E8F0");
 const headerBackgroundColor = ref(
-  props.element.style?.headerBackgroundColor || "#F8F9FA"
+  props.element.style?.headerBackgroundColor || "#F8F9FA",
 );
 const headerTextColor = ref(props.element.style?.headerTextColor || "#000000");
 const cellBackgroundColor = ref(
-  props.element.style?.cellBackgroundColor || "#FFFFFF"
+  props.element.style?.cellBackgroundColor || "#FFFFFF",
 );
 const cellTextColor = ref(props.element.style?.cellTextColor || "#000000");
 
@@ -112,7 +112,7 @@ watch(
       newValue.style?.cellBackgroundColor || "#FFFFFF";
     cellTextColor.value = newValue.style?.cellTextColor || "#000000";
   },
-  { deep: true }
+  { deep: true },
 );
 
 function updateElement(updates: Partial<typeof props.element.style>) {

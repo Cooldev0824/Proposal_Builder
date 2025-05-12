@@ -56,15 +56,15 @@
       <v-icon
         icon="mdi-grid"
         size="small"
-        @click="$emit('toggle-grid')"
         class="grid-toggle-icon"
+        @click="$emit('toggle-grid')"
       ></v-icon>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, watch } from "vue";
 
 const props = defineProps<{
   visible: boolean;
@@ -74,16 +74,16 @@ const props = defineProps<{
 }>();
 
 defineEmits<{
-  (e: 'toggle-grid'): void;
+  (e: "toggle-grid"): void;
 }>();
 
 // Log when visibility changes
 watch(() => props.visible, (newValue) => {
-  console.log('Grid overlay visibility changed:', newValue)
-}, { immediate: true })
+  console.log("Grid overlay visibility changed:", newValue);
+}, { immediate: true });
 
 const gridStyle = computed(() => {
-  console.log('Computing grid style, visible:', props.visible)
+  console.log("Computing grid style, visible:", props.visible);
   return {
     // Width and height are now handled by CSS with !important
     // to ensure they include the rulers
@@ -93,7 +93,7 @@ const gridStyle = computed(() => {
        linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
        linear-gradient(to right, rgba(0, 0, 0, 0.1) ${props.gridSize * 10}px, transparent ${props.gridSize * 10}px),
        linear-gradient(to bottom, rgba(0, 0, 0, 0.1) ${props.gridSize * 10}px, transparent ${props.gridSize * 10}px)`
-      : 'none'
+      : "none",
   };
 });
 </script>

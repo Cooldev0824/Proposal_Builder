@@ -32,14 +32,18 @@
             class="cell-size"
             @update:model-value="updateCells"
           ></v-text-field>
-          <v-btn icon size="small" color="error" @click="removeCell(index)">
+          <v-btn icon
+                 size="small"
+                 color="error"
+                 @click="removeCell(index)"
+          >
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </div>
       </template>
     </draggable>
     
-    <v-btn block @click="addCell" class="mb-4">
+    <v-btn block class="mb-4" @click="addCell">
       <v-icon left>mdi-plus</v-icon>
       Add Cell
     </v-btn>
@@ -72,57 +76,57 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import draggable from 'vuedraggable'
-import type { DocumentElement } from '../../../types/document'
+import { ref, watch } from "vue";
+import draggable from "vuedraggable";
+import type { DocumentElement } from "../../../types/document";
 
 const props = defineProps<{
   element: DocumentElement
-}>()
+}>();
 
 const emit = defineEmits<{
-  (e: 'update:element', element: DocumentElement): void
-}>()
+  (e: "update:element", element: DocumentElement): void
+}>();
 
-const cells = ref(props.element.content.cells.map(cell => ({
+const cells = ref(props.element.content.cells.map((cell) => ({
   ...cell,
-  id: crypto.randomUUID()
-})))
-const borderColor = ref(props.element.style?.borderColor || '#E2E8F0')
-const backgroundColor = ref(props.element.style?.backgroundColor || 'white')
+  id: crypto.randomUUID(),
+})));
+const borderColor = ref(props.element.style?.borderColor || "#E2E8F0");
+const backgroundColor = ref(props.element.style?.backgroundColor || "white");
 
 watch(() => props.element, (newValue) => {
-  cells.value = newValue.content.cells.map(cell => ({
+  cells.value = newValue.content.cells.map((cell) => ({
     ...cell,
-    id: crypto.randomUUID()
-  }))
-  borderColor.value = newValue.style?.borderColor || '#E2E8F0'
-  backgroundColor.value = newValue.style?.backgroundColor || 'white'
-}, { deep: true })
+    id: crypto.randomUUID(),
+  }));
+  borderColor.value = newValue.style?.borderColor || "#E2E8F0";
+  backgroundColor.value = newValue.style?.backgroundColor || "white";
+}, { deep: true });
 
 function updateCells() {
   const updatedElement = {
     ...props.element,
     content: {
-      cells: cells.value.map(({ id, ...cell }) => cell)
-    }
-  }
-  emit('update:element', updatedElement)
+      cells: cells.value.map(({ id, ...cell }) => cell),
+    },
+  };
+  emit("update:element", updatedElement);
 }
 
 function addCell() {
   cells.value.push({
     id: crypto.randomUUID(),
-    type: 'text',
-    content: '',
-    size: 1
-  })
-  updateCells()
+    type: "text",
+    content: "",
+    size: 1,
+  });
+  updateCells();
 }
 
 function removeCell(index: number) {
-  cells.value.splice(index, 1)
-  updateCells()
+  cells.value.splice(index, 1);
+  updateCells();
 }
 
 function updateStyle() {
@@ -131,10 +135,10 @@ function updateStyle() {
     style: {
       ...props.element.style,
       borderColor: borderColor.value,
-      backgroundColor: backgroundColor.value
-    }
-  }
-  emit('update:element', updatedElement)
+      backgroundColor: backgroundColor.value,
+    },
+  };
+  emit("update:element", updatedElement);
 }
 </script>
 

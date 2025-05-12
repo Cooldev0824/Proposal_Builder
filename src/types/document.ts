@@ -24,13 +24,47 @@ export interface Size {
   height: number;
 }
 
+export interface ElementContent {
+  [key: string]: unknown;
+  columns?: Array<{ field: string; headerName: string }>;
+  rows?: Array<Record<string, unknown>>;
+  text?: string;
+  html?: string;
+  src?: string;
+  url?: string;
+  cells?: GridCell[];
+  headers?: string[];
+}
+
+export interface ElementStyle {
+  [key: string]: string | number | boolean | undefined;
+  color?: string;
+  backgroundColor?: string;
+  fontFamily?: string;
+  fontSize?: string | number;
+  fontWeight?: string | number;
+  textAlign?: "left" | "center" | "right" | "justify";
+  lineHeight?: string | number;
+  border?: string;
+  borderRadius?: string | number;
+  borderWidth?: number;
+  borderColor?: string;
+  padding?: string | number;
+  margin?: string | number;
+  opacity?: string | number;
+  transform?: string;
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+}
+
 export type DocumentElement = {
   id: string;
   type: string;
-  content: any;
+  content: ElementContent | string;
   position: Position;
   size: Size;
-  style?: any;
+  style?: ElementStyle;
   zIndex?: number;
   children?: DocumentElement[];
   formType?: string;

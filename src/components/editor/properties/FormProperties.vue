@@ -47,9 +47,10 @@
       >
         <template #item="{ element: option }">
           <div class="option-row">
-            <v-icon size="small" class="drag-handle" color="grey"
-              >mdi-drag</v-icon
-            >
+            <v-icon size="small"
+                    class="drag-handle"
+                    color="grey"
+            >mdi-drag</v-icon>
             <v-text-field
               v-model="option.text"
               density="compact"
@@ -70,7 +71,7 @@
         </template>
       </draggable>
 
-      <v-btn block @click="addOption" class="mb-4">
+      <v-btn block class="mb-4" @click="addOption">
         <v-icon left>mdi-plus</v-icon>
         Add Option
       </v-btn>
@@ -124,7 +125,7 @@ const options = ref(
   (props.element.content.options || []).map((text: string) => ({
     id: crypto.randomUUID(),
     text,
-  }))
+  })),
 );
 const inline = ref(props.element.content.inline || false);
 const inputType = ref(props.element.content.inputType || "text");
@@ -143,7 +144,7 @@ watch(
     inputType.value = newValue.content.inputType || "text";
     backgroundColor.value = newValue.style?.backgroundColor || "white";
   },
-  { deep: true }
+  { deep: true },
 );
 
 function updateElement(updates: Partial<typeof props.element.content>) {

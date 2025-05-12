@@ -6,8 +6,8 @@
     :isPreview="isPreview"
     :minWidth="50"
     :minHeight="50"
-    @update:element="handleBaseElementUpdate"
     tabindex="0"
+    @update:element="handleBaseElementUpdate"
   >
     <!-- Group border and background -->
     <div
@@ -17,9 +17,9 @@
     >
       <!-- Render child elements -->
       <component
+        :is="getElementComponent(childElement.type)"
         v-for="childElement in element.children || []"
         :key="childElement.id"
-        :is="getElementComponent(childElement.type)"
         :element="childElement"
         :isSelected="false"
         :isPreview="true"
@@ -38,7 +38,7 @@ import BaseElement from "./BaseElement.vue";
 import { getElementComponent } from "./ElementRegistry";
 
 // Import styles
-import '../../../assets/styles/components/elements.scss';
+import "../../../assets/styles/components/elements.scss";
 
 const props = defineProps<{
   element: DocumentElement;
@@ -57,7 +57,7 @@ const groupContainerStyle = computed<CSSProperties>(() => {
   return {
     width: "100%",
     height: "100%",
-    border: style.borderWidth ? `${style.borderWidth}px ${style.borderStyle || 'dashed'} ${style.borderColor || '#666'}` : "1px dashed #666",
+    border: style.borderWidth ? `${style.borderWidth}px ${style.borderStyle || "dashed"} ${style.borderColor || "#666"}` : "1px dashed #666",
     backgroundColor: style.backgroundColor || "transparent",
     opacity: style.opacity !== undefined ? style.opacity : 1,
     position: "relative" as const,
@@ -92,7 +92,7 @@ function handleResize(newSize: Size, newPosition: Position) {
   const scaleY = newSize.height / props.element.size.height;
 
   // Update children positions and sizes proportionally
-  const updatedChildren = props.element.children?.map(child => {
+  const updatedChildren = props.element.children?.map((child) => {
     // Calculate new relative position
     const relativeX = child.position.x - props.element.position.x;
     const relativeY = child.position.y - props.element.position.y;
@@ -108,7 +108,7 @@ function handleResize(newSize: Size, newPosition: Position) {
     return {
       ...child,
       position: { x: newX, y: newY },
-      size: { width: newWidth, height: newHeight }
+      size: { width: newWidth, height: newHeight },
     };
   });
 
@@ -117,7 +117,7 @@ function handleResize(newSize: Size, newPosition: Position) {
     ...props.element,
     position: newPosition,
     size: newSize,
-    children: updatedChildren
+    children: updatedChildren,
   };
 
   emit("update:element", updatedElement);
@@ -138,11 +138,11 @@ function handleClick(event: MouseEvent) {
     groupElement.focus();
 
     // Add a visual feedback that the group was clicked
-    groupElement.classList.add('click-feedback');
+    groupElement.classList.add("click-feedback");
 
     // Remove it after the animation completes
     setTimeout(() => {
-      groupElement.classList.remove('click-feedback');
+      groupElement.classList.remove("click-feedback");
     }, 300);
   }
 
@@ -152,7 +152,7 @@ function handleClick(event: MouseEvent) {
 
 // Expose the handleResize function to the BaseElement
 defineExpose({
-  handleResize
+  handleResize,
 });
 </script>
 

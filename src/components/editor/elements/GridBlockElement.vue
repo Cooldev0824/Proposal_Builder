@@ -14,9 +14,9 @@
       >
         <div class="cell-content">
           <component
+            :is="getElementComponent(element.type)"
             v-for="element in cell?.elements || []"
             :key="element.id"
-            :is="getElementComponent(element.type)"
             :element="element"
             :isSelected="selectedElement?.id === element.id"
             @click.stop="selectElement(element)"
@@ -56,8 +56,8 @@
             <v-list-item
               v-for="type in elementTypes || []"
               :key="type"
-              @click="addElement(type)"
               class="element-type-item"
+              @click="addElement(type)"
             >
               <template v-slot:prepend>
                 <v-icon :icon="getElementIcon(type)"></v-icon>
@@ -82,10 +82,10 @@ const TextElement = defineAsyncComponent(() => import("./TextElement.vue"));
 const ImageElement = defineAsyncComponent(() => import("./ImageElement.vue"));
 const ShapeElement = defineAsyncComponent(() => import("./ShapeElement.vue"));
 const TableElement = defineAsyncComponent(
-  () => import("./SimpleTableElement.vue")
+  () => import("./SimpleTableElement.vue"),
 );
 const SignatureElement = defineAsyncComponent(
-  () => import("./SignatureElement.vue")
+  () => import("./SignatureElement.vue"),
 );
 
 const props = defineProps<{
@@ -139,35 +139,35 @@ let startClientX = 0;
 
 function getElementComponent(type: string) {
   switch (type) {
-    case "text":
-      return TextElement;
-    case "image":
-      return ImageElement;
-    case "shape":
-      return ShapeElement;
-    case "table":
-      return TableElement;
-    case "signature":
-      return SignatureElement;
-    default:
-      return null;
+  case "text":
+    return TextElement;
+  case "image":
+    return ImageElement;
+  case "shape":
+    return ShapeElement;
+  case "table":
+    return TableElement;
+  case "signature":
+    return SignatureElement;
+  default:
+    return null;
   }
 }
 
 function getElementIcon(type: string) {
   switch (type) {
-    case "text":
-      return "mdi-format-text";
-    case "image":
-      return "mdi-image";
-    case "shape":
-      return "mdi-shape";
-    case "table":
-      return "mdi-table";
-    case "signature":
-      return "mdi-draw";
-    default:
-      return "mdi-help";
+  case "text":
+    return "mdi-format-text";
+  case "image":
+    return "mdi-image";
+  case "shape":
+    return "mdi-shape";
+  case "table":
+    return "mdi-table";
+  case "signature":
+    return "mdi-draw";
+  default:
+    return "mdi-help";
   }
 }
 
@@ -208,7 +208,7 @@ function addElement(type: string) {
   };
 
   updatedElement.content.cells[editingCellIndex.value].elements.push(
-    newElement
+    newElement,
   );
   emit("update:element", updatedElement);
 
@@ -327,11 +327,11 @@ function onCellResize(event: MouseEvent) {
 
   currentCell.size = Math.max(
     0.1,
-    startCellSizes[resizingCellIndex] + sizeDelta
+    startCellSizes[resizingCellIndex] + sizeDelta,
   );
   nextCell.size = Math.max(
     0.1,
-    startCellSizes[resizingCellIndex + 1] - sizeDelta
+    startCellSizes[resizingCellIndex + 1] - sizeDelta,
   );
 
   emit("update:element", {

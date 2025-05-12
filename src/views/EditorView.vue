@@ -28,7 +28,7 @@
         @section-deleted="deleteSection"
       />
 
-      <div class="main-editor" ref="editorContainer">
+      <div ref="editorContainer" class="main-editor">
         <div
           class="editor-content"
           :style="editorContentStyle"
@@ -39,7 +39,7 @@
         >
           <DocumentPage
             v-for="(section, index) in document?.sections &&
-            document?.sections.length > 0
+              document?.sections.length > 0
               ? document.sections
               : []"
             :key="section.id"
@@ -47,6 +47,7 @@
             :isActive="currentSection === index"
             :showGrid="showGrid"
             :isDrawing="isDrawing && currentSection === index"
+            ref="documentPageRefs"
             :drawingRectStyle="drawingRectangleStyle"
             :paperSize="document.paperSize"
             :orientation="document.orientation"
@@ -57,12 +58,11 @@
             @move-element-to-top="moveElementToTop"
             @move-element-to-bottom="moveElementToBottom"
             @toggle-grid="toggleGrid"
-            ref="documentPageRefs"
           />
         </div>
       </div>
 
-      <div class="right-panel" v-if="selectedElement || showLayerPanel">
+      <div v-if="selectedElement || showLayerPanel" class="right-panel">
         <v-tabs v-model="activeTab">
           <v-tab value="properties">Properties</v-tab>
           <v-tab value="layers">Layers</v-tab>
@@ -142,14 +142,15 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="cancelDelete" :disabled="isDeleting"
-            >Cancel</v-btn
-          >
+          <v-btn text
+                 :disabled="isDeleting"
+                 @click="cancelDelete"
+          >Cancel</v-btn>
           <v-btn
             color="error"
-            @click="confirmDelete"
             :loading="isDeleting"
             :disabled="isDeleting"
+            @click="confirmDelete"
           >
             Delete
           </v-btn>
@@ -280,7 +281,7 @@ watch(
   () => {
     historyStore.pushState(document);
   },
-  { deep: true }
+  { deep: true },
 );
 
 onMounted(async () => {
@@ -376,12 +377,12 @@ function selectElement(element: DocumentElement | null) {
 
 function updateElement(element: DocumentElement) {
   const sectionIndex = document.sections.findIndex((s) =>
-    s.elements.some((e) => e.id === element.id)
+    s.elements.some((e) => e.id === element.id),
   );
 
   if (sectionIndex >= 0) {
     const elementIndex = document.sections[sectionIndex].elements.findIndex(
-      (e) => e.id === element.id
+      (e) => e.id === element.id,
     );
     if (elementIndex >= 0) {
       document.sections[sectionIndex].elements[elementIndex] = element;
@@ -391,7 +392,7 @@ function updateElement(element: DocumentElement) {
 
 function deleteElement(element: DocumentElement) {
   const sectionIndex = document.sections.findIndex((s) =>
-    s.elements.some((e) => e.id === element.id)
+    s.elements.some((e) => e.id === element.id),
   );
 
   if (sectionIndex >= 0) {
@@ -511,30 +512,30 @@ function finishDrawing(event: MouseEvent) {
   if (width > 10 && height > 10) {
     // Create the element based on the drawing tool
     switch (drawingTool.value) {
-      case "text":
-        addTextElement(adjustedLeft, adjustedTop, width, height);
-        break;
-      case "image":
-        addImageElement(adjustedLeft, adjustedTop, width, height);
-        break;
-      case "shape":
-        addShapeElement(adjustedLeft, adjustedTop, width, height);
-        break;
-      case "line":
-        addLineElement(adjustedLeft, adjustedTop, width, height);
-        break;
-      case "table":
-        addTableElement(adjustedLeft, adjustedTop, width, height);
-        break;
-      case "signature":
-        addSignatureElement(adjustedLeft, adjustedTop, width, height);
-        break;
-      case "form":
-        addFormElement(adjustedLeft, adjustedTop, width, height);
-        break;
-      case "grid-element":
-        addGridElement(adjustedLeft, adjustedTop, width, height);
-        break;
+    case "text":
+      addTextElement(adjustedLeft, adjustedTop, width, height);
+      break;
+    case "image":
+      addImageElement(adjustedLeft, adjustedTop, width, height);
+      break;
+    case "shape":
+      addShapeElement(adjustedLeft, adjustedTop, width, height);
+      break;
+    case "line":
+      addLineElement(adjustedLeft, adjustedTop, width, height);
+      break;
+    case "table":
+      addTableElement(adjustedLeft, adjustedTop, width, height);
+      break;
+    case "signature":
+      addSignatureElement(adjustedLeft, adjustedTop, width, height);
+      break;
+    case "form":
+      addFormElement(adjustedLeft, adjustedTop, width, height);
+      break;
+    case "grid-element":
+      addGridElement(adjustedLeft, adjustedTop, width, height);
+      break;
     }
   }
 
@@ -618,100 +619,100 @@ async function exportToPdf() {
 
 function handleToolClick(tool: string, value?: any) {
   switch (tool) {
-    case "undo":
-      handleUndo();
-      break;
+  case "undo":
+    handleUndo();
+    break;
 
-    case "redo":
-      handleRedo();
-      break;
+  case "redo":
+    handleRedo();
+    break;
 
-    case "add-page":
-      addSection({
-        id: "section-" + Date.now(),
-        title: "New Section",
-        elements: [],
-      });
-      break;
+  case "add-page":
+    addSection({
+      id: "section-" + Date.now(),
+      title: "New Section",
+      elements: [],
+    });
+    break;
 
-    case "grid":
-      toggleGrid(value);
-      break;
+  case "grid":
+    toggleGrid(value);
+    break;
 
-    case "zoom-in":
-      zoom.value = Math.min(2, zoom.value + 0.1);
-      break;
+  case "zoom-in":
+    zoom.value = Math.min(2, zoom.value + 0.1);
+    break;
 
-    case "zoom-out":
-      zoom.value = Math.max(0.5, zoom.value - 0.1);
-      break;
+  case "zoom-out":
+    zoom.value = Math.max(0.5, zoom.value - 0.1);
+    break;
 
-    case "paper-size":
-      // Update the document's paper size
-      document.paperSize = value;
-      console.log("Document paper size changed to:", value);
-      break;
+  case "paper-size":
+    // Update the document's paper size
+    document.paperSize = value;
+    console.log("Document paper size changed to:", value);
+    break;
 
-    case "orientation":
-      // Update the document's orientation
-      document.orientation = value as "portrait" | "landscape";
-      console.log("Document orientation changed to:", value);
-      break;
+  case "orientation":
+    // Update the document's orientation
+    document.orientation = value as "portrait" | "landscape";
+    console.log("Document orientation changed to:", value);
+    break;
 
-    case "document-size":
-      // Open the document size dialog
-      showDocumentSizeDialog.value = true;
-      break;
+  case "document-size":
+    // Open the document size dialog
+    showDocumentSizeDialog.value = true;
+    break;
 
-    case "text":
-      // Set the drawing tool to text and wait for user to draw
-      drawingTool.value = "text";
-      break;
+  case "text":
+    // Set the drawing tool to text and wait for user to draw
+    drawingTool.value = "text";
+    break;
 
-    case "image":
-      // Set the drawing tool to image and wait for user to draw
-      drawingTool.value = "image";
-      break;
+  case "image":
+    // Set the drawing tool to image and wait for user to draw
+    drawingTool.value = "image";
+    break;
 
-    case "shape":
-      // Set the drawing tool to shape and wait for user to draw
-      drawingTool.value = "shape";
-      // Set the current shape type
-      currentShapeType.value = value || "rectangle";
-      break;
+  case "shape":
+    // Set the drawing tool to shape and wait for user to draw
+    drawingTool.value = "shape";
+    // Set the current shape type
+    currentShapeType.value = value || "rectangle";
+    break;
 
-    case "line":
-      // Set the drawing tool to line and wait for user to draw
-      drawingTool.value = "line";
-      break;
+  case "line":
+    // Set the drawing tool to line and wait for user to draw
+    drawingTool.value = "line";
+    break;
 
-    case "table":
-      // Set the drawing tool to table and wait for user to draw
-      drawingTool.value = "table";
-      break;
+  case "table":
+    // Set the drawing tool to table and wait for user to draw
+    drawingTool.value = "table";
+    break;
 
-    case "signature":
-      // Set the drawing tool to signature and wait for user to draw
-      drawingTool.value = "signature";
-      break;
+  case "signature":
+    // Set the drawing tool to signature and wait for user to draw
+    drawingTool.value = "signature";
+    break;
 
-    case "form":
-      // Set the drawing tool to form and wait for user to draw
-      drawingTool.value = "form";
-      break;
+  case "form":
+    // Set the drawing tool to form and wait for user to draw
+    drawingTool.value = "form";
+    break;
 
-    case "grid-element":
-      // Set the drawing tool to grid and wait for user to draw
-      drawingTool.value = "grid-element";
-      break;
+  case "grid-element":
+    // Set the drawing tool to grid and wait for user to draw
+    drawingTool.value = "grid-element";
+    break;
 
-    case "preview":
-      showPreview.value = true;
-      break;
+  case "preview":
+    showPreview.value = true;
+    break;
 
-    case "export-pdf":
-      exportToPdf();
-      break;
+  case "export-pdf":
+    exportToPdf();
+    break;
   }
 }
 
@@ -719,7 +720,7 @@ function addTextElement(
   x?: number,
   y?: number,
   width?: number,
-  height?: number
+  height?: number,
 ) {
   // Get highest zIndex in current section to place new element on top
   const highestZIndex = getHighestZIndex();
@@ -769,7 +770,7 @@ function addImageElement(
   x?: number,
   y?: number,
   width?: number,
-  height?: number
+  height?: number,
 ) {
   const highestZIndex = getHighestZIndex();
 
@@ -796,7 +797,7 @@ function addShapeElement(
   x?: number,
   y?: number,
   width?: number,
-  height?: number
+  height?: number,
 ) {
   const highestZIndex = getHighestZIndex();
 
@@ -822,7 +823,7 @@ function addLineElement(
   x?: number,
   y?: number,
   width?: number,
-  height?: number
+  height?: number,
 ) {
   const highestZIndex = getHighestZIndex();
 
@@ -847,7 +848,7 @@ function addTableElement(
   x?: number,
   y?: number,
   width?: number,
-  height?: number
+  height?: number,
 ) {
   const highestZIndex = getHighestZIndex();
 
@@ -877,7 +878,7 @@ function addSignatureElement(
   x?: number,
   y?: number,
   width?: number,
-  height?: number
+  height?: number,
 ) {
   const highestZIndex = getHighestZIndex();
 
@@ -901,7 +902,7 @@ function addFormElement(
   x?: number,
   y?: number,
   width?: number,
-  height?: number
+  height?: number,
 ) {
   const highestZIndex = getHighestZIndex();
 
@@ -928,7 +929,7 @@ function addGridElement(
   x?: number,
   y?: number,
   width?: number,
-  height?: number
+  height?: number,
 ) {
   const highestZIndex = getHighestZIndex();
 
@@ -956,7 +957,7 @@ function addGridElement(
 // Layer management functions
 function moveElementUp(element: DocumentElement) {
   const sectionIndex = document.sections.findIndex((s) =>
-    s.elements.some((e) => e.id === element.id)
+    s.elements.some((e) => e.id === element.id),
   );
 
   if (sectionIndex >= 0) {
@@ -969,7 +970,7 @@ function moveElementUp(element: DocumentElement) {
 
       // Find the element with the next higher zIndex
       const higherElements = elements.filter(
-        (e) => (e.zIndex ?? 0) > currentZIndex
+        (e) => (e.zIndex ?? 0) > currentZIndex,
       );
 
       if (higherElements.length > 0) {
@@ -996,7 +997,7 @@ function moveElementUp(element: DocumentElement) {
 
 function moveElementDown(element: DocumentElement) {
   const sectionIndex = document.sections.findIndex((s) =>
-    s.elements.some((e) => e.id === element.id)
+    s.elements.some((e) => e.id === element.id),
   );
 
   if (sectionIndex >= 0) {
@@ -1009,7 +1010,7 @@ function moveElementDown(element: DocumentElement) {
 
       // Find the element with the next lower zIndex
       const lowerElements = elements.filter(
-        (e) => (e.zIndex ?? 0) < currentZIndex
+        (e) => (e.zIndex ?? 0) < currentZIndex,
       );
 
       if (lowerElements.length > 0) {
@@ -1036,7 +1037,7 @@ function moveElementDown(element: DocumentElement) {
 
 function moveElementToTop(element: DocumentElement) {
   const sectionIndex = document.sections.findIndex((s) =>
-    s.elements.some((e) => e.id === element.id)
+    s.elements.some((e) => e.id === element.id),
   );
 
   if (sectionIndex >= 0) {
@@ -1059,7 +1060,7 @@ function moveElementToTop(element: DocumentElement) {
 
 function moveElementToBottom(element: DocumentElement) {
   const sectionIndex = document.sections.findIndex((s) =>
-    s.elements.some((e) => e.id === element.id)
+    s.elements.some((e) => e.id === element.id),
   );
 
   if (sectionIndex >= 0) {
@@ -1151,7 +1152,7 @@ watch(
       lastEdit.value = Date.now();
     }
   },
-  { deep: true }
+  { deep: true },
 );
 
 // Reset unsaved changes flag
@@ -1296,7 +1297,7 @@ function cancelSave() {
 // Add autosave functionality
 // const lastEdit = ref(Date.now());
 // Autosave is disabled for now
-let autoSaveTimer: number | null = null;
+const autoSaveTimer: number | null = null;
 
 // Watch for document changes and mark for autosave
 watch(
@@ -1304,7 +1305,7 @@ watch(
   () => {
     lastEdit.value = Date.now();
   },
-  { deep: true }
+  { deep: true },
 );
 
 // Set up autosave timer

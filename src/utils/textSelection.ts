@@ -21,7 +21,7 @@ export function hasSelectedText(): boolean {
  */
 export function applyStyleToSelectedText(
   styleProperty: string,
-  value: string | boolean
+  value: string | boolean,
 ): boolean {
   console.log(`Applying style: ${styleProperty} = ${value} to selected text`);
 
@@ -52,65 +52,65 @@ export function applyStyleToSelectedText(
   let commandValue: string | null = null;
 
   switch (styleProperty) {
-    case "bold":
-      command = "bold";
-      break;
-    case "italic":
-      command = "italic";
-      break;
-    case "underline":
-      command = "underline";
-      break;
-    case "fontName":
-      command = "fontName";
-      commandValue = value as string;
-      break;
-    case "fontSize":
-      command = "fontSize";
-      commandValue = value + "px";
-      break;
-    case "foreColor":
-      command = "foreColor";
-      commandValue = value as string;
-      break;
-    case "backColor":
-      command = "backColor";
-      commandValue = value as string;
-      break;
-    case "justifyLeft":
-    case "justifyCenter":
-    case "justifyRight":
-    case "justifyFull":
-      command = styleProperty;
-      break;
-    default:
-      console.log(`Using custom span for style: ${styleProperty}`);
-      try {
-        // For unsupported commands, wrap in a span with inline style
-        const span = document.createElement("span");
-        span.style.setProperty(styleProperty, value as string);
+  case "bold":
+    command = "bold";
+    break;
+  case "italic":
+    command = "italic";
+    break;
+  case "underline":
+    command = "underline";
+    break;
+  case "fontName":
+    command = "fontName";
+    commandValue = value as string;
+    break;
+  case "fontSize":
+    command = "fontSize";
+    commandValue = value + "px";
+    break;
+  case "foreColor":
+    command = "foreColor";
+    commandValue = value as string;
+    break;
+  case "backColor":
+    command = "backColor";
+    commandValue = value as string;
+    break;
+  case "justifyLeft":
+  case "justifyCenter":
+  case "justifyRight":
+  case "justifyFull":
+    command = styleProperty;
+    break;
+  default:
+    console.log(`Using custom span for style: ${styleProperty}`);
+    try {
+      // For unsupported commands, wrap in a span with inline style
+      const span = document.createElement("span");
+      span.style.setProperty(styleProperty, value as string);
 
-        // Extract the selected content
-        const fragment = range.extractContents();
-        span.appendChild(fragment);
+      // Extract the selected content
+      const fragment = range.extractContents();
+      span.appendChild(fragment);
 
-        // Insert the styled span
-        range.insertNode(span);
+      // Insert the styled span
+      range.insertNode(span);
 
-        // Update selection to include the new span
-        selection.removeAllRanges();
-        const newRange = document.createRange();
-        newRange.selectNodeContents(span);
-        selection.addRange(newRange);
+      // Update selection to include the new span
+      selection.removeAllRanges();
+      const newRange = document.createRange();
+      newRange.selectNodeContents(span);
+      selection.addRange(newRange);
 
-        console.log("Style applied successfully with span");
-        return true;
-      } catch (error) {
-        console.error("Error applying custom style:", error);
-        // Try to restore the original selection
-        restoreSelectionState(selectionState);
-        return false;
-      }
+      console.log("Style applied successfully with span");
+      return true;
+    } catch (error) {
+      console.error("Error applying custom style:", error);
+      // Try to restore the original selection
+      restoreSelectionState(selectionState);
+      return false;
+    }
   }
 
   // For supported commands, use execCommand
@@ -166,7 +166,7 @@ export function restoreSelectionState(
     startOffset: number;
     endContainer: Node;
     endOffset: number;
-  } | null
+  } | null,
 ): boolean {
   if (!state || !state.range) return false;
 
@@ -186,7 +186,7 @@ export function restoreSelectionState(
     } catch (e) {
       console.warn(
         "Failed to restore selection using containers, falling back to range clone",
-        e
+        e,
       );
       // Fall back to the cloned range if the containers are no longer valid
       selection.removeAllRanges();

@@ -10,7 +10,10 @@
   >
     <div
       class="element-content"
+      ref="contentElement"
       contenteditable="true"
+      :style="textStyle"
+      :data-element-id="element.id"
       @input="handleTextChange"
       @keydown="handleKeyDown"
       @focus="handleFocus"
@@ -18,9 +21,6 @@
       @mousedown="handleMouseDown"
       @mouseup="handleMouseUp"
       @keyup="handleKeyUp"
-      :style="textStyle"
-      ref="contentElement"
-      :data-element-id="element.id"
     ></div>
   </BaseElement>
 </template>
@@ -40,7 +40,7 @@ import BaseElement from "./BaseElement.vue";
 import { getFontFamilyValue } from "../../../utils/fontFamilies";
 
 // Import styles
-import '../../../assets/styles/components/elements.scss';
+import "../../../assets/styles/components/elements.scss";
 
 const props = defineProps<{
   element: DocumentElement;
@@ -132,7 +132,7 @@ watch(
       // Re-enable the observer
       setupMutationObserver();
     }
-  }
+  },
 );
 
 // Setup mutation observer to track content changes
@@ -214,18 +214,18 @@ function handleKeyDown(event: KeyboardEvent) {
   if ((event.ctrlKey || event.metaKey) && isEditing.value) {
     // Handle common keyboard shortcuts
     switch (event.key.toLowerCase()) {
-      case "b": // Bold
-        event.preventDefault();
-        toggleStyle("bold");
-        break;
-      case "i": // Italic
-        event.preventDefault();
-        toggleStyle("italic");
-        break;
-      case "u": // Underline
-        event.preventDefault();
-        toggleStyle("underline");
-        break;
+    case "b": // Bold
+      event.preventDefault();
+      toggleStyle("bold");
+      break;
+    case "i": // Italic
+      event.preventDefault();
+      toggleStyle("italic");
+      break;
+    case "u": // Underline
+      event.preventDefault();
+      toggleStyle("underline");
+      break;
     }
   }
 }
@@ -263,5 +263,4 @@ onBeforeUnmount(() => {
   }
 });
 </script>
-
 

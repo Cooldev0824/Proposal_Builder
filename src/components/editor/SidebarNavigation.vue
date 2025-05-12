@@ -1,8 +1,8 @@
 <template>
   <div class="sidebar" :class="{ collapsed: isCollapsed }">
     <div class="sidebar-header">
-      <h3 class="sidebar-title" v-if="!isCollapsed">Document Sections</h3>
-      <v-btn icon @click="toggleSidebar" size="small">
+      <h3 v-if="!isCollapsed" class="sidebar-title">Document Sections</h3>
+      <v-btn icon size="small" @click="toggleSidebar">
         <v-icon>{{ isCollapsed ? 'mdi-chevron-right' : 'mdi-chevron-left' }}</v-icon>
       </v-btn>
     </div>
@@ -27,21 +27,25 @@
             <v-btn icon size="x-small" @click.stop="editSection(index)">
               <v-icon size="small">mdi-pencil</v-icon>
             </v-btn>
-            <v-btn icon size="x-small" color="error" @click.stop="confirmDeleteSection(index)">
+            <v-btn icon
+                   size="x-small"
+                   color="error"
+                   @click.stop="confirmDeleteSection(index)"
+            >
               <v-icon size="small">mdi-delete</v-icon>
             </v-btn>
           </div>
         </div>
       </transition-group>
       
-      <div class="add-section" v-if="!isCollapsed">
+      <div v-if="!isCollapsed" class="add-section">
         <v-btn block @click="addSection">
           <v-icon left>mdi-plus</v-icon>
           Add Section
         </v-btn>
       </div>
       <div v-else class="add-section-icon">
-        <v-btn icon @click="addSection" size="small">
+        <v-btn icon size="small" @click="addSection">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </div>
@@ -83,62 +87,62 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { Section } from '../../types/document'
+import { ref, computed } from "vue";
+import { Section } from "../../types/document";
 
 const props = defineProps<{
   sections: Section[]
   currentSection: number
-}>()
+}>();
 
 const emit = defineEmits<{
-  (e: 'section-selected', index: number): void
-  (e: 'section-added', section: Section): void
-  (e: 'section-updated', index: number, section: Section): void
-  (e: 'section-deleted', index: number): void
-}>()
+  (e: "section-selected", index: number): void
+  (e: "section-added", section: Section): void
+  (e: "section-updated", index: number, section: Section): void
+  (e: "section-deleted", index: number): void
+}>();
 
-const isCollapsed = ref(false)
-const sectionDialog = ref(false)
-const deleteDialog = ref(false)
-const sectionTitle = ref('')
-const editingSection = ref<number | null>(null)
-const sectionToDelete = ref<number | null>(null)
+const isCollapsed = ref(false);
+const sectionDialog = ref(false);
+const deleteDialog = ref(false);
+const sectionTitle = ref("");
+const editingSection = ref<number | null>(null);
+const sectionToDelete = ref<number | null>(null);
 
 function toggleSidebar() {
-  isCollapsed.value = !isCollapsed.value
+  isCollapsed.value = !isCollapsed.value;
 }
 
 function selectSection(index: number) {
-  emit('section-selected', index)
+  emit("section-selected", index);
 }
 
 function getSectionElementsCount(section: Section): number {
-  return section.elements?.length || 0
+  return section.elements?.length || 0;
 }
 
 function addSection() {
-  editingSection.value = null
-  sectionTitle.value = 'New Section'
-  sectionDialog.value = true
+  editingSection.value = null;
+  sectionTitle.value = "New Section";
+  sectionDialog.value = true;
 }
 
 function editSection(index: number) {
-  editingSection.value = index
-  sectionTitle.value = props.sections[index].title
-  sectionDialog.value = true
+  editingSection.value = index;
+  sectionTitle.value = props.sections[index].title;
+  sectionDialog.value = true;
 }
 
 function confirmDeleteSection(index: number) {
-  sectionToDelete.value = index
-  deleteDialog.value = true
+  sectionToDelete.value = index;
+  deleteDialog.value = true;
 }
 
 function deleteSection() {
   if (sectionToDelete.value !== null) {
-    emit('section-deleted', sectionToDelete.value)
-    deleteDialog.value = false
-    sectionToDelete.value = null
+    emit("section-deleted", sectionToDelete.value);
+    deleteDialog.value = false;
+    sectionToDelete.value = null;
   }
 }
 
@@ -147,22 +151,22 @@ function saveSection() {
     // Update existing section
     const updatedSection = {
       ...props.sections[editingSection.value],
-      title: sectionTitle.value
-    }
-    emit('section-updated', editingSection.value, updatedSection)
+      title: sectionTitle.value,
+    };
+    emit("section-updated", editingSection.value, updatedSection);
   } else {
     // Create new section
     const newSection: Section = {
-      id: 'section-' + Date.now(),
+      id: "section-" + Date.now(),
       title: sectionTitle.value,
-      elements: []
-    }
-    emit('section-added', newSection)
+      elements: [],
+    };
+    emit("section-added", newSection);
   }
   
-  sectionDialog.value = false
-  sectionTitle.value = ''
-  editingSection.value = null
+  sectionDialog.value = false;
+  sectionTitle.value = "";
+  editingSection.value = null;
 }
 </script>
 

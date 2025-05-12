@@ -15,7 +15,7 @@
         @section-updated="updateSection"
       />
 
-      <div class="main-editor" ref="editorContainer">
+      <div ref="editorContainer" class="main-editor">
         <div class="editor-content" :style="editorContentStyle">
           <template v-if="showGrid">
             <GridLayout ref="gridLayout" />

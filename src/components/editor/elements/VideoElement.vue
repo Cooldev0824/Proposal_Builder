@@ -42,33 +42,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { DocumentElement } from '../../../types/document'
+import { ref, computed } from "vue";
+import { DocumentElement } from "../../../types/document";
 
 const props = defineProps<{
   element: DocumentElement
   isSelected: boolean
-}>()
+}>();
 
 const emit = defineEmits<{
-  (e: 'update:element', element: DocumentElement): void
-}>()
+  (e: "update:element", element: DocumentElement): void
+}>();
 
-const videoDialog = ref(false)
-const videoUrl = ref('')
-const videoError = ref(false)
+const videoDialog = ref(false);
+const videoUrl = ref("");
+const videoError = ref(false);
 
 // Drag & drop functionality
-let isDragging = false
-let startX = 0
-let startY = 0
-let startLeft = 0
-let startTop = 0
+let isDragging = false;
+let startX = 0;
+let startY = 0;
+let startLeft = 0;
+let startTop = 0;
 
 // Resize functionality
-let isResizing = false
-let startWidth = 0
-let startHeight = 0
+let isResizing = false;
+let startWidth = 0;
+let startHeight = 0;
 
 const elementStyle = computed(() => {
   return {
@@ -76,108 +76,108 @@ const elementStyle = computed(() => {
     top: `${props.element.position.y}px`,
     width: `${props.element.size.width}px`,
     height: `${props.element.size.height}px`,
-    backgroundColor: '#f5f5f5',
-    borderRadius: '4px',
-    border: props.isSelected ? '2px solid var(--primary)' : '1px solid var(--border)',
-    zIndex: props.element.zIndex ?? 0
-  }
-})
+    backgroundColor: "#f5f5f5",
+    borderRadius: "4px",
+    border: props.isSelected ? "2px solid var(--primary)" : "1px solid var(--border)",
+    zIndex: props.element.zIndex ?? 0,
+  };
+});
 
 function openVideoDialog() {
-  videoUrl.value = props.element.content || ''
-  videoDialog.value = true
+  videoUrl.value = props.element.content || "";
+  videoDialog.value = true;
 }
 
 function saveVideo() {
   if (videoUrl.value) {
     const updatedElement = {
       ...props.element,
-      content: videoUrl.value
-    }
-    emit('update:element', updatedElement)
+      content: videoUrl.value,
+    };
+    emit("update:element", updatedElement);
   }
-  videoDialog.value = false
+  videoDialog.value = false;
 }
 
 function handleVideoError() {
-  videoError.value = true
+  videoError.value = true;
 }
 
 function startDrag(event: MouseEvent) {
-  isDragging = true
-  startX = event.clientX
-  startY = event.clientY
-  startLeft = props.element.position.x
-  startTop = props.element.position.y
+  isDragging = true;
+  startX = event.clientX;
+  startY = event.clientY;
+  startLeft = props.element.position.x;
+  startTop = props.element.position.y;
 
-  document.addEventListener('mousemove', onDrag)
-  document.addEventListener('mouseup', stopDrag)
+  document.addEventListener("mousemove", onDrag);
+  document.addEventListener("mouseup", stopDrag);
 }
 
 function onDrag(event: MouseEvent) {
-  if (!isDragging) return
+  if (!isDragging) return;
 
-  const deltaX = event.clientX - startX
-  const deltaY = event.clientY - startY
+  const deltaX = event.clientX - startX;
+  const deltaY = event.clientY - startY;
 
   const newPosition = {
     x: startLeft + deltaX,
-    y: startTop + deltaY
-  }
+    y: startTop + deltaY,
+  };
 
   const updatedElement = {
     ...props.element,
-    position: newPosition
-  }
+    position: newPosition,
+  };
 
-  emit('update:element', updatedElement)
+  emit("update:element", updatedElement);
 }
 
 function stopDrag() {
-  isDragging = false
-  document.removeEventListener('mousemove', onDrag)
-  document.removeEventListener('mouseup', stopDrag)
+  isDragging = false;
+  document.removeEventListener("mousemove", onDrag);
+  document.removeEventListener("mouseup", stopDrag);
 }
 
 function startResize(event: MouseEvent) {
-  isResizing = true
-  startX = event.clientX
-  startY = event.clientY
-  startWidth = props.element.size.width
-  startHeight = props.element.size.height
+  isResizing = true;
+  startX = event.clientX;
+  startY = event.clientY;
+  startWidth = props.element.size.width;
+  startHeight = props.element.size.height;
 
-  document.addEventListener('mousemove', onResize)
-  document.addEventListener('mouseup', stopResize)
+  document.addEventListener("mousemove", onResize);
+  document.addEventListener("mouseup", stopResize);
 }
 
 function onResize(event: MouseEvent) {
-  if (!isResizing) return
+  if (!isResizing) return;
 
-  const deltaX = event.clientX - startX
-  const deltaY = event.clientY - startY
+  const deltaX = event.clientX - startX;
+  const deltaY = event.clientY - startY;
 
   // Maintain 16:9 aspect ratio
-  const aspectRatio = 16/9
-  const newWidth = Math.max(200, startWidth + deltaX)
-  const newHeight = newWidth / aspectRatio
+  const aspectRatio = 16/9;
+  const newWidth = Math.max(200, startWidth + deltaX);
+  const newHeight = newWidth / aspectRatio;
 
   const newSize = {
     width: newWidth,
-    height: newHeight
-  }
+    height: newHeight,
+  };
 
   const updatedElement = {
     ...props.element,
-    size: newSize
-  }
+    size: newSize,
+  };
 
-  emit('update:element', updatedElement)
+  emit("update:element", updatedElement);
 }
 
 function stopResize() {
-  isResizing = false
-  document.removeEventListener('mousemove', onResize)
-  document.removeEventListener('mouseup', stopResize)
+  isResizing = false;
+  document.removeEventListener("mousemove", onResize);
+  document.removeEventListener("mouseup", stopResize);
 }
 </script>
 

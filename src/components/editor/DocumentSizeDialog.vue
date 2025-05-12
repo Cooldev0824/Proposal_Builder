@@ -17,8 +17,8 @@
                 :key="size.name"
                 :value="size.name"
                 :active="selectedPaperSize.name === size.name"
-                @click="selectPaperSize(size)"
                 class="paper-size-list-item"
+                @click="selectPaperSize(size)"
               >
                 <template v-slot:prepend>
                   <div class="paper-size-icon" :style="getIconStyle(size)"></div>
@@ -85,45 +85,45 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-import { PAPER_SIZES, PaperSize } from '../../utils/paperSizes';
+import { ref, computed, watch } from "vue";
+import { PAPER_SIZES, PaperSize } from "../../utils/paperSizes";
 
 // Import styles
-import '../../assets/styles/components/documentSizeDialog.scss';
+import "../../assets/styles/components/documentSizeDialog.scss";
 
 const props = defineProps<{
   modelValue: boolean;
   paperSize?: string;
-  orientation?: 'portrait' | 'landscape';
+  orientation?: "portrait" | "landscape";
 }>();
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: boolean): void;
-  (e: 'update:paperSize', value: string): void;
-  (e: 'update:orientation', value: 'portrait' | 'landscape'): void;
-  (e: 'apply', paperSize: string, orientation: 'portrait' | 'landscape'): void;
+  (e: "update:modelValue", value: boolean): void;
+  (e: "update:paperSize", value: string): void;
+  (e: "update:orientation", value: "portrait" | "landscape"): void;
+  (e: "apply", paperSize: string, orientation: "portrait" | "landscape"): void;
 }>();
 
 const dialog = computed({
   get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value)
+  set: (value) => emit("update:modelValue", value),
 });
 
 const paperSizes = PAPER_SIZES;
 
 // Initialize with current paper size or default to A4
 const selectedPaperSize = ref(
-  paperSizes.find(size => size.name === props.paperSize) ||
-  paperSizes.find(size => size.name === 'A4') ||
-  paperSizes[0]
+  paperSizes.find((size) => size.name === props.paperSize) ||
+  paperSizes.find((size) => size.name === "A4") ||
+  paperSizes[0],
 );
 
-const selectedOrientation = ref(props.orientation || 'portrait');
+const selectedOrientation = ref(props.orientation || "portrait");
 
 // Watch for changes in props
 watch(() => props.paperSize, (newValue) => {
   if (newValue) {
-    const paperSize = paperSizes.find(size => size.name === newValue);
+    const paperSize = paperSizes.find((size) => size.name === newValue);
     if (paperSize) {
       selectedPaperSize.value = paperSize;
     }
@@ -146,9 +146,9 @@ function cancel() {
 }
 
 function apply() {
-  emit('update:paperSize', selectedPaperSize.value.name);
-  emit('update:orientation', selectedOrientation.value);
-  emit('apply', selectedPaperSize.value.name, selectedOrientation.value);
+  emit("update:paperSize", selectedPaperSize.value.name);
+  emit("update:orientation", selectedOrientation.value);
+  emit("apply", selectedPaperSize.value.name, selectedOrientation.value);
   dialog.value = false;
 }
 
@@ -173,20 +173,20 @@ function getIconStyle(size: PaperSize) {
   return {
     width: `${width}px`,
     height: `${height}px`,
-    border: '1px solid var(--v-border-color)',
-    backgroundColor: 'white',
+    border: "1px solid var(--v-border-color)",
+    backgroundColor: "white",
   };
 }
 
 // Function to get the style for the large paper preview
-function getLargePreviewStyle(size: PaperSize, orientation: 'portrait' | 'landscape') {
+function getLargePreviewStyle(size: PaperSize, orientation: "portrait" | "landscape") {
   const aspectRatio = size.width / size.height;
   const maxWidth = 250; // Maximum width in pixels
   const maxHeight = 350; // Maximum height in pixels
 
   let width, height;
 
-  if (orientation === 'landscape') {
+  if (orientation === "landscape") {
     // Swap width and height for landscape
     if (1/aspectRatio > 1) {
       // Wider paper in landscape
@@ -213,19 +213,18 @@ function getLargePreviewStyle(size: PaperSize, orientation: 'portrait' | 'landsc
   return {
     width: `${width}px`,
     height: `${height}px`,
-    border: '1px solid var(--v-border-color)',
-    backgroundColor: 'white',
+    border: "1px solid var(--v-border-color)",
+    backgroundColor: "white",
   };
 }
 
 // Function to get the dimensions text
-function getDimensionsText(size: PaperSize, orientation: 'portrait' | 'landscape') {
-  if (orientation === 'landscape') {
+function getDimensionsText(size: PaperSize, orientation: "portrait" | "landscape") {
+  if (orientation === "landscape") {
     return `${size.height}px × ${size.width}px`;
   } else {
     return `${size.width}px × ${size.height}px`;
   }
 }
 </script>
-
 

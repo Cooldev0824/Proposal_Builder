@@ -9,15 +9,19 @@
     <div v-if="isSelected" class="table-toolbar">
       <div class="toolbar-section">
         <v-btn-group variant="outlined" density="compact">
-          <v-btn icon size="small" @click="addRow" title="Add row">
+          <v-btn icon
+                 size="small"
+                 title="Add row"
+                 @click="addRow"
+          >
             <v-icon>mdi-table-row-plus-after</v-icon>
           </v-btn>
           <v-btn
             icon
             size="small"
-            @click="showDeleteRowDialog = true"
             title="Delete row"
             :disabled="element.content.rows.length <= 1"
+            @click="showDeleteRowDialog = true"
           >
             <v-icon>mdi-table-row-remove</v-icon>
           </v-btn>
@@ -26,15 +30,19 @@
 
       <div class="toolbar-section">
         <v-btn-group variant="outlined" density="compact">
-          <v-btn icon size="small" @click="addColumn" title="Add column">
+          <v-btn icon
+                 size="small"
+                 title="Add column"
+                 @click="addColumn"
+          >
             <v-icon>mdi-table-column-plus-after</v-icon>
           </v-btn>
           <v-btn
             icon
             size="small"
-            @click="showDeleteColumnDialog = true"
             title="Delete column"
             :disabled="element.content.headers.length <= 1"
+            @click="showDeleteColumnDialog = true"
           >
             <v-icon>mdi-table-column-remove</v-icon>
           </v-btn>
@@ -82,10 +90,8 @@
     <!-- Cell edit dialog -->
     <v-dialog v-model="editDialog" max-width="500">
       <v-card>
-        <v-card-title
-          >Edit
-          {{ editingCellType === "header" ? "Header" : "Cell" }}</v-card-title
-        >
+        <v-card-title>Edit
+          {{ editingCellType === "header" ? "Header" : "Cell" }}</v-card-title>
         <v-card-text>
           <v-textarea
             v-model="editingCellValue"
@@ -140,8 +146,8 @@
           <v-btn text @click="showDeleteRowDialog = false">Cancel</v-btn>
           <v-btn
             color="error"
-            @click="deleteSelectedRow"
             :disabled="!rowToDelete"
+            @click="deleteSelectedRow"
           >
             Delete
           </v-btn>
@@ -188,8 +194,8 @@
           <v-btn text @click="showDeleteColumnDialog = false">Cancel</v-btn>
           <v-btn
             color="error"
-            @click="deleteSelectedColumn"
             :disabled="!columnToDelete"
+            @click="deleteSelectedColumn"
           >
             Delete
           </v-btn>
@@ -373,7 +379,7 @@ function stopResize() {
 function editCell(
   type: "header" | "cell",
   rowIndex: number,
-  cellIndex?: number
+  cellIndex?: number,
 ) {
   editingCellType.value = type;
   editingRowIndex.value = rowIndex;

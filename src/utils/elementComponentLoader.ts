@@ -27,7 +27,7 @@ const LoadingComponent = {
  */
 export function createAsyncElementComponent(
   path: string,
-  errorMessage: string = "Error loading component"
+  errorMessage: string = "Error loading component",
 ): Component {
   return defineAsyncComponent({
     // @vite-ignore - This dynamic import is handled at runtime

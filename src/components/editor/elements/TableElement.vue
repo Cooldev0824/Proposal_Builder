@@ -10,18 +10,26 @@
     <div v-if="isSelected && !isEditingActive" class="table-toolbar">
       <div class="toolbar-section">
         <v-btn-group variant="outlined" density="compact">
-          <v-btn icon size="small" @click="addRowAbove" title="Add row above">
+          <v-btn icon
+                 size="small"
+                 title="Add row above"
+                 @click="addRowAbove"
+          >
             <v-icon>mdi-table-row-plus-before</v-icon>
           </v-btn>
-          <v-btn icon size="small" @click="addRowBelow" title="Add row below">
+          <v-btn icon
+                 size="small"
+                 title="Add row below"
+                 @click="addRowBelow"
+          >
             <v-icon>mdi-table-row-plus-after</v-icon>
           </v-btn>
           <v-btn
             icon
             size="small"
-            @click="deleteRow"
             title="Delete row"
             :disabled="element.content.rows.length <= 1"
+            @click="deleteRow"
           >
             <v-icon>mdi-table-row-remove</v-icon>
           </v-btn>
@@ -33,25 +41,25 @@
           <v-btn
             icon
             size="small"
-            @click="addColumnLeft"
             title="Add column left"
+            @click="addColumnLeft"
           >
             <v-icon>mdi-table-column-plus-before</v-icon>
           </v-btn>
           <v-btn
             icon
             size="small"
-            @click="addColumnRight"
             title="Add column right"
+            @click="addColumnRight"
           >
             <v-icon>mdi-table-column-plus-after</v-icon>
           </v-btn>
           <v-btn
             icon
             size="small"
-            @click="deleteColumn"
             title="Delete column"
             :disabled="element.content.headers.length <= 1"
+            @click="deleteColumn"
           >
             <v-icon>mdi-table-column-remove</v-icon>
           </v-btn>
@@ -60,7 +68,11 @@
 
       <div class="toolbar-section">
         <v-btn-group variant="outlined" density="compact">
-          <v-btn icon size="small" @click="startEditing" title="Edit table">
+          <v-btn icon
+                 size="small"
+                 title="Edit table"
+                 @click="startEditing"
+          >
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
         </v-btn-group>
@@ -74,24 +86,24 @@
           <v-btn
             icon
             size="small"
-            @click="applyFormatting('bold')"
             :class="{ active: activeCellFormatting.bold }"
+            @click="applyFormatting('bold')"
           >
             <v-icon>mdi-format-bold</v-icon>
           </v-btn>
           <v-btn
             icon
             size="small"
-            @click="applyFormatting('italic')"
             :class="{ active: activeCellFormatting.italic }"
+            @click="applyFormatting('italic')"
           >
             <v-icon>mdi-format-italic</v-icon>
           </v-btn>
           <v-btn
             icon
             size="small"
-            @click="applyFormatting('underline')"
             :class="{ active: activeCellFormatting.underline }"
+            @click="applyFormatting('underline')"
           >
             <v-icon>mdi-format-underline</v-icon>
           </v-btn>
@@ -103,24 +115,24 @@
           <v-btn
             icon
             size="small"
-            @click="applyAlignment('left')"
             :class="{ active: activeCellFormatting.align === 'left' }"
+            @click="applyAlignment('left')"
           >
             <v-icon>mdi-format-align-left</v-icon>
           </v-btn>
           <v-btn
             icon
             size="small"
-            @click="applyAlignment('center')"
             :class="{ active: activeCellFormatting.align === 'center' }"
+            @click="applyAlignment('center')"
           >
             <v-icon>mdi-format-align-center</v-icon>
           </v-btn>
           <v-btn
             icon
             size="small"
-            @click="applyAlignment('right')"
             :class="{ active: activeCellFormatting.align === 'right' }"
+            @click="applyAlignment('right')"
           >
             <v-icon>mdi-format-align-right</v-icon>
           </v-btn>
@@ -131,9 +143,9 @@
         <v-btn
           icon
           size="small"
-          @click="finishEditing"
           color="primary"
           title="Finish editing"
+          @click="finishEditing"
         >
           <v-icon>mdi-check</v-icon>
         </v-btn>
@@ -157,9 +169,9 @@
               @dblclick.stop="activateCell('header', -1, index)"
             >
               <div v-if="!isHeaderActive(index)" class="cell-content">
-                <div
-                  v-html="formatCellContent(header, getHeaderFormatting(index))"
-                ></div>
+                <SafeHtml
+                  :html="formatCellContent(header, getHeaderFormatting(index))"
+                />
               </div>
               <div v-else class="cell-editor">
                 <div
@@ -168,7 +180,7 @@
                   class="editable-content"
                   @blur="updateCellContent"
                   @keydown="handleCellKeyDown"
-                  v-html="header"
+                  v-text="header"
                 ></div>
               </div>
             </th>
@@ -191,14 +203,12 @@
                 v-if="!isCellActive(rowIndex, cellIndex)"
                 class="cell-content"
               >
-                <div
-                  v-html="
-                    formatCellContent(
-                      cell,
-                      getCellFormatting(rowIndex, cellIndex)
-                    )
-                  "
-                ></div>
+                <SafeHtml
+                  :html="formatCellContent(
+                    cell,
+                    getCellFormatting(rowIndex, cellIndex)
+                  )"
+                />
               </div>
               <div v-else class="cell-editor">
                 <div
@@ -207,7 +217,7 @@
                   class="editable-content"
                   @blur="updateCellContent"
                   @keydown="handleCellKeyDown"
-                  v-html="cell"
+                  v-text="cell"
                 ></div>
               </div>
             </td>
@@ -265,14 +275,14 @@
     >
       <v-list dense>
         <v-list-item
-          @click="contextMenuAction('merge')"
           :disabled="!canMergeCells"
+          @click="contextMenuAction('merge')"
         >
           <v-list-item-title>Merge cells</v-list-item-title>
         </v-list-item>
         <v-list-item
-          @click="contextMenuAction('split')"
           :disabled="!canSplitCell"
+          @click="contextMenuAction('split')"
         >
           <v-list-item-title>Split cell</v-list-item-title>
         </v-list-item>
@@ -291,14 +301,14 @@
         </v-list-item>
         <v-divider></v-divider>
         <v-list-item
-          @click="contextMenuAction('deleteRow')"
           :disabled="element.content.rows.length <= 1"
+          @click="contextMenuAction('deleteRow')"
         >
           <v-list-item-title>Delete row</v-list-item-title>
         </v-list-item>
         <v-list-item
-          @click="contextMenuAction('deleteColumn')"
           :disabled="element.content.headers.length <= 1"
+          @click="contextMenuAction('deleteColumn')"
         >
           <v-list-item-title>Delete column</v-list-item-title>
         </v-list-item>
@@ -311,9 +321,10 @@
 import { computed, ref, nextTick, onMounted, onBeforeUnmount } from "vue";
 import { DocumentElement } from "../../../types/document";
 import type { CSSProperties } from "vue";
+import SafeHtml from "../../common/SafeHtml.vue";
 
 // Import styles
-import '../../../assets/styles/components/tableElement.scss';
+import "../../../assets/styles/components/tableElement.scss";
 
 interface CellFormatting {
   bold?: boolean;
@@ -524,7 +535,7 @@ function getHeaderFormatting(index: number): CellFormatting {
 // Get cell formatting for a specific cell
 function getCellFormatting(
   rowIndex: number,
-  cellIndex: number
+  cellIndex: number,
 ): CellFormatting {
   return tableData.value.cellFormatting?.[rowIndex]?.[cellIndex] || {};
 }
@@ -532,7 +543,7 @@ function getCellFormatting(
 // Format cell content with HTML based on formatting
 function formatCellContent(
   content: string,
-  formatting: CellFormatting
+  formatting: CellFormatting,
 ): string {
   let formattedContent = content;
 
@@ -806,7 +817,7 @@ function getRowPosition(index: number): number {
 // Cell selection and editing
 function isHeaderSelected(index: number): boolean {
   return selectedCells.value.some(
-    (cell) => cell.type === "header" && cell.cellIndex === index
+    (cell) => cell.type === "header" && cell.cellIndex === index,
   );
 }
 
@@ -823,7 +834,7 @@ function isCellSelected(rowIndex: number, cellIndex: number): boolean {
     (cell) =>
       cell.type === "cell" &&
       cell.rowIndex === rowIndex &&
-      cell.cellIndex === cellIndex
+      cell.cellIndex === cellIndex,
   );
 }
 
@@ -839,7 +850,7 @@ function isCellActive(rowIndex: number, cellIndex: number): boolean {
 function selectCell(
   type: "header" | "cell",
   rowIndex: number,
-  cellIndex: number
+  cellIndex: number,
 ) {
   if (!isEditingActive.value) return;
 
@@ -853,7 +864,7 @@ function selectCell(
       (cell) =>
         cell.type === type &&
         cell.rowIndex === rowIndex &&
-        cell.cellIndex === cellIndex
+        cell.cellIndex === cellIndex,
     );
 
     // If not already selected, add to selection
@@ -867,7 +878,7 @@ function selectCell(
             cell.type === type &&
             cell.rowIndex === rowIndex &&
             cell.cellIndex === cellIndex
-          )
+          ),
       );
     }
   } else {
@@ -882,7 +893,7 @@ function selectCell(
 function activateCell(
   type: "header" | "cell",
   rowIndex: number,
-  cellIndex: number
+  cellIndex: number,
 ) {
   if (!isEditingActive.value) return;
 
@@ -1005,7 +1016,7 @@ function navigateToNextCell(reverse = false) {
           activateCell(
             "cell",
             rowIndex - 1,
-            tableData.value.rows[rowIndex - 1].length - 1
+            tableData.value.rows[rowIndex - 1].length - 1,
           );
         }
       } else {
@@ -1243,7 +1254,7 @@ function deleteRow() {
 
   // Clear selection if it contained the deleted row
   selectedCells.value = selectedCells.value.filter(
-    (cell) => cell.type !== "cell" || cell.rowIndex !== rowIndex
+    (cell) => cell.type !== "cell" || cell.rowIndex !== rowIndex,
   );
 
   // Clear active cell if it was in the deleted row
@@ -1336,7 +1347,7 @@ function deleteColumn() {
 
   // Clear selection if it contained the deleted column
   selectedCells.value = selectedCells.value.filter(
-    (cell) => cell.cellIndex !== columnIndex
+    (cell) => cell.cellIndex !== columnIndex,
   );
 
   // Clear active cell if it was in the deleted column
@@ -1353,30 +1364,30 @@ function contextMenuAction(action: string) {
   showContextMenu.value = false;
 
   switch (action) {
-    case "merge":
-      mergeCells();
-      break;
-    case "split":
-      splitCell();
-      break;
-    case "insertRowAbove":
-      addRowAbove();
-      break;
-    case "insertRowBelow":
-      addRowBelow();
-      break;
-    case "insertColumnLeft":
-      addColumnLeft();
-      break;
-    case "insertColumnRight":
-      addColumnRight();
-      break;
-    case "deleteRow":
-      deleteRow();
-      break;
-    case "deleteColumn":
-      deleteColumn();
-      break;
+  case "merge":
+    mergeCells();
+    break;
+  case "split":
+    splitCell();
+    break;
+  case "insertRowAbove":
+    addRowAbove();
+    break;
+  case "insertRowBelow":
+    addRowBelow();
+    break;
+  case "insertColumnLeft":
+    addColumnLeft();
+    break;
+  case "insertColumnRight":
+    addColumnRight();
+    break;
+  case "deleteRow":
+    deleteRow();
+    break;
+  case "deleteColumn":
+    deleteColumn();
+    break;
   }
 }
 
@@ -1417,5 +1428,4 @@ function handleDocumentClick() {
   showContextMenu.value = false;
 }
 </script>
-
 

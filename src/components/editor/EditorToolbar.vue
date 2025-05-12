@@ -4,7 +4,7 @@ import { ref, watch } from "vue";
 import { PAPER_SIZES } from "../../utils/paperSizes";
 
 // Import styles
-import '../../assets/styles/components/editorToolbar.scss';
+import "../../assets/styles/components/editorToolbar.scss";
 
 // 2. Functions
 function isActive(tool: string) {
@@ -47,7 +47,7 @@ const paperSizes = PAPER_SIZES;
 const selectedPaperSize = ref(
   paperSizes.find((size) => size.name === props.paperSize) ||
     paperSizes.find((size) => size.name === "Letter") ||
-    paperSizes[0]
+    paperSizes[0],
 );
 const selectedOrientation = ref(props.orientation || "portrait");
 
@@ -62,7 +62,7 @@ watch(
       }
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // Watch for changes to the orientation prop
@@ -73,7 +73,7 @@ watch(
       selectedOrientation.value = newValue;
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // Watch for changes to the showGrid prop
@@ -85,14 +85,14 @@ watch(
       console.log("Grid visibility updated in toolbar:", showGrid.value);
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
 
 <template>
   <div class="editor-toolbar">
     <div class="toolbar-group">
-      <v-btn @click="$emit('navigate-to-dashboard')" class="mr-2">
+      <v-btn class="mr-2" @click="$emit('navigate-to-dashboard')">
         <v-icon left>mdi-arrow-left</v-icon>
         Dashboard
       </v-btn>
@@ -105,7 +105,7 @@ watch(
     <div class="toolbar-divider"></div>
 
     <div class="toolbar-group">
-      <v-btn icon @click="$emit('tool-clicked', 'add-page')" size="small">
+      <v-btn icon size="small" @click="$emit('tool-clicked', 'add-page')">
         <v-icon>mdi-file-plus</v-icon>
         <v-tooltip activator="parent" location="bottom">Add Page</v-tooltip>
       </v-btn>
@@ -116,18 +116,18 @@ watch(
     <div class="toolbar-group">
       <v-btn
         icon
-        @click="$emit('tool-clicked', 'text')"
         size="small"
         :color="isActive('text') ? 'primary' : ''"
+        @click="$emit('tool-clicked', 'text')"
       >
         <v-icon>mdi-format-text</v-icon>
         <v-tooltip activator="parent" location="bottom">Add Text</v-tooltip>
       </v-btn>
       <v-btn
         icon
-        @click="$emit('tool-clicked', 'image')"
         size="small"
         :color="isActive('image') ? 'primary' : ''"
+        @click="$emit('tool-clicked', 'image')"
       >
         <v-icon>mdi-image</v-icon>
         <v-tooltip activator="parent" location="bottom">Add Image</v-tooltip>
@@ -141,9 +141,9 @@ watch(
             :color="isActive('shape') ? 'primary' : ''"
           >
             <v-icon>mdi-shape</v-icon>
-            <v-tooltip activator="parent" location="bottom"
-              >Add Shape</v-tooltip
-            >
+            <v-tooltip activator="parent"
+                       location="bottom"
+            >Add Shape</v-tooltip>
           </v-btn>
         </template>
         <v-list>
@@ -175,38 +175,38 @@ watch(
       </v-menu>
       <v-btn
         icon
-        @click="$emit('tool-clicked', 'line')"
         size="small"
         :color="isActive('line') ? 'primary' : ''"
+        @click="$emit('tool-clicked', 'line')"
       >
         <v-icon>mdi-minus</v-icon>
         <v-tooltip activator="parent" location="bottom">Add Line</v-tooltip>
       </v-btn>
       <v-btn
         icon
-        @click="$emit('tool-clicked', 'table')"
         size="small"
         :color="isActive('table') ? 'primary' : ''"
+        @click="$emit('tool-clicked', 'table')"
       >
         <v-icon>mdi-table</v-icon>
         <v-tooltip activator="parent" location="bottom">Add Table</v-tooltip>
       </v-btn>
       <v-btn
         icon
-        @click="$emit('tool-clicked', 'signature')"
         size="small"
         :color="isActive('signature') ? 'primary' : ''"
+        @click="$emit('tool-clicked', 'signature')"
       >
         <v-icon>mdi-draw</v-icon>
-        <v-tooltip activator="parent" location="bottom"
-          >Add Signature</v-tooltip
-        >
+        <v-tooltip activator="parent"
+                   location="bottom"
+        >Add Signature</v-tooltip>
       </v-btn>
       <v-btn
         icon
-        @click="$emit('tool-clicked', 'form')"
         size="small"
         :color="isActive('form') ? 'primary' : ''"
+        @click="$emit('tool-clicked', 'form')"
       >
         <v-icon>mdi-form-select</v-icon>
         <v-tooltip activator="parent" location="bottom">Add Form</v-tooltip>
@@ -218,10 +218,10 @@ watch(
     <div class="toolbar-group">
       <!-- Document size button -->
       <v-btn
-        @click="openDocumentSizeDialog"
         size="small"
         variant="outlined"
         class="document-size-btn"
+        @click="openDocumentSizeDialog"
       >
         <v-icon class="mr-1">mdi-file-document-outline</v-icon>
         <span>{{ selectedPaperSize.name }} ({{ selectedOrientation }})</span>
@@ -233,11 +233,11 @@ watch(
     <v-spacer></v-spacer>
 
     <div class="toolbar-group">
-      <v-btn icon @click="$emit('tool-clicked', 'zoom-in')" size="small">
+      <v-btn icon size="small" @click="$emit('tool-clicked', 'zoom-in')">
         <v-icon>mdi-magnify-plus</v-icon>
         <v-tooltip activator="parent" location="bottom">Zoom In</v-tooltip>
       </v-btn>
-      <v-btn icon @click="$emit('tool-clicked', 'zoom-out')" size="small">
+      <v-btn icon size="small" @click="$emit('tool-clicked', 'zoom-out')">
         <v-icon>mdi-magnify-minus</v-icon>
         <v-tooltip activator="parent" location="bottom">Zoom Out</v-tooltip>
       </v-btn>
@@ -248,16 +248,16 @@ watch(
     <div class="toolbar-group">
       <v-btn
         color="primary"
-        @click="$emit('save')"
         :loading="isSaving"
         :disabled="isSaving"
+        @click="$emit('save')"
       >
         <v-icon left>mdi-content-save</v-icon>
         Save
       </v-btn>
 
       <!-- Save status indicator -->
-      <div class="save-status" v-if="saveMessage">
+      <div v-if="saveMessage" class="save-status">
         <v-icon v-if="saveSuccess" color="success" size="small">
           mdi-check-circle
         </v-icon>
@@ -280,10 +280,10 @@ watch(
       </v-btn>
 
       <v-btn
-        @click="$emit('tool-clicked', 'export-pdf')"
         color="success"
         :loading="isExportingPdf"
         :disabled="isExportingPdf"
+        @click="$emit('tool-clicked', 'export-pdf')"
       >
         <v-icon left>mdi-file-pdf-box</v-icon>
         Export PDF
@@ -293,8 +293,8 @@ watch(
       <v-btn
         v-if="documentId && !documentId.startsWith('new-doc')"
         color="error"
-        @click="$emit('delete-document')"
         class="ml-2"
+        @click="$emit('delete-document')"
       >
         <v-icon left>mdi-delete</v-icon>
         Delete
@@ -302,5 +302,4 @@ watch(
     </div>
   </div>
 </template>
-
 

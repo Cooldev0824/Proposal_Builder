@@ -169,7 +169,7 @@ watch(
     lineStyle.value = newValue.style?.lineStyle || "solid";
     rotation.value = newValue.style?.rotation || 0;
   },
-  { deep: true }
+  { deep: true },
 );
 
 function updateElement(updates: Partial<typeof props.element.style>) {

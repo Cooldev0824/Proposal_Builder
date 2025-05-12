@@ -96,7 +96,7 @@ export function clearSelection(): void {
  */
 export function applyFormatting(
   command: string,
-  value: string | boolean | null = null
+  value: string | boolean | null = null,
 ): boolean {
   // Don't interfere with input fields
   if (isInputActive()) {
@@ -146,33 +146,34 @@ export function applyFormatting(
       let styleValue: string;
 
       switch (command) {
-        case "foreColor":
-          styleProperty = "color";
-          styleValue = value as string;
-          break;
-        case "backColor":
-          styleProperty = "backgroundColor";
-          styleValue = value as string;
-          break;
-        case "fontSize":
-          styleProperty = "fontSize";
-          styleValue = `${value}px`;
-          break;
-        default:
-          // For other commands, try the standard execCommand
-          document.execCommand("styleWithCSS", false, "true");
-          const result = document.execCommand(command, false, value as string);
+      case "foreColor":
+        styleProperty = "color";
+        styleValue = value as string;
+        break;
+      case "backColor":
+        styleProperty = "backgroundColor";
+        styleValue = value as string;
+        break;
+      case "fontSize":
+        styleProperty = "fontSize";
+        styleValue = `${value}px`;
+        break;
+      default: {
+        // For other commands, try the standard execCommand
+        document.execCommand("styleWithCSS", false, "true");
+        const result = document.execCommand(command, false, value as string);
 
-          // Save the selection again to preserve it for future operations
-          saveSelection();
+        // Save the selection again to preserve it for future operations
+        saveSelection();
 
-          return result;
+        return result;
+      }
       }
 
       return applyStyleToMultiLineSelection(
         currentRange,
         styleProperty,
-        styleValue
+        styleValue,
       );
     } else {
       // For single-line selections or other commands, use the standard execCommand
@@ -258,7 +259,7 @@ export function applyFontSize(fontSize: number): boolean {
     const result = applyStyleToMultiLineSelection(
       currentRange,
       "fontSize",
-      `${fontSize}px`
+      `${fontSize}px`,
     );
 
     if (result) {
@@ -404,7 +405,7 @@ export function applyBackgroundColor(color: string): boolean {
     const result = applyStyleToMultiLineSelection(
       currentRange,
       "backgroundColor",
-      color
+      color,
     );
 
     if (result) {
@@ -435,7 +436,7 @@ export function applyBackgroundColor(color: string): boolean {
  */
 export function applyTextAndBackgroundColor(
   textColor: string,
-  backgroundColor: string
+  backgroundColor: string,
 ): boolean {
   if (!savedRange || !savedElement) {
     return false;
@@ -534,10 +535,10 @@ export function applyTextAndBackgroundColor(
  * Apply text alignment to the saved selection
  */
 export function applyTextAlignment(
-  alignment: "left" | "center" | "right" | "justify"
+  alignment: "left" | "center" | "right" | "justify",
 ): boolean {
   const command = `justify${alignment.charAt(0).toUpperCase()}${alignment.slice(
-    1
+    1,
   )}`;
   return applyFormatting(command);
 }
@@ -587,7 +588,7 @@ export function isMultiLineSelection(range: Range): boolean {
     // Check for block elements and line breaks in the selection
     const containsBlockElements =
       tempDiv.querySelector(
-        "div, p, h1, h2, h3, h4, h5, h6, ul, ol, li, blockquote, table, tr, td, th"
+        "div, p, h1, h2, h3, h4, h5, h6, ul, ol, li, blockquote, table, tr, td, th",
       ) !== null;
     const containsLineBreaks = tempDiv.querySelector("br") !== null;
 
@@ -609,7 +610,7 @@ export function isMultiLineSelection(range: Range): boolean {
               ? NodeFilter.FILTER_ACCEPT
               : NodeFilter.FILTER_REJECT;
           },
-        }
+        },
       );
 
       let node;
@@ -631,14 +632,14 @@ export function isMultiLineSelection(range: Range): boolean {
           for (let i = startNodeIndex; i <= endNodeIndex; i++) {
             const node = textNodes[i];
             const parentParagraph = node.parentElement?.closest(
-              "p, div, li, td, th, h1, h2, h3, h4, h5, h6"
+              "p, div, li, td, th, h1, h2, h3, h4, h5, h6",
             );
 
             if (parentParagraph) {
               for (let j = i + 1; j <= endNodeIndex; j++) {
                 const otherNode = textNodes[j];
                 const otherParentParagraph = otherNode.parentElement?.closest(
-                  "p, div, li, td, th, h1, h2, h3, h4, h5, h6"
+                  "p, div, li, td, th, h1, h2, h3, h4, h5, h6",
                 );
 
                 if (
@@ -677,7 +678,7 @@ export function isMultiLineSelection(range: Range): boolean {
 export function applyStyleToMultiLineSelection(
   range: Range,
   styleProperty: string,
-  value: string
+  value: string,
 ): boolean {
   try {
     // First, try using the document.execCommand approach (most reliable)
@@ -744,7 +745,7 @@ export function applyStyleToMultiLineSelection(
 
     // If execCommand fails, try the surroundContents approach
     console.log(
-      `execCommand failed, trying surroundContents for ${styleProperty}`
+      `execCommand failed, trying surroundContents for ${styleProperty}`,
     );
 
     try {
@@ -770,13 +771,13 @@ export function applyStyleToMultiLineSelection(
       }
 
       console.log(
-        `Applied ${styleProperty}: ${value} to selection using surroundContents`
+        `Applied ${styleProperty}: ${value} to selection using surroundContents`,
       );
       return true;
     } catch (error) {
       console.error(
         "surroundContents failed, trying iterative approach:",
-        error
+        error,
       );
 
       // If surroundContents fails, use a more complex approach for multi-line selections
@@ -842,7 +843,7 @@ export function applyStyleToMultiLineSelection(
         }
 
         console.log(
-          `Applied ${styleProperty}: ${value} to multi-line selection using iterative approach`
+          `Applied ${styleProperty}: ${value} to multi-line selection using iterative approach`,
         );
         return true;
       } catch (error) {
@@ -876,7 +877,7 @@ export function applyStyleToMultiLineSelection(
           }
 
           console.log(
-            `Applied ${styleProperty}: ${value} to selection using fallback approach`
+            `Applied ${styleProperty}: ${value} to selection using fallback approach`,
           );
           return true;
         } catch (finalError) {
@@ -886,7 +887,7 @@ export function applyStyleToMultiLineSelection(
       }
     }
   } catch (error) {
-    console.error(`Error applying style to multi-line selection:`, error);
+    console.error("Error applying style to multi-line selection:", error);
     return false;
   }
 }
@@ -920,7 +921,7 @@ function getAllTextNodes(container: Node): Node[] {
 function processNodesForStyling(
   container: Node,
   styleProperty: string,
-  value: string
+  value: string,
 ): void {
   try {
     // Use a different approach based on the node type
@@ -996,7 +997,7 @@ function processNodesForStyling(
  */
 export function applyStyleDirectly(
   styleProperty: string,
-  value: string
+  value: string,
 ): boolean {
   if (!savedRange || !savedElement) {
     console.error("Cannot apply style: No saved selection");
@@ -1045,13 +1046,13 @@ export function applyStyleDirectly(
       savedRange = newRange.cloneRange();
 
       console.log(
-        `Applied ${styleProperty}: ${value} to selection using direct method`
+        `Applied ${styleProperty}: ${value} to selection using direct method`,
       );
       return true;
     } catch (error) {
       console.error(
         "Error with surroundContents, falling back to execCommand:",
-        error
+        error,
       );
 
       // Try execCommand as a last resort
@@ -1080,7 +1081,7 @@ export function applyStyleDirectly(
       return false;
     }
   } catch (error) {
-    console.error(`Error applying style directly:`, error);
+    console.error("Error applying style directly:", error);
     return false;
   }
 }
@@ -1091,7 +1092,7 @@ export function applyStyleDirectly(
  */
 export function directlyApplyStyle(
   styleProperty: string,
-  value: string
+  value: string,
 ): boolean {
   if (!savedRange || !savedElement) {
     console.error(`Cannot apply ${styleProperty}: No saved selection`);
@@ -1175,7 +1176,7 @@ export function directlyApplyStyle(
       } catch (error) {
         console.error(
           "Error applying font size with direct span approach:",
-          error
+          error,
         );
 
         // Fall back to execCommand as a last resort
@@ -1207,7 +1208,7 @@ export function directlyApplyStyle(
         } catch (fallbackError) {
           console.error(
             "Error applying font size with fallback approach:",
-            fallbackError
+            fallbackError,
           );
           return false;
         }
@@ -1242,29 +1243,29 @@ export function directlyApplyStyle(
 
         // Set appropriate styles based on heading level
         switch (headingLevel) {
-          case 1: // H1
-            headingElement.style.fontSize = "32px";
-            headingElement.style.fontWeight = "bold";
-            headingElement.style.marginBottom = "16px";
-            headingElement.style.color = "#333";
-            break;
-          case 2: // H2
-            headingElement.style.fontSize = "28px";
-            headingElement.style.fontWeight = "bold";
-            headingElement.style.marginBottom = "14px";
-            headingElement.style.color = "#444";
-            break;
-          case 3: // H3
-            headingElement.style.fontSize = "24px";
-            headingElement.style.fontWeight = "bold";
-            headingElement.style.marginBottom = "12px";
-            headingElement.style.color = "#555";
-            break;
-          default: // H4-H6
-            headingElement.style.fontSize = 28 - headingLevel * 2 + "px";
-            headingElement.style.fontWeight = "bold";
-            headingElement.style.marginBottom = "10px";
-            break;
+        case 1: // H1
+          headingElement.style.fontSize = "32px";
+          headingElement.style.fontWeight = "bold";
+          headingElement.style.marginBottom = "16px";
+          headingElement.style.color = "#333";
+          break;
+        case 2: // H2
+          headingElement.style.fontSize = "28px";
+          headingElement.style.fontWeight = "bold";
+          headingElement.style.marginBottom = "14px";
+          headingElement.style.color = "#444";
+          break;
+        case 3: // H3
+          headingElement.style.fontSize = "24px";
+          headingElement.style.fontWeight = "bold";
+          headingElement.style.marginBottom = "12px";
+          headingElement.style.color = "#555";
+          break;
+        default: // H4-H6
+          headingElement.style.fontSize = 28 - headingLevel * 2 + "px";
+          headingElement.style.fontWeight = "bold";
+          headingElement.style.marginBottom = "10px";
+          break;
         }
 
         // Add the fragment to the heading element
@@ -1294,7 +1295,7 @@ export function directlyApplyStyle(
 
     // For other properties, use execCommand
     let command = "";
-    let commandValue = value;
+    const commandValue = value;
 
     if (styleProperty === "color") {
       command = "foreColor";
@@ -1306,7 +1307,7 @@ export function directlyApplyStyle(
     }
 
     console.log(
-      `Applying ${styleProperty} with value ${value} using execCommand ${command}`
+      `Applying ${styleProperty} with value ${value} using execCommand ${command}`,
     );
     const result = document.execCommand(command, false, commandValue);
 
@@ -1327,7 +1328,7 @@ export function directlyApplyStyle(
  */
 function applyFontSizeToMultiLineSelection(
   range: Range,
-  fontSize: string
+  fontSize: string,
 ): boolean {
   try {
     console.log("Applying font size to multi-line selection:", fontSize);

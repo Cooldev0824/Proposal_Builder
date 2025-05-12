@@ -19,8 +19,8 @@
           color="primary"
           variant="outlined"
           size="small"
-          @click="openSignatureCanvas"
           class="action-btn"
+          @click="openSignatureCanvas"
         >
           <v-icon left>mdi-pencil</v-icon>
           Edit
@@ -29,8 +29,8 @@
           color="error"
           variant="outlined"
           size="small"
-          @click="clearSavedSignature"
           class="action-btn"
+          @click="clearSavedSignature"
         >
           <v-icon left>mdi-delete</v-icon>
           Clear

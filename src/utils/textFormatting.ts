@@ -11,7 +11,7 @@
 export function formatSelection(command: string, value: string | boolean | null = null): boolean {
   try {
     // Make sure we have focus
-    document.execCommand('styleWithCSS', false, 'true');
+    document.execCommand("styleWithCSS", false, "true");
     return document.execCommand(command, false, value as string);
   } catch (error) {
     console.error(`Error applying format ${command}:`, error);
@@ -23,21 +23,21 @@ export function formatSelection(command: string, value: string | boolean | null 
  * Apply bold formatting to the current selection
  */
 export function toggleBold(): boolean {
-  return formatSelection('bold');
+  return formatSelection("bold");
 }
 
 /**
  * Apply italic formatting to the current selection
  */
 export function toggleItalic(): boolean {
-  return formatSelection('italic');
+  return formatSelection("italic");
 }
 
 /**
  * Apply underline formatting to the current selection
  */
 export function toggleUnderline(): boolean {
-  return formatSelection('underline');
+  return formatSelection("underline");
 }
 
 /**
@@ -45,7 +45,7 @@ export function toggleUnderline(): boolean {
  * @param fontFamily The font family to apply
  */
 export function setFontFamily(fontFamily: string): boolean {
-  return formatSelection('fontName', fontFamily);
+  return formatSelection("fontName", fontFamily);
 }
 
 /**
@@ -53,7 +53,7 @@ export function setFontFamily(fontFamily: string): boolean {
  * @param fontSize The font size to apply (in px)
  */
 export function setFontSize(fontSize: number): boolean {
-  return formatSelection('fontSize', fontSize.toString());
+  return formatSelection("fontSize", fontSize.toString());
 }
 
 /**
@@ -61,7 +61,7 @@ export function setFontSize(fontSize: number): boolean {
  * @param color The color to apply (CSS color value)
  */
 export function setTextColor(color: string): boolean {
-  return formatSelection('foreColor', color);
+  return formatSelection("foreColor", color);
 }
 
 /**
@@ -69,14 +69,14 @@ export function setTextColor(color: string): boolean {
  * @param color The color to apply (CSS color value)
  */
 export function setBackgroundColor(color: string): boolean {
-  return formatSelection('backColor', color);
+  return formatSelection("backColor", color);
 }
 
 /**
  * Set the text alignment for the current selection
  * @param alignment The alignment to apply ('left', 'center', 'right', 'justify')
  */
-export function setTextAlignment(alignment: 'left' | 'center' | 'right' | 'justify'): boolean {
+export function setTextAlignment(alignment: "left" | "center" | "right" | "justify"): boolean {
   const command = `justify${alignment.charAt(0).toUpperCase()}${alignment.slice(1)}`;
   return formatSelection(command);
 }
@@ -105,7 +105,7 @@ export function getFormattingValue(command: string): string {
     return document.queryCommandValue(command);
   } catch (error) {
     console.error(`Error getting format value ${command}:`, error);
-    return '';
+    return "";
   }
 }
 
@@ -113,47 +113,47 @@ export function getFormattingValue(command: string): string {
  * Check if the current selection has bold formatting
  */
 export function hasBold(): boolean {
-  return hasFormatting('bold');
+  return hasFormatting("bold");
 }
 
 /**
  * Check if the current selection has italic formatting
  */
 export function hasItalic(): boolean {
-  return hasFormatting('italic');
+  return hasFormatting("italic");
 }
 
 /**
  * Check if the current selection has underline formatting
  */
 export function hasUnderline(): boolean {
-  return hasFormatting('underline');
+  return hasFormatting("underline");
 }
 
 /**
  * Get the font family of the current selection
  */
 export function getFontFamily(): string {
-  return getFormattingValue('fontName');
+  return getFormattingValue("fontName");
 }
 
 /**
  * Get the font size of the current selection
  */
 export function getFontSize(): string {
-  return getFormattingValue('fontSize');
+  return getFormattingValue("fontSize");
 }
 
 /**
  * Get the text color of the current selection
  */
 export function getTextColor(): string {
-  return getFormattingValue('foreColor');
+  return getFormattingValue("foreColor");
 }
 
 /**
  * Get the background color of the current selection
  */
 export function getBackgroundColor(): string {
-  return getFormattingValue('backColor');
+  return getFormattingValue("backColor");
 }

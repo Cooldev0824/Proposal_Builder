@@ -2,7 +2,7 @@
   <div class="document-page-container">
     <!-- Actual document page -->
     <div class="document-page" :class="{ active: isActive }" :style="pageStyle">
-      <div class="page-content" ref="pageContent">
+      <div ref="pageContent" class="page-content">
         <!-- Element toolbar positioned at the top of the page content -->
         <ElementToolbar
           v-if="selectedElement && selectedElementPosition"
@@ -30,13 +30,13 @@
               >
                 <component
                   :is="getElementComponent(element.type)"
+                  ref="elementRefs"
                   :element="element"
                   :isSelected="selectedElement?.id === element.id"
-                  @click.stop="selectElement(element)"
-                  @update:element="updateElement"
-                  ref="elementRefs"
                   :data-element-id="element.id"
                   :class="`element-${element.id}`"
+                  @click.stop="selectElement(element)"
+                  @update:element="updateElement"
                 />
               </div>
             </div>
@@ -49,9 +49,9 @@
         <div
           v-if="
             !section ||
-            !section?.elements ||
-            !Array.isArray(section.elements) ||
-            !section.elements?.length
+              !section?.elements ||
+              !Array.isArray(section.elements) ||
+              !section.elements?.length
           "
           class="empty-page"
         >
@@ -84,7 +84,7 @@ import {
   onMounted,
   onBeforeUnmount,
   onErrorCaptured,
-  type CSSProperties
+  type CSSProperties,
 } from "vue";
 import { Section, DocumentElement } from "../../types/document";
 import ElementToolbar from "./ElementToolbar.vue";
@@ -92,7 +92,7 @@ import { getPaperSizeByName, getLandscapeSize } from "../../utils/paperSizes";
 import { getElementComponent } from "../../utils/elementComponentLoader";
 
 // Import styles
-import '../../assets/styles/components/documentPage.scss';
+import "../../assets/styles/components/documentPage.scss";
 
 // 2. Types
 /**
@@ -242,7 +242,7 @@ watch(
       showGrid.value = newValue;
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 /**
@@ -255,7 +255,7 @@ watch(
     nextTick(() => {
       calculateSelectedElementPosition();
     });
-  }
+  },
 );
 
 // 7. Methods
@@ -283,7 +283,7 @@ function calculateSelectedElementPosition(): void {
 
   // Try to find the element by data-element-id attribute first
   let elementDom = pageContent.value.querySelector(
-    `[data-element-id="${elementId}"]`
+    `[data-element-id="${elementId}"]`,
   );
 
   // If not found, try to find the element wrapper that contains this element
@@ -412,5 +412,4 @@ onErrorCaptured((error, instance, info) => {
   return false; // prevent error from propagating
 });
 </script>
-
 

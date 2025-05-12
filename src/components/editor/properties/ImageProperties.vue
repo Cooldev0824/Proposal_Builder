@@ -162,7 +162,7 @@ watch(
     backgroundColor.value = newValue.style?.backgroundColor || "";
     opacity.value = newValue.style?.opacity || 1;
   },
-  { deep: true }
+  { deep: true },
 );
 
 function handlePreviewError() {

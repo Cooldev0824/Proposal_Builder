@@ -1,8 +1,8 @@
-import axios from 'axios';
-import type { Document } from '../types/document';
+import axios from "axios";
+import type { Document } from "../types/document";
 
 // API base URL - change this to match your server
-const API_URL = 'http://localhost:3000/api';
+const API_URL = "http://localhost:3000/api";
 
 /**
  * Document Service
@@ -18,7 +18,7 @@ export const documentService = {
       const response = await axios.get(`${API_URL}/documents`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching documents:', error);
+      console.error("Error fetching documents:", error);
       throw error;
     }
   },
@@ -48,7 +48,7 @@ export const documentService = {
       const response = await axios.post(`${API_URL}/documents`, document);
       return response.data;
     } catch (error) {
-      console.error('Error saving document:', error);
+      console.error("Error saving document:", error);
       throw error;
     }
   },
@@ -73,21 +73,21 @@ export const documentService = {
    * @param title Document title
    * @returns New document object
    */
-  createNewDocument(title: string = 'Untitled Document'): Document {
+  createNewDocument(title: string = "Untitled Document"): Document {
     return {
       id: `new-doc-${Date.now()}`,
       title,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      paperSize: 'Letter',
-      orientation: 'portrait',
+      paperSize: "Letter",
+      orientation: "portrait",
       sections: [
         {
-          id: 'cover',
-          title: 'Cover',
-          elements: []
-        }
-      ]
+          id: "cover",
+          title: "Cover",
+          elements: [],
+        },
+      ],
     };
   },
 
@@ -100,10 +100,10 @@ export const documentService = {
       const response = await axios.delete(`${API_URL}/cleanup/images`);
       return response.data;
     } catch (error) {
-      console.error('Error cleaning up orphaned images:', error);
+      console.error("Error cleaning up orphaned images:", error);
       throw error;
     }
-  }
+  },
 };
 
 export default documentService;

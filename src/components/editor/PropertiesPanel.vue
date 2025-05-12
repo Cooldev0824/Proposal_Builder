@@ -14,18 +14,18 @@ import "../../assets/styles/components/propertiesPanel.scss";
 // 2. Functions
 function getPropertiesComponent(type: string) {
   switch (type) {
-    case "text":
-      return TextProperties;
-    case "image":
-      return ImageProperties;
-    case "shape":
-      return ShapeProperties;
-    case "table":
-      return TableProperties;
-    case "form":
-      return FormProperties;
-    default:
-      return null;
+  case "text":
+    return TextProperties;
+  case "image":
+    return ImageProperties;
+  case "shape":
+    return ShapeProperties;
+  case "table":
+    return TableProperties;
+  case "form":
+    return FormProperties;
+  default:
+    return null;
   }
 }
 
@@ -55,7 +55,7 @@ watch(
       size.value = { ...newValue.size };
     }
   },
-  { immediate: true, deep: true }
+  { immediate: true, deep: true },
 );
 
 // Simplified update functions

@@ -64,7 +64,7 @@ export const useDocumentStore = defineStore("documents", () => {
 
       // Update local cache
       const index = documents.value.findIndex(
-        (doc) => doc.id === savedDocument.id
+        (doc) => doc.id === savedDocument.id,
       );
       if (index >= 0) {
         // Update existing document in cache

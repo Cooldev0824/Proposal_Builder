@@ -150,8 +150,8 @@
         :color="listType === 'bullet' ? 'primary' : undefined"
         icon
         size="small"
-        @click="toggleBulletList"
         title="Bullet List"
+        @click="toggleBulletList"
       >
         <v-icon>mdi-format-list-bulleted</v-icon>
       </v-btn>
@@ -160,17 +160,25 @@
         :color="listType === 'number' ? 'primary' : undefined"
         icon
         size="small"
-        @click="toggleNumberedList"
         title="Numbered List"
+        @click="toggleNumberedList"
       >
         <v-icon>mdi-format-list-numbered</v-icon>
       </v-btn>
 
-      <v-btn icon size="small" @click="increaseIndent" title="Increase Indent">
+      <v-btn icon
+             size="small"
+             title="Increase Indent"
+             @click="increaseIndent"
+      >
         <v-icon>mdi-format-indent-increase</v-icon>
       </v-btn>
 
-      <v-btn icon size="small" @click="decreaseIndent" title="Decrease Indent">
+      <v-btn icon
+             size="small"
+             title="Decrease Indent"
+             @click="decreaseIndent"
+      >
         <v-icon>mdi-format-indent-decrease</v-icon>
       </v-btn>
     </div>
@@ -179,8 +187,8 @@
       <v-btn
         icon
         size="small"
-        @click="transformText('uppercase')"
         title="UPPERCASE"
+        @click="transformText('uppercase')"
       >
         <v-icon>mdi-format-letter-case-upper</v-icon>
       </v-btn>
@@ -188,8 +196,8 @@
       <v-btn
         icon
         size="small"
-        @click="transformText('lowercase')"
         title="lowercase"
+        @click="transformText('lowercase')"
       >
         <v-icon>mdi-format-letter-case-lower</v-icon>
       </v-btn>
@@ -197,8 +205,8 @@
       <v-btn
         icon
         size="small"
-        @click="transformText('capitalize')"
         title="Capitalize"
+        @click="transformText('capitalize')"
       >
         <v-icon>mdi-format-letter-case</v-icon>
       </v-btn>
@@ -206,8 +214,8 @@
       <v-btn
         icon
         size="small"
-        @click="clearFormatting"
         title="Clear Formatting"
+        @click="clearFormatting"
       >
         <v-icon>mdi-format-clear</v-icon>
       </v-btn>
@@ -215,12 +223,11 @@
 
     <div class="first-line-indent mb-4 mt-4">
       <div class="d-flex align-center justify-space-between">
-        <label class="text-body-2 text-medium-emphasis"
-          >First Line Indent</label
-        >
-        <v-chip size="small" color="primary" class="ml-2"
-          >{{ textIndent }}px</v-chip
-        >
+        <label class="text-body-2 text-medium-emphasis">First Line Indent</label>
+        <v-chip size="small"
+                color="primary"
+                class="ml-2"
+        >{{ textIndent }}px</v-chip>
       </div>
       <v-slider
         v-model="textIndent"
@@ -256,9 +263,10 @@
     <div class="paragraph-indent mb-4">
       <div class="d-flex align-center justify-space-between">
         <label class="text-body-2 text-medium-emphasis">Paragraph Indent</label>
-        <v-chip size="small" color="primary" class="ml-2"
-          >{{ paragraphIndent }}px</v-chip
-        >
+        <v-chip size="small"
+                color="primary"
+                class="ml-2"
+        >{{ paragraphIndent }}px</v-chip>
       </div>
       <v-slider
         v-model="paragraphIndent"
@@ -393,11 +401,11 @@ const paragraphIndent = ref(props.element.style?.paragraphIndent || 0);
 const listType = ref(props.element.style?.listType || "none");
 const textColor = ref(props.element.style?.color || "#000000");
 const backgroundColor = ref(
-  props.element.style?.backgroundColor || "transparent"
+  props.element.style?.backgroundColor || "transparent",
 );
 const blockBackground = ref(props.element.style?.blockBackground || false);
 const blockBackgroundColor = ref(
-  props.element.style?.blockBackgroundColor || "#f5f5f5"
+  props.element.style?.blockBackgroundColor || "#f5f5f5",
 );
 
 // Group font families by category for the dropdown
@@ -484,7 +492,7 @@ watch(
     blockBackgroundColor.value =
       newValue.style?.blockBackgroundColor || "#f5f5f5";
   },
-  { deep: true }
+  { deep: true },
 );
 
 function updateElement(updates: Partial<typeof props.element.style>) {
@@ -503,7 +511,7 @@ function updateTextStyle() {
   // Check if we're applying a heading style
   if (textStyle.value.startsWith("Heading ")) {
     // Extract the heading level (1-6)
-    const headingLevel = parseInt(textStyle.value.split(" ")[1]);
+    const headingLevel = parseInt(textStyle.value.split(" ")[1], 10);
 
     if (hasSavedSelection()) {
       // Apply heading to selected text
@@ -515,30 +523,30 @@ function updateTextStyle() {
       let newBold = false;
 
       switch (headingLevel) {
-        case 1:
-          newFontSize = 32;
-          newBold = true;
-          break;
-        case 2:
-          newFontSize = 28;
-          newBold = true;
-          break;
-        case 3:
-          newFontSize = 24;
-          newBold = true;
-          break;
-        case 4:
-          newFontSize = 20;
-          newBold = true;
-          break;
-        case 5:
-          newFontSize = 18;
-          newBold = true;
-          break;
-        case 6:
-          newFontSize = 16;
-          newBold = true;
-          break;
+      case 1:
+        newFontSize = 32;
+        newBold = true;
+        break;
+      case 2:
+        newFontSize = 28;
+        newBold = true;
+        break;
+      case 3:
+        newFontSize = 24;
+        newBold = true;
+        break;
+      case 4:
+        newFontSize = 20;
+        newBold = true;
+        break;
+      case 5:
+        newFontSize = 18;
+        newBold = true;
+        break;
+      case 6:
+        newFontSize = 16;
+        newBold = true;
+        break;
       }
 
       // Update the font size and bold state
@@ -695,7 +703,7 @@ function decreaseIndent() {
 }
 
 function transformText(
-  transformType: "uppercase" | "lowercase" | "capitalize"
+  transformType: "uppercase" | "lowercase" | "capitalize",
 ) {
   // Check if there's a text selection
   if (hasSavedSelection()) {
@@ -707,17 +715,17 @@ function transformText(
 
       let transformedText = selectedText;
       switch (transformType) {
-        case "uppercase":
-          transformedText = selectedText.toUpperCase();
-          break;
-        case "lowercase":
-          transformedText = selectedText.toLowerCase();
-          break;
-        case "capitalize":
-          transformedText = selectedText.replace(/\b\w/g, (char) =>
-            char.toUpperCase()
-          );
-          break;
+      case "uppercase":
+        transformedText = selectedText.toUpperCase();
+        break;
+      case "lowercase":
+        transformedText = selectedText.toLowerCase();
+        break;
+      case "capitalize":
+        transformedText = selectedText.replace(/\b\w/g, (char) =>
+          char.toUpperCase(),
+        );
+        break;
       }
 
       // Create a document fragment with the transformed text
@@ -742,7 +750,7 @@ function transformText(
     // If no selection, transform the entire text content
     if (!props.element.content) return;
 
-    let transformedContent = props.element.content;
+    const transformedContent = props.element.content;
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = transformedContent;
 
@@ -751,7 +759,7 @@ function transformText(
     const walker = document.createTreeWalker(
       tempDiv,
       NodeFilter.SHOW_TEXT,
-      null
+      null,
     );
 
     let node;
@@ -765,17 +773,17 @@ function transformText(
 
       let transformedText = node.textContent;
       switch (transformType) {
-        case "uppercase":
-          transformedText = node.textContent.toUpperCase();
-          break;
-        case "lowercase":
-          transformedText = node.textContent.toLowerCase();
-          break;
-        case "capitalize":
-          transformedText = node.textContent.replace(/\b\w/g, (char) =>
-            char.toUpperCase()
-          );
-          break;
+      case "uppercase":
+        transformedText = node.textContent.toUpperCase();
+        break;
+      case "lowercase":
+        transformedText = node.textContent.toLowerCase();
+        break;
+      case "capitalize":
+        transformedText = node.textContent.replace(/\b\w/g, (char) =>
+          char.toUpperCase(),
+        );
+        break;
       }
 
       node.textContent = transformedText;

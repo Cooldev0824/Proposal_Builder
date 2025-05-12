@@ -1,11 +1,12 @@
 <script setup lang="ts">
 // 1. Imports
-import { ref, onMounted, onUnmounted } from 'vue'
-import { GridStack } from 'gridstack'
-import 'gridstack/dist/gridstack.min.css'
+import { ref, onMounted, onUnmounted, watch } from "vue";
+import { GridStack } from "gridstack";
+import "gridstack/dist/gridstack.min.css";
+import DOMPurify from "dompurify";
 
 // Import styles
-import '../../assets/styles/components/gridLayout.scss'
+import "../../assets/styles/components/gridLayout.scss";
 
 // Type definitions
 interface GridItem {
@@ -18,90 +19,124 @@ interface GridItem {
 }
 
 // 2. Functions
-function updateItemsPositions(gridItems: any[]) {
-  gridItems.forEach((gridItem) => {
-    const index = parseInt(gridItem.el.getAttribute('gs-id'))
+function updateItemsPositions(gridItems: unknown[]): void {
+  gridItems.forEach((gridItem: any) => {
+    const index = parseInt(gridItem.el.getAttribute("gs-id"), 10);
     if (!isNaN(index) && items.value[index]) {
       items.value[index] = {
         ...items.value[index],
         x: gridItem.x,
         y: gridItem.y,
         w: gridItem.w,
-        h: gridItem.h
-      }
+        h: gridItem.h,
+      };
     }
-  })
+  });
 }
 
 function addItem() {
-  editingIndex.value = null
+  editingIndex.value = null;
   editingItem.value = {
-    title: '',
-    content: ''
-  }
-  showAddDialog.value = true
+    title: "",
+    content: "",
+  };
+  showAddDialog.value = true;
 }
 
 function editItem(index: number) {
-  editingIndex.value = index
-  editingItem.value = { ...items.value[index] }
-  showAddDialog.value = true
+  editingIndex.value = index;
+  editingItem.value = { ...items.value[index] };
+  showAddDialog.value = true;
 }
 
 function saveItem() {
-  if (!grid) return
+  if (!grid) return;
 
   const newItem: GridItem = {
     x: 0,
     y: 0,
     w: 6,
     h: 4,
-    title: editingItem.value.title || 'Untitled Block',
-    content: editingItem.value.content || ''
-  }
+    title: editingItem.value.title || "Untitled Block",
+    content: editingItem.value.content || "",
+  };
 
   if (editingIndex.value !== null) {
     // Update existing item
     items.value[editingIndex.value] = {
       ...items.value[editingIndex.value],
-      ...newItem
-    }
-    grid.update(grid.getGridItems()[editingIndex.value], newItem)
+      ...newItem,
+    };
+    grid.update(grid.getGridItems()[editingIndex.value], newItem);
   } else {
     // Add new item
-    items.value.push(newItem)
-    grid.addWidget(newItem)
+    items.value.push(newItem);
+    grid.addWidget(newItem);
   }
 
-  showAddDialog.value = false
-  editingIndex.value = null
+  showAddDialog.value = false;
+  editingIndex.value = null;
   editingItem.value = {
-    title: '',
-    content: ''
-  }
+    title: "",
+    content: "",
+  };
 }
 
 function removeItem(index: number) {
   if (grid) {
-    const gridItems = grid.getGridItems()
+    const gridItems = grid.getGridItems();
     if (gridItems[index]) {
-      grid.removeWidget(gridItems[index])
-      items.value.splice(index, 1)
+      grid.removeWidget(gridItems[index]);
+      items.value.splice(index, 1);
     }
   }
 }
 
-// 3. Hooks and Reactive State
-const gridContainer = ref<HTMLElement | null>(null)
-const items = ref<GridItem[]>([])
-let grid: GridStack | null = null
+// Function to check if content is HTML
+function isHtmlContent(content: string): boolean {
+  // Simple check for HTML tags
+  return /<[a-z][\s\S]*>/i.test(content);
+}
 
-const showAddDialog = ref(false)
-const editingIndex = ref<number | null>(null)
+// Function to safely render HTML content
+function renderSafeHtml(content: string, element: HTMLElement): void {
+  if (!element) return;
+
+  // Sanitize HTML content using DOMPurify
+  const sanitizedHtml = DOMPurify.sanitize(content, {
+    ALLOWED_TAGS: ["p", "br", "b", "i", "em", "strong", "a", "ul", "ol", "li", "span", "div", "h1", "h2", "h3", "h4", "h5", "h6"],
+    ALLOWED_ATTR: ["href", "target", "class", "style"],
+  });
+
+  // Set the sanitized HTML
+  element.innerHTML = sanitizedHtml;
+}
+
+// 3. Hooks and Reactive State
+const gridContainer = ref<HTMLElement | null>(null);
+const contentContainers = ref<HTMLElement[]>([]);
+const items = ref<GridItem[]>([]);
+let grid: GridStack | null = null;
+
+const showAddDialog = ref(false);
+const editingIndex = ref<number | null>(null);
 const editingItem = ref<Partial<GridItem>>({
-  title: '',
-  content: ''
-})
+  title: "",
+  content: "",
+});
+
+// Watch for changes in items to update HTML content
+watch(items, () => {
+  // Use nextTick to ensure DOM is updated
+  setTimeout(() => {
+    const htmlContainers = document.querySelectorAll(".html-content");
+    htmlContainers.forEach((container, index) => {
+      if (items.value[index] && isHtmlContent(items.value[index].content)) {
+        renderSafeHtml(items.value[index].content, container as HTMLElement);
+      }
+    });
+  }, 0);
+}, { deep: true });
 
 onMounted(() => {
   if (gridContainer.value) {
@@ -111,37 +146,54 @@ onMounted(() => {
       animate: true,
       float: true,
       resizable: {
-        handles: 'all'
+        handles: "all",
       },
       draggable: {
-        handle: '.item-header'
-      }
-    }, gridContainer.value.querySelector('.grid-stack') as HTMLElement)
+        handle: ".item-header",
+      },
+    }, gridContainer.value.querySelector(".grid-stack") as HTMLElement);
 
-    grid.on('change', (_event: any, changedItems: any[]) => {
-      updateItemsPositions(changedItems)
-    })
+    grid.on("change", (_event: unknown, changedItems: unknown[]) => {
+      updateItemsPositions(changedItems);
+    });
+
+    // Initial render of HTML content
+    setTimeout(() => {
+      const htmlContainers = document.querySelectorAll(".html-content");
+      htmlContainers.forEach((container, index) => {
+        if (items.value[index] && isHtmlContent(items.value[index].content)) {
+          renderSafeHtml(items.value[index].content, container as HTMLElement);
+        }
+      });
+    }, 0);
   }
-})
+});
 
 onUnmounted(() => {
   if (grid) {
-    grid.destroy()
+    grid.destroy();
   }
-})
+});
 
 // Expose public methods
 defineExpose({
   addItem,
   removeItem,
-  grid
-})
+  grid,
+});
 </script>
 
 <template>
-  <div class="grid-layout" ref="gridContainer">
+  <div ref="gridContainer" class="grid-layout">
     <div class="grid-stack">
-      <div v-for="(item, index) in items" :key="index" class="grid-stack-item" :gs-x="item.x" :gs-y="item.y" :gs-w="item.w" :gs-h="item.h">
+      <div v-for="(item, index) in items"
+           :key="index"
+           class="grid-stack-item"
+           :gs-x="item.x"
+           :gs-y="item.y"
+           :gs-w="item.w"
+           :gs-h="item.h"
+      >
         <div class="grid-stack-item-content">
           <div class="item-header">
             <span class="item-title">{{ item.title }}</span>
@@ -149,12 +201,20 @@ defineExpose({
               <v-btn icon size="small" @click="editItem(index)">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
-              <v-btn icon size="small" color="error" @click="removeItem(index)">
+              <v-btn icon
+                     size="small"
+                     color="error"
+                     @click="removeItem(index)"
+              >
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </div>
           </div>
-          <div class="item-content" v-html="item.content"></div>
+          <div class="item-content">
+            <!-- Use v-if/v-else to conditionally render HTML content safely -->
+            <div v-if="isHtmlContent(item.content)" ref="contentContainer" class="html-content"></div>
+            <div v-else>{{ item.content }}</div>
+          </div>
         </div>
       </div>
     </div>

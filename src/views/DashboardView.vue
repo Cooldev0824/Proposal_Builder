@@ -15,10 +15,10 @@
                 <v-btn
                   icon
                   color="primary"
-                  @click="refreshDocuments"
                   :loading="isLoading"
                   :disabled="isLoading"
                   title="Refresh documents"
+                  @click="refreshDocuments"
                 >
                   <v-icon>mdi-refresh</v-icon>
                 </v-btn>
@@ -29,12 +29,16 @@
       </v-row>
 
       <v-row>
-        <v-col cols="12" sm="6" md="4" lg="3">
+        <v-col cols="12"
+               sm="6"
+               md="4"
+               lg="3"
+        >
           <v-card
-            @click="createNewDocument"
             class="new-document-card"
             height="200"
             hover
+            @click="createNewDocument"
           >
             <v-card-text
               class="d-flex flex-column align-center justify-center h-100"
@@ -54,10 +58,10 @@
           lg="3"
         >
           <v-card
-            @click="openDocument(doc.id)"
             height="200"
             hover
             class="document-card"
+            @click="openDocument(doc.id)"
           >
             <v-card-text class="pa-0 position-relative h-100">
               <div class="document-preview">
@@ -117,14 +121,15 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="deleteDialog = false" :disabled="isDeleting"
-            >Cancel</v-btn
-          >
+          <v-btn text
+                 :disabled="isDeleting"
+                 @click="deleteDialog = false"
+          >Cancel</v-btn>
           <v-btn
             color="error"
-            @click="deleteDocument"
             :loading="isDeleting"
             :disabled="isDeleting"
+            @click="deleteDocument"
           >
             Delete
           </v-btn>
@@ -271,7 +276,7 @@ function getDocumentThumbnail(doc: any): string {
       if (section.elements && section.elements.length > 0) {
         // Look for the first image element to use as thumbnail
         const imageElement = section.elements.find(
-          (el: any) => el.type === "image" && el.content
+          (el: any) => el.type === "image" && el.content,
         );
         if (imageElement && imageElement.content) {
           // If the image path is from our server, prepend the API URL
@@ -285,7 +290,7 @@ function getDocumentThumbnail(doc: any): string {
   }
 
   // If no image found, use a placeholder based on document ID
-  const index = parseInt(doc.id.replace(/\D/g, "")) % placeholders.length;
+  const index = parseInt(doc.id.replace(/\D/g, ""), 10) % placeholders.length;
   return placeholders[index] || placeholders[0];
 }
 
