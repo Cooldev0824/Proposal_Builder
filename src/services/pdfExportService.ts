@@ -126,6 +126,21 @@ export async function exportToPdf(
         });
       });
 
+      // Preload all images to ensure they're properly rendered
+      const images = pageClone.querySelectorAll("img");
+      await Promise.all(
+        Array.from(images).map((img) => {
+          return new Promise((resolve) => {
+            if (img.complete) {
+              resolve(null);
+            } else {
+              img.onload = () => resolve(null);
+              img.onerror = () => resolve(null);
+            }
+          });
+        })
+      );
+
       // Render the page to canvas with settings that match the preview
       const canvas = await html2canvas(pageClone, {
         scale: mergedOptions.quality || 2,
@@ -186,9 +201,67 @@ export async function exportToPdf(
           images.forEach((img) => {
             img.crossOrigin = "anonymous";
 
+            // Get the parent container (for positioning)
+            const container = img.parentElement;
+
             // Make sure images are visible
             img.style.display = "block";
             img.style.visibility = "visible";
+
+            // Get computed object-fit style
+            const computedStyle = window.getComputedStyle(img);
+            const objectFit =
+              computedStyle.objectFit || img.style.objectFit || "cover";
+
+            // Special handling for maintaining aspect ratio while fitting height
+            if (objectFit === "contain") {
+              // For contain, we want to maintain aspect ratio while ensuring the image fits within the container
+              img.style.objectFit = "contain";
+              img.style.height = "100%"; // Always fit the height
+              img.style.width = "auto"; // Let width adjust to maintain aspect ratio
+              img.style.maxWidth = "none"; // Allow width to exceed container if needed
+              img.style.position = "absolute";
+              img.style.top = "0";
+              img.style.left = "50%";
+              img.style.transform = "translateX(-50%)"; // Center horizontally
+            } else if (objectFit === "cover") {
+              // For cover, we want to fill the container while maintaining aspect ratio
+              img.style.objectFit = "cover";
+              img.style.width = "100%";
+              img.style.height = "100%";
+              img.style.position = "absolute";
+              img.style.top = "0";
+              img.style.left = "0";
+            } else if (objectFit === "fill") {
+              // For fill, we want to stretch the image to fill the container
+              img.style.width = "100%";
+              img.style.height = "100%";
+              img.style.objectFit = "fill";
+            } else if (objectFit === "none") {
+              // For none, we show the image at its natural size
+              img.style.maxHeight = "100%"; // Limit height to container
+              img.style.width = "auto"; // Let width adjust to maintain aspect ratio
+              img.style.position = "absolute";
+              img.style.top = "50%";
+              img.style.left = "50%";
+              img.style.transform = "translate(-50%, -50%)";
+            } else if (objectFit === "scale-down") {
+              // For scale-down, we show the image at its natural size or scaled down if too large
+              img.style.maxHeight = "100%"; // Limit height to container
+              img.style.width = "auto"; // Let width adjust to maintain aspect ratio
+              img.style.maxWidth = "none"; // Allow width to exceed container if needed
+              img.style.position = "absolute";
+              img.style.top = "50%";
+              img.style.left = "50%";
+              img.style.transform = "translate(-50%, -50%)";
+            }
+
+            // Ensure parent container has proper positioning
+            if (container && container instanceof HTMLElement) {
+              container.style.position = "relative";
+              container.style.overflow = "hidden";
+              container.style.boxSizing = "border-box";
+            }
           });
 
           // Process text elements to ensure styles are applied correctly
@@ -400,6 +473,21 @@ async function exportSinglePage(
     containerClone.style.position = "relative";
     containerClone.style.overflow = "hidden";
 
+    // Preload all images to ensure they're properly rendered
+    const images = containerClone.querySelectorAll("img");
+    await Promise.all(
+      Array.from(images).map((img) => {
+        return new Promise((resolve) => {
+          if (img.complete) {
+            resolve(null);
+          } else {
+            img.onload = () => resolve(null);
+            img.onerror = () => resolve(null);
+          }
+        });
+      })
+    );
+
     // Render the container to canvas
     const canvas = await html2canvas(containerClone, {
       scale: options.quality || 2,
@@ -423,9 +511,67 @@ async function exportSinglePage(
         images.forEach((img) => {
           img.crossOrigin = "anonymous";
 
+          // Get the parent container (for positioning)
+          const container = img.parentElement;
+
           // Make sure images are visible
           img.style.display = "block";
           img.style.visibility = "visible";
+
+          // Get computed object-fit style
+          const computedStyle = window.getComputedStyle(img);
+          const objectFit =
+            computedStyle.objectFit || img.style.objectFit || "cover";
+
+          // Special handling for maintaining aspect ratio while fitting height
+          if (objectFit === "contain") {
+            // For contain, we want to maintain aspect ratio while ensuring the image fits within the container
+            img.style.objectFit = "contain";
+            img.style.height = "100%"; // Always fit the height
+            img.style.width = "auto"; // Let width adjust to maintain aspect ratio
+            img.style.maxWidth = "none"; // Allow width to exceed container if needed
+            img.style.position = "absolute";
+            img.style.top = "0";
+            img.style.left = "50%";
+            img.style.transform = "translateX(-50%)"; // Center horizontally
+          } else if (objectFit === "cover") {
+            // For cover, we want to fill the container while maintaining aspect ratio
+            img.style.objectFit = "cover";
+            img.style.width = "100%";
+            img.style.height = "100%";
+            img.style.position = "absolute";
+            img.style.top = "0";
+            img.style.left = "0";
+          } else if (objectFit === "fill") {
+            // For fill, we want to stretch the image to fill the container
+            img.style.width = "100%";
+            img.style.height = "100%";
+            img.style.objectFit = "fill";
+          } else if (objectFit === "none") {
+            // For none, we show the image at its natural size
+            img.style.maxHeight = "100%"; // Limit height to container
+            img.style.width = "auto"; // Let width adjust to maintain aspect ratio
+            img.style.position = "absolute";
+            img.style.top = "50%";
+            img.style.left = "50%";
+            img.style.transform = "translate(-50%, -50%)";
+          } else if (objectFit === "scale-down") {
+            // For scale-down, we show the image at its natural size or scaled down if too large
+            img.style.maxHeight = "100%"; // Limit height to container
+            img.style.width = "auto"; // Let width adjust to maintain aspect ratio
+            img.style.maxWidth = "none"; // Allow width to exceed container if needed
+            img.style.position = "absolute";
+            img.style.top = "50%";
+            img.style.left = "50%";
+            img.style.transform = "translate(-50%, -50%)";
+          }
+
+          // Ensure parent container has proper positioning
+          if (container && container instanceof HTMLElement) {
+            container.style.position = "relative";
+            container.style.overflow = "hidden";
+            container.style.boxSizing = "border-box";
+          }
         });
       },
       ignoreElements: (element) => {
@@ -753,23 +899,13 @@ export async function directExportToPdf(
             }
           }
         } else if (element.type === "image") {
-          const img = document.createElement("img");
-          img.src = element.content;
-          img.style.width = "100%";
-          img.style.height = "100%";
-          img.style.objectFit = element.style?.objectFit || "contain";
-          img.crossOrigin = "anonymous"; // Add CORS support
-
-          // Apply additional image styles from the element
-          if (element.style?.borderRadius) {
-            img.style.borderRadius = `${element.style.borderRadius}px`;
-          }
-
           // Create a container for the image to handle background color and borders
           const imgContainer = document.createElement("div");
           imgContainer.style.width = "100%";
           imgContainer.style.height = "100%";
           imgContainer.style.overflow = "hidden";
+          imgContainer.style.position = "relative"; // Important for absolute positioning of the image
+          imgContainer.style.boxSizing = "border-box"; // Ensure borders are included in the size
 
           // Apply background color if specified
           if (element.style?.backgroundColor) {
@@ -781,7 +917,6 @@ export async function directExportToPdf(
             imgContainer.style.border = `${element.style.borderWidth}px solid ${
               element.style.borderColor || "#000000"
             }`;
-            imgContainer.style.boxSizing = "border-box";
           }
 
           // Apply border radius if specified
@@ -789,7 +924,70 @@ export async function directExportToPdf(
             imgContainer.style.borderRadius = `${element.style.borderRadius}px`;
           }
 
+          // Create the image element
+          const img = document.createElement("img");
+          img.src = element.content;
+          img.crossOrigin = "anonymous"; // Add CORS support
+
+          // Set image styles based on object-fit property
+          const objectFit = element.style?.objectFit || "contain";
+
+          // Special handling for maintaining aspect ratio while fitting height
+          if (objectFit === "contain") {
+            // For contain, we want to maintain aspect ratio while ensuring the image fits within the container
+            img.style.objectFit = "contain";
+            img.style.height = "100%"; // Always fit the height
+            img.style.width = "auto"; // Let width adjust to maintain aspect ratio
+            img.style.maxWidth = "none"; // Allow width to exceed container if needed
+            img.style.position = "absolute";
+            img.style.top = "0";
+            img.style.left = "50%";
+            img.style.transform = "translateX(-50%)"; // Center horizontally
+          } else if (objectFit === "cover") {
+            // For cover, we want to fill the container while maintaining aspect ratio
+            img.style.objectFit = "cover";
+            img.style.width = "100%";
+            img.style.height = "100%";
+            img.style.position = "absolute";
+            img.style.top = "0";
+            img.style.left = "0";
+          } else if (objectFit === "fill") {
+            // For fill, we want to stretch the image to fill the container
+            img.style.width = "100%";
+            img.style.height = "100%";
+            img.style.objectFit = "fill";
+          } else if (objectFit === "none") {
+            // For none, we show the image at its natural size
+            img.style.maxHeight = "100%"; // Limit height to container
+            img.style.width = "auto"; // Let width adjust to maintain aspect ratio
+            img.style.position = "absolute";
+            img.style.top = "50%";
+            img.style.left = "50%";
+            img.style.transform = "translate(-50%, -50%)";
+          } else if (objectFit === "scale-down") {
+            // For scale-down, we show the image at its natural size or scaled down if too large
+            img.style.maxHeight = "100%"; // Limit height to container
+            img.style.width = "auto"; // Let width adjust to maintain aspect ratio
+            img.style.maxWidth = "none"; // Allow width to exceed container if needed
+            img.style.position = "absolute";
+            img.style.top = "50%";
+            img.style.left = "50%";
+            img.style.transform = "translate(-50%, -50%)";
+          }
+
+          // Apply additional image styles
+          if (element.style?.borderRadius) {
+            img.style.borderRadius = `${element.style.borderRadius}px`;
+          }
+
+          // Ensure image is visible
+          img.style.display = "block";
+          img.style.visibility = "visible";
+
+          // Add the image to the container
           imgContainer.appendChild(img);
+
+          // Add the container to the element div
           elementDiv.appendChild(imgContainer);
         } else if (element.type === "shape") {
           // Handle different shape types
@@ -844,24 +1042,36 @@ export async function directExportToPdf(
           }
         } else if (element.type === "signature") {
           if (element.content) {
-            const img = document.createElement("img");
-            img.src = element.content;
-            img.style.width = "100%";
-            img.style.height = "100%";
-            img.style.objectFit = "contain";
-            img.crossOrigin = "anonymous"; // Add CORS support
-
             // Create a container for the signature to handle background color
             const signatureContainer = document.createElement("div");
             signatureContainer.style.width = "100%";
             signatureContainer.style.height = "100%";
             signatureContainer.style.overflow = "hidden";
+            signatureContainer.style.position = "relative"; // Important for absolute positioning
+            signatureContainer.style.boxSizing = "border-box"; // Ensure borders are included in the size
 
             // Apply background color if specified
             if (element.style?.backgroundColor) {
               signatureContainer.style.backgroundColor =
                 element.style.backgroundColor;
             }
+
+            // Create the image element
+            const img = document.createElement("img");
+            img.src = element.content;
+            img.crossOrigin = "anonymous"; // Add CORS support
+
+            // Set image styles for proper display
+            img.style.objectFit = "contain";
+            img.style.width = "100%";
+            img.style.height = "100%";
+            img.style.position = "absolute";
+            img.style.top = "0";
+            img.style.left = "0";
+
+            // Ensure image is visible
+            img.style.display = "block";
+            img.style.visibility = "visible";
 
             signatureContainer.appendChild(img);
             elementDiv.appendChild(signatureContainer);
@@ -874,6 +1084,21 @@ export async function directExportToPdf(
       });
 
       tempContainer.appendChild(pageContainer);
+
+      // Preload all images to ensure they're properly rendered
+      const images = pageContainer.querySelectorAll("img");
+      await Promise.all(
+        Array.from(images).map((img) => {
+          return new Promise((resolve) => {
+            if (img.complete) {
+              resolve(null);
+            } else {
+              img.onload = () => resolve(null);
+              img.onerror = () => resolve(null);
+            }
+          });
+        })
+      );
 
       // Add a new page for each section after the first
       if (i > 0) {
@@ -896,9 +1121,67 @@ export async function directExportToPdf(
           images.forEach((img) => {
             img.crossOrigin = "anonymous";
 
+            // Get the parent container (for positioning)
+            const container = img.parentElement;
+
             // Make sure images are visible
             img.style.display = "block";
             img.style.visibility = "visible";
+
+            // Get computed object-fit style
+            const computedStyle = window.getComputedStyle(img);
+            const objectFit =
+              computedStyle.objectFit || img.style.objectFit || "cover";
+
+            // Special handling for maintaining aspect ratio while fitting height
+            if (objectFit === "contain") {
+              // For contain, we want to maintain aspect ratio while ensuring the image fits within the container
+              img.style.objectFit = "contain";
+              img.style.height = "100%"; // Always fit the height
+              img.style.width = "auto"; // Let width adjust to maintain aspect ratio
+              img.style.maxWidth = "none"; // Allow width to exceed container if needed
+              img.style.position = "absolute";
+              img.style.top = "0";
+              img.style.left = "50%";
+              img.style.transform = "translateX(-50%)"; // Center horizontally
+            } else if (objectFit === "cover") {
+              // For cover, we want to fill the container while maintaining aspect ratio
+              img.style.objectFit = "cover";
+              img.style.width = "100%";
+              img.style.height = "100%";
+              img.style.position = "absolute";
+              img.style.top = "0";
+              img.style.left = "0";
+            } else if (objectFit === "fill") {
+              // For fill, we want to stretch the image to fill the container
+              img.style.width = "100%";
+              img.style.height = "100%";
+              img.style.objectFit = "fill";
+            } else if (objectFit === "none") {
+              // For none, we show the image at its natural size
+              img.style.maxHeight = "100%"; // Limit height to container
+              img.style.width = "auto"; // Let width adjust to maintain aspect ratio
+              img.style.position = "absolute";
+              img.style.top = "50%";
+              img.style.left = "50%";
+              img.style.transform = "translate(-50%, -50%)";
+            } else if (objectFit === "scale-down") {
+              // For scale-down, we show the image at its natural size or scaled down if too large
+              img.style.maxHeight = "100%"; // Limit height to container
+              img.style.width = "auto"; // Let width adjust to maintain aspect ratio
+              img.style.maxWidth = "none"; // Allow width to exceed container if needed
+              img.style.position = "absolute";
+              img.style.top = "50%";
+              img.style.left = "50%";
+              img.style.transform = "translate(-50%, -50%)";
+            }
+
+            // Ensure parent container has proper positioning
+            if (container && container instanceof HTMLElement) {
+              container.style.position = "relative";
+              container.style.overflow = "hidden";
+              container.style.boxSizing = "border-box";
+            }
           });
         },
       });
