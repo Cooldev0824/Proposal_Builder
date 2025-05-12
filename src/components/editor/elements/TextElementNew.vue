@@ -9,8 +9,8 @@
     @update:element="handleBaseElementUpdate"
   >
     <div
-      class="element-content"
       ref="contentElement"
+      class="element-content"
       contenteditable="true"
       :style="textStyle"
       :data-element-id="element.id"

@@ -6,7 +6,7 @@
     @mousedown.stop="startDrag"
   >
     <div class="grid-container">
-      <ag-grid-vue
+      <AgGridVue
         class="ag-theme-alpine"
         :columnDefs="columnDefs"
         :rowData="rowData"

@@ -43,11 +43,11 @@
               ? document.sections
               : []"
             :key="section.id"
+            ref="documentPageRefs"
             :section="section"
             :isActive="currentSection === index"
             :showGrid="showGrid"
             :isDrawing="isDrawing && currentSection === index"
-            ref="documentPageRefs"
             :drawingRectStyle="drawingRectangleStyle"
             :paperSize="document.paperSize"
             :orientation="document.orientation"

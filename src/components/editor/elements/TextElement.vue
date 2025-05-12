@@ -258,7 +258,7 @@ function getNodePath(node: Node): number[] | null {
   return path;
 }
 
-// Handle text changes
+// Optimized text change handler with improved cursor restoration
 function handleTextChange(_event: Event): void {
   if (!contentElement.value || isUpdating) return;
 
@@ -274,17 +274,20 @@ function handleTextChange(_event: Event): void {
   // Save the path to the node for more reliable restoration
   const nodePath = getNodePath(container);
 
-  // Save text before cursor for text-based restoration
+  // Save text before cursor for text-based restoration (only if needed)
   let textBeforeCursor = "";
 
-  try {
-    // Create a range from the start of the content to the cursor
-    const beforeRange = document.createRange();
-    beforeRange.setStart(contentElement.value, 0);
-    beforeRange.setEnd(range.endContainer, range.endOffset);
-    textBeforeCursor = beforeRange.toString();
-  } catch (error) {
-    // Error getting text around cursor
+  // Only compute textBeforeCursor if we might need it (when container might be lost)
+  if (!container || !contentElement.value.contains(container)) {
+    try {
+      // Create a range from the start of the content to the cursor
+      const beforeRange = document.createRange();
+      beforeRange.setStart(contentElement.value, 0);
+      beforeRange.setEnd(range.endContainer, range.endOffset);
+      textBeforeCursor = beforeRange.toString();
+    } catch (_error) {
+      // Error getting text around cursor - ignore
+    }
   }
 
   // Get the current content before updating
@@ -292,7 +295,6 @@ function handleTextChange(_event: Event): void {
 
   // Prevent content from being reset to empty or previous value
   if (currentContent === "") {
-    isUpdating = false;
     return;
   }
 
@@ -305,8 +307,8 @@ function handleTextChange(_event: Event): void {
   isUpdating = true;
   emit("update:element", updatedElement);
 
-  // Restore cursor position after Vue updates the DOM
-  setTimeout(() => {
+  // Use requestAnimationFrame instead of setTimeout for better performance
+  requestAnimationFrame(() => {
     try {
       if (!contentElement.value) {
         isUpdating = false;
@@ -316,125 +318,114 @@ function handleTextChange(_event: Event): void {
       // Focus the element
       contentElement.value.focus();
 
-      // First try to restore using the original container reference
+      // First try to restore using the original container reference (most efficient)
       if (container && contentElement.value.contains(container)) {
-        // Create a new range at the saved position
-        const newRange = document.createRange();
-
-        // Ensure the offset is valid for the container
-        const maxOffset =
-          container.nodeType === Node.TEXT_NODE
-            ? container.textContent?.length || 0
-            : container.childNodes.length;
-
-        const safeOffset = Math.min(offset, maxOffset);
-
-        newRange.setStart(container, safeOffset);
-        newRange.setEnd(container, safeOffset);
-
-        // Apply the selection
-        selection.removeAllRanges();
-        selection.addRange(newRange);
-
-        // Cursor restored using direct container reference
+        restoreCursorToContainer(selection, container, offset);
       }
       // If that fails, try using the node path
       else if (nodePath) {
         const nodeAtPath = findNodeAtPath(nodePath);
         if (nodeAtPath) {
-          // Create a new range at the saved position
-          const newRange = document.createRange();
-
-          // Ensure the offset is valid for the node
-          const maxOffset =
-            nodeAtPath.nodeType === Node.TEXT_NODE
-              ? nodeAtPath.textContent?.length || 0
-              : nodeAtPath.childNodes.length;
-
-          const safeOffset = Math.min(offset, maxOffset);
-
-          newRange.setStart(nodeAtPath, safeOffset);
-          newRange.setEnd(nodeAtPath, safeOffset);
-
-          // Apply the selection
-          selection.removeAllRanges();
-          selection.addRange(newRange);
-
-          // Cursor restored using node path
+          restoreCursorToContainer(selection, nodeAtPath, offset);
         }
-        // If node path fails, try text-based approach
+        // If node path fails, try text-based approach as last resort
         else if (textBeforeCursor) {
-          // Get all text nodes
-          const textNodes: Node[] = [];
-          const walker = document.createTreeWalker(
-            contentElement.value,
-            NodeFilter.SHOW_TEXT,
-            null,
-          );
-
-          let node: Node | null;
-          while ((node = walker.nextNode())) {
-            textNodes.push(node);
-          }
-
-          if (textNodes.length > 0) {
-            // Combine all text content
-            let fullText = "";
-
-            // Define the node position interface
-            interface NodePosition {
-              node: Node;
-              startPos: number;
-              endPos: number;
-            }
-
-            const nodePositions: NodePosition[] = [];
-
-            textNodes.forEach((node) => {
-              const startPos = fullText.length;
-              fullText += node.textContent;
-              const endPos = fullText.length;
-
-              nodePositions.push({
-                node,
-                startPos,
-                endPos,
-              });
-            });
-
-            // Find the position in the full text that matches our cursor position
-            const cursorPos = textBeforeCursor.length;
-
-            // Find which node contains the cursor position
-            let targetNode: Node | null = null;
-            let targetOffset = 0;
-
-            for (const pos of nodePositions) {
-              if (cursorPos >= pos.startPos && cursorPos <= pos.endPos) {
-                targetNode = pos.node;
-                targetOffset = cursorPos - pos.startPos;
-                break;
-              }
-            }
-
-            // If we found a node, set the cursor position
-            if (targetNode) {
-              const newRange = document.createRange();
-              newRange.setStart(targetNode, targetOffset);
-              newRange.setEnd(targetNode, targetOffset);
-              selection.removeAllRanges();
-              selection.addRange(newRange);
-              // Cursor restored using text content approach
-            }
-          }
+          restoreCursorUsingTextPosition(selection, textBeforeCursor);
         }
       }
-    } catch (error) {
-      // Error restoring selection
+    } catch (_error) {
+      // Error restoring selection - ignore
     } finally {
       isUpdating = false;
     }
-  }, 10);
+  });
+}
+
+// Helper function to restore cursor to a specific container and offset
+function restoreCursorToContainer(selection: Selection, container: Node, offset: number): void {
+  if (!contentElement.value) return;
+
+  try {
+    // Create a new range at the saved position
+    const newRange = document.createRange();
+
+    // Ensure the offset is valid for the container
+    const maxOffset =
+      container.nodeType === Node.TEXT_NODE
+        ? container.textContent?.length || 0
+        : container.childNodes.length;
+
+    const safeOffset = Math.min(offset, maxOffset);
+
+    newRange.setStart(container, safeOffset);
+    newRange.setEnd(container, safeOffset);
+
+    // Apply the selection
+    selection.removeAllRanges();
+    selection.addRange(newRange);
+  } catch (_error) {
+    // Error restoring cursor - ignore
+  }
+}
+
+// Helper function to restore cursor using text position
+function restoreCursorUsingTextPosition(selection: Selection, textBeforeCursor: string): void {
+  if (!contentElement.value) return;
+
+  try {
+    // Get all text nodes
+    const textNodes: Node[] = [];
+    const walker = document.createTreeWalker(
+      contentElement.value,
+      NodeFilter.SHOW_TEXT,
+      null,
+    );
+
+    let node: Node | null;
+    while ((node = walker.nextNode())) {
+      textNodes.push(node);
+    }
+
+    if (textNodes.length === 0) return;
+
+    // Use a more efficient approach with a single pass through the text
+    let accumulatedLength = 0;
+    const cursorPos = textBeforeCursor.length;
+
+    for (const node of textNodes) {
+      const nodeLength = node.textContent?.length || 0;
+
+      if (accumulatedLength + nodeLength >= cursorPos) {
+        // This node contains our cursor position
+        const nodeOffset = cursorPos - accumulatedLength;
+
+        const newRange = document.createRange();
+        newRange.setStart(node, nodeOffset);
+        newRange.setEnd(node, nodeOffset);
+
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+        return;
+      }
+
+      accumulatedLength += nodeLength;
+    }
+
+    // If we couldn't find the exact position, place cursor at the end
+    if (textNodes.length > 0) {
+      const lastNode = textNodes[textNodes.length - 1];
+      const lastNodeLength = lastNode.textContent?.length || 0;
+
+      const newRange = document.createRange();
+      newRange.setStart(lastNode, lastNodeLength);
+      newRange.setEnd(lastNode, lastNodeLength);
+
+      selection.removeAllRanges();
+      selection.addRange(newRange);
+    }
+  } catch (_error) {
+    // Error restoring cursor - ignore
+  }
 }
 
 // Handle key down events
@@ -1028,28 +1019,61 @@ function setupMutationObserver() {
   });
 }
 
-// Initialize the component
+// Store event handlers as refs so they can be properly removed
+const clickHandler = (e: MouseEvent): void => {
+  const element = contentElement.value;
+  if (e.target === element && element) {
+    element.focus();
+  }
+};
+
+const mouseupHandler = (): void => {
+  // Use requestAnimationFrame instead of setTimeout for better performance
+  requestAnimationFrame(() => {
+    const selection = window.getSelection();
+    if (selection && !selection.isCollapsed && selection.rangeCount > 0 && contentElement.value) {
+      // Save selection state
+      saveSelection();
+    }
+  });
+};
+
+const keyupHandler = (e: KeyboardEvent): void => {
+  // Only for navigation keys and shift (for selection)
+  if (
+    e.key.includes("Arrow") ||
+    e.key === "Home" ||
+    e.key === "End" ||
+    e.key === "PageUp" ||
+    e.key === "PageDown" ||
+    e.key === "Shift"
+  ) {
+    // Use requestAnimationFrame instead of setTimeout for better performance
+    requestAnimationFrame(() => {
+      const selection = window.getSelection();
+      if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
+        // Save selection state
+        saveSelection();
+      }
+    });
+  }
+};
+
+// Initialize the component - combine the two onMounted hooks
 onMounted(() => {
   // Apply initial styles
   nextTick(() => {
     // Force update of the element style for block background
-    if (props.element.style?.blockBackground) {
+    if (props.element.style?.blockBackground && contentElement.value) {
       // Apply initial block background color
-      const elementDiv = contentElement.value?.parentElement;
+      const elementDiv = contentElement.value.parentElement;
       if (elementDiv) {
         elementDiv.style.backgroundColor =
           props.element.style.blockBackgroundColor || "#f5f5f5";
       }
     }
   });
-});
 
-// Expose methods to parent components
-defineExpose({
-  // No special methods needed anymore, selection is handled by the global selection manager
-});
-
-onMounted(() => {
   if (contentElement.value) {
     // Set initial content
     contentElement.value.innerHTML = props.element.content || "";
@@ -1065,51 +1089,32 @@ onMounted(() => {
     // Set up mutation observer
     setupMutationObserver();
 
-    // Add a click handler to ensure focus works correctly
+    // Add event listeners with proper references for cleanup
     const element = contentElement.value;
-    element.addEventListener("click", (e) => {
-      if (e.target === element && element) {
-        element.focus();
-      }
-    });
-
-    // Add a mouseup handler to ensure selection is saved
-    contentElement.value.addEventListener("mouseup", () => {
-      // Add a small delay to ensure the selection is complete
-      setTimeout(() => {
-        // Save the selection for text formatting
-        const selection = window.getSelection();
-        if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
-          // Selection saved in TextElement mouseup handler
-        }
-      }, 10);
-    });
-
-    // Add a keyup handler to ensure selection is saved after keyboard navigation
-    contentElement.value.addEventListener("keyup", (e) => {
-      // Only for navigation keys and shift (for selection)
-      if (
-        e.key.includes("Arrow") ||
-        e.key === "Home" ||
-        e.key === "End" ||
-        e.key === "PageUp" ||
-        e.key === "PageDown" ||
-        e.key === "Shift"
-      ) {
-        // Save the selection for text formatting
-        const selection = window.getSelection();
-        if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
-          // Selection saved in TextElement keyup handler
-        }
-      }
-    });
+    element.addEventListener("click", clickHandler);
+    element.addEventListener("mouseup", mouseupHandler);
+    element.addEventListener("keyup", keyupHandler);
   }
 });
 
+// Expose methods to parent components
+defineExpose({
+  // No special methods needed anymore, selection is handled by the global selection manager
+});
+
+// Proper cleanup of all event listeners and observers
 onBeforeUnmount(() => {
   // Clean up mutation observer
   if (observer) {
     observer.disconnect();
+    observer = null;
+  }
+
+  // Clean up event listeners
+  if (contentElement.value) {
+    contentElement.value.removeEventListener("click", clickHandler);
+    contentElement.value.removeEventListener("mouseup", mouseupHandler);
+    contentElement.value.removeEventListener("keyup", keyupHandler);
   }
 });
 </script>
